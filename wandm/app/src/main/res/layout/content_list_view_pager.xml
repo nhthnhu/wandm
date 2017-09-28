@@ -3,7 +3,25 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:layout_margin="8dp"
               android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:subtitleTextColor="@color/color_grey"
+            app:titleTextColor="@color/color_grey"/>
+
+    </android.support.design.widget.AppBarLayout>
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,21 +30,19 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
         android:paddingBottom="4dp"
-        app:stl_defaultTabTextColor="@color/white"
+        app:stl_defaultTabTextColor="@color/color_grey"
         app:stl_distributeEvenly="true"
-        app:stl_indicatorColor="@color/accent"
+        app:stl_indicatorColor="@color/color_grey"
         app:stl_indicatorCornerRadius="1.5dp"
         app:stl_indicatorInterpolation="smart"
         app:stl_indicatorThickness="3dp"
-        app:stl_underlineColor="@color/transparent"
-        />
+        app:stl_underlineColor="@color/color_transparent"/>
 
 
     <android.support.v4.view.ViewPager
         android:id="@+id/listViewPagers"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent"/>
 
     <FrameLayout
         android:id="@+id/controlFragmentContainer"
