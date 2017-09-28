@@ -3,7 +3,7 @@ package com.wandm
 import android.graphics.Color
 import com.ms_square.etsyblur.BlurConfig
 
-object AppConfig{
+object AppConfig {
 
     /**
      * @return BlurConfig to support BlurringView of EtsyBlur
