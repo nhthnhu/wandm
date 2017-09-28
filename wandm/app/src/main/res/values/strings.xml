@@ -4,4 +4,5 @@
     <string name="fragment_songs">Songs</string>
     <string name="fragment_artists">Artists</string>
     <string name="fragment_albums">Albums</string>
+    <string name="fragment_folders">Folders</string>
 </resources>

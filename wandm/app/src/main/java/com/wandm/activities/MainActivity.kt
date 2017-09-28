@@ -9,6 +9,7 @@ import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.fragment.AlbumsFragment
 import com.wandm.fragment.ArtistsFragment
+import com.wandm.fragment.FoldersFragment
 import com.wandm.fragment.SongsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_list_view_pager.*
@@ -31,6 +32,8 @@ class MainActivity : BaseActivity() {
                 ArtistsFragment::class.java))
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.fragment_albums),
                 AlbumsFragment::class.java))
+        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.fragment_folders),
+                FoldersFragment::class.java))
 
         val fragmentAdapter = FragmentPagerItemAdapter(supportFragmentManager, pagerItems)
         listViewPagers.adapter = fragmentAdapter
