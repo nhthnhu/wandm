@@ -1,4 +1,4 @@
-package com.wandm.view;
+package com.wandm.views;
 
 
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.wandm.model
+package com.wandm.models
 
 import com.wandm.R
 

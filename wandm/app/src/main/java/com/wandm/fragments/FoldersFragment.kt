@@ -1,4 +1,4 @@
-package com.wandm.fragment
+package com.wandm.fragments
 
 import android.os.Bundle
 import com.wandm.R

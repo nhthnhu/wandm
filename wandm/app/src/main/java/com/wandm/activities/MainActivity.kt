@@ -13,8 +13,8 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import com.wandm.AppConfig
 import com.wandm.R
-import com.wandm.adapter.MenuAdapter
-import com.wandm.fragment.*
+import com.wandm.adapters.MenuAdapter
+import com.wandm.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_list_view_pager.*
 import kotlinx.android.synthetic.main.sliding_pane.*
