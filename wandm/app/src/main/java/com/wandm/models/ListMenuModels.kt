@@ -10,7 +10,7 @@ class ListMenuModels private constructor() {
     }
 
     init {
-        val setting = MenuModel(R.drawable.ic_action_search, "Setting", false)
+        val setting = MenuModel(R.drawable.ic_action_search_dark, "Setting", false)
         mList.add(setting)
     }
 
