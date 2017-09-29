@@ -1,6 +1,6 @@
 package com.wandm.activities
 
-import android.app.WallpaperManager
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SlidingPaneLayout
@@ -21,6 +21,10 @@ import kotlinx.android.synthetic.main.sliding_pane.*
 
 
 class MainActivity : BaseActivity() {
+
+    companion object {
+        lateinit var instance: MainActivity
+    }
 
     private val panelListener: SlidingPaneLayout.PanelSlideListener = object : SlidingPaneLayout.PanelSlideListener {
 
@@ -49,6 +53,8 @@ class MainActivity : BaseActivity() {
         blurringView.blurConfig(AppConfig.getBlurViewConfig())
         setupToolbar()
 
+        instance = this
+
         val pagerItems = FragmentPagerItems(this)
 
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.songs),
@@ -72,11 +78,13 @@ class MainActivity : BaseActivity() {
         menuRecyclerView.adapter = MenuAdapter()
 
         addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
+
+        startActivity(Intent(this, NowPlayingActivity::class.java))
     }
 
     override fun onResume() {
         super.onResume()
-        setBackground()
+        setBackground(background, blurringView)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -93,16 +101,6 @@ class MainActivity : BaseActivity() {
             }
         }
         return true
-    }
-
-    /**
-     * Set blur background for this Activity
-     */
-    private fun setBackground() {
-        val wallpaperManager = WallpaperManager.getInstance(this)
-        val wallpaperDrawable = wallpaperManager.drawable
-        background.background = wallpaperDrawable
-        blurringView.blurredView(background)
     }
 
     private fun setupToolbar() {

@@ -1,9 +1,12 @@
 package com.wandm.activities
 
+import android.app.WallpaperManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.AppCompatImageView
 import android.view.WindowManager
+import com.ms_square.etsyblur.BlurringView
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -47,5 +50,15 @@ abstract class BaseActivity : AppCompatActivity() {
                 .add(containerViewId, fragment, tag)
                 .commit()
 
+    }
+
+    /**
+     * Set blur background for this Activity
+     */
+    protected fun setBackground(imgageView: AppCompatImageView, blurringView: BlurringView) {
+        val wallpaperManager = WallpaperManager.getInstance(this)
+        val wallpaperDrawable = wallpaperManager.drawable
+        imgageView.background = wallpaperDrawable
+        blurringView.blurredView(imgageView)
     }
 }
