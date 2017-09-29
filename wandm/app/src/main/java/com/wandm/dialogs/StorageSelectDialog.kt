@@ -7,10 +7,6 @@ import android.support.v7.app.AlertDialog
 import com.wandm.R
 import java.io.File
 
-/**
- * Created by nv95 on 06.12.16.
- */
-
 class StorageSelectDialog(context: Context) : DialogInterface.OnClickListener {
 
     private val mDialog: AlertDialog
@@ -18,7 +14,7 @@ class StorageSelectDialog(context: Context) : DialogInterface.OnClickListener {
     private var mDirSelectListener: OnDirSelectListener? = null
 
     init {
-        mStorages = getAvailableStorages(context)
+        mStorages = getAvailableStorage(context)
         val names = arrayOfNulls<String>(mStorages.size)
         for (i in mStorages.indices) {
             names[i] = mStorages[i].name
@@ -47,7 +43,7 @@ class StorageSelectDialog(context: Context) : DialogInterface.OnClickListener {
     }
 
 
-    private fun getAvailableStorages(context: Context): Array<File> {
+    private fun getAvailableStorage(context: Context): Array<File> {
         val storageRoot = File("/storage")
         return storageRoot.listFiles { file -> file.canRead() }
     }

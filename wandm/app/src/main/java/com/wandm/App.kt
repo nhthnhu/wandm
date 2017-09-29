@@ -5,7 +5,7 @@ import android.app.Application
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader
-import com.wandm.utils.PreferencesUtility
+import com.wandm.utils.PreferencesUtils
 import java.io.IOException
 import java.io.InputStream
 
@@ -21,7 +21,7 @@ class App : Application() {
         SmartAsyncPolicyHolder.INSTANCE.init(applicationContext)
 
         val localImageLoaderConfiguration = ImageLoaderConfiguration.Builder(this).imageDownloader(object : BaseImageDownloader(this) {
-            internal var prefs = PreferencesUtility.getInstance(this.context)
+            internal var prefs = PreferencesUtils.getInstance(this.context)
 
             @Throws(IOException::class)
             override fun getStreamFromNetwork(imageUri: String, extra: Any): InputStream {

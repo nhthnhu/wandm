@@ -2,7 +2,6 @@ package com.wandm.fragments
 
 import android.os.Bundle
 import com.wandm.R
-import org.jetbrains.anko.support.v4.toast
 
 class ArtistsFragment : BaseFragment() {
     override fun getLayoutResId(): Int {
@@ -10,7 +9,7 @@ class ArtistsFragment : BaseFragment() {
     }
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
-        toast("artist")
+
     }
 
 }

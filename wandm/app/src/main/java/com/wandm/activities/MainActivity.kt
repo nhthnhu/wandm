@@ -25,7 +25,7 @@ class MainActivity : BaseActivity() {
         lateinit var instance: MainActivity
     }
 
-    private val panelListener: SlidingPaneLayout.PanelSlideListener = object : SlidingPaneLayout.PanelSlideListener {
+    private val panelListener = object : SlidingPaneLayout.PanelSlideListener {
 
         override fun onPanelClosed(arg0: View) {
 
@@ -49,13 +49,11 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        blurringView.blurConfig(AppConfig.getBlurViewConfig())
         setupToolbar()
-
         instance = this
+        blurringView.blurConfig(AppConfig.getBlurViewConfig())
 
         val pagerItems = FragmentPagerItems(this)
-
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.songs),
                 SongsFragment::class.java))
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.artists),
@@ -70,8 +68,8 @@ class MainActivity : BaseActivity() {
         listTabs.setViewPager(listViewPagers)
 
         slidingPane.setPanelSlideListener(panelListener)
-        slidingPane.setParallaxDistance(100)
-        slidingPane.setSliderFadeColor(ContextCompat.getColor(this, android.R.color.transparent))
+        slidingPane.parallaxDistance = 100
+        slidingPane.sliderFadeColor = ContextCompat.getColor(this, android.R.color.transparent)
 
         menuRecyclerView.layoutManager = LinearLayoutManager(this)
         menuRecyclerView.adapter = MenuAdapter()
@@ -81,7 +79,7 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        setBackground(background, blurringView)
+        setBlurBackground(background, blurringView)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -100,6 +98,9 @@ class MainActivity : BaseActivity() {
         return true
     }
 
+    /**
+     * Used to setup toolbar
+     */
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar

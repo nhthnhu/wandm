@@ -54,11 +54,14 @@ abstract class BaseActivity : AppCompatActivity() {
 
     /**
      * Set blur background for this Activity
+     *
+     * @param imageView
+     * @param blurringView
      */
-    protected fun setBackground(imgageView: AppCompatImageView, blurringView: BlurringView) {
+    protected fun setBlurBackground(imageView: AppCompatImageView, blurringView: BlurringView) {
         val wallpaperManager = WallpaperManager.getInstance(this)
         val wallpaperDrawable = wallpaperManager.drawable
-        imgageView.background = wallpaperDrawable
-        blurringView.blurredView(imgageView)
+        imageView.background = wallpaperDrawable
+        blurringView.blurredView(imageView)
     }
 }

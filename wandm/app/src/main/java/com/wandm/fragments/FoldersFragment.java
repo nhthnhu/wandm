@@ -21,15 +21,11 @@ import android.widget.ProgressBar;
 import com.wandm.R;
 import com.wandm.adapters.FolderAdapter;
 import com.wandm.dialogs.StorageSelectDialog;
-import com.wandm.utils.PreferencesUtility;
+import com.wandm.utils.PreferencesUtils;
 import com.wandm.views.DividerItemDecoration;
 import com.wandm.views.FastScroller;
 
 import java.io.File;
-
-/**
- * Created by nv95 on 10.11.16.
- */
 
 public class FoldersFragment extends Fragment implements StorageSelectDialog.OnDirSelectListener {
 
@@ -119,7 +115,7 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
         protected String doInBackground(String... params) {
             Activity activity = getActivity();
             if (activity != null) {
-                mAdapter = new FolderAdapter(activity, new File(PreferencesUtility.Companion.getInstance(activity).getLastFolder()));
+                mAdapter = new FolderAdapter(activity, new File(PreferencesUtils.Companion.getInstance(activity).getLastFolder()));
                 updateTheme();
          }
             return "Executed";
@@ -128,7 +124,7 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
         @Override
         protected void onPostExecute(String result) {
             recyclerView.setAdapter(mAdapter);
-            //to add spacing between cards
+            // to add spacing between cards
             if (getActivity() != null) {
                 setItemDecoration();
             }

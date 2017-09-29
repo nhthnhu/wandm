@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.wandm.App
 import com.wandm.R
-import com.wandm.models.ListMenuModels
-import com.wandm.models.MenuModel
+import com.wandm.models.ListMenus
+import com.wandm.models.Menu
 import kotlinx.android.synthetic.main.item_menu.view.*
 
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
 
     override fun onBindViewHolder(holder: MenuHolder?, position: Int) {
-        holder?.bind(ListMenuModels.instance[position])
+        holder?.bind(ListMenus.instance[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MenuHolder {
@@ -22,12 +22,12 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return ListMenuModels.instance.size()
+        return ListMenus.instance.size()
     }
 
 
     inner class MenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(data: MenuModel) {
+        fun bind(data: Menu) {
             itemView.menuImageView.background = App.instance.getDrawable(data.icon)
             itemView.contentMenuTextView.text = data.content
         }

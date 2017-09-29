@@ -15,7 +15,7 @@ class NowPlayingActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        setBackground(nowPlayingBackground, nowPlayingBlurringView)
+        setBlurBackground(nowPlayingBackground, nowPlayingBlurringView)
     }
 
     private fun setupToolbar() {

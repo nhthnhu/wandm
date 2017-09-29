@@ -1,17 +1,3 @@
-/*
- * Copyright (C) 2015 Naman Dwivedi
- *
- * Licensed under the GNU General Public License v3
- *
- * This is free software: you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- */
-
 package com.wandm.loaders;
 
 import android.content.ContentResolver;
@@ -24,7 +10,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.wandm.models.Song;
-import com.wandm.utils.PreferencesUtility;
+import com.wandm.utils.PreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,8 +97,7 @@ public class SongLoader {
             Song song = getSongForCursor(cursor);
             cursor.close();
             return song;
-        }
-        else return new Song();
+        } else return new Song();
     }
 
     public static ArrayList<Song> getAllSongs(Context context) {
@@ -138,7 +123,7 @@ public class SongLoader {
 
 
     public static Cursor makeSongCursor(Context context, String selection, String[] paramArrayOfString) {
-        final String songSortOrder = PreferencesUtility.Companion.getInstance(context).getSongSortOrder();
+        final String songSortOrder = PreferencesUtils.Companion.getInstance(context).getSongSortOrder();
         return makeSongCursor(context, selection, paramArrayOfString, songSortOrder);
     }
 

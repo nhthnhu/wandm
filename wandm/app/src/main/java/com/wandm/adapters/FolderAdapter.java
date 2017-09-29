@@ -1,5 +1,6 @@
 package com.wandm.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -23,17 +24,13 @@ import com.wandm.R;
 import com.wandm.loaders.FolderLoader;
 import com.wandm.loaders.SongLoader;
 import com.wandm.models.Song;
-import com.wandm.utils.PreferencesUtility;
-import com.wandm.utils.WMUtils;
+import com.wandm.utils.PreferencesUtils;
+import com.wandm.utils.Utils;
 import com.wandm.views.BubbleTextGetter;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by nv95 on 10.11.16.
- */
 
 public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder> implements BubbleTextGetter {
 
@@ -83,7 +80,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
         if (localItem.isDirectory()) {
             itemHolder.albumArt.setImageDrawable("..".equals(localItem.getName()) ? mIcons[1] : mIcons[0]);
         } else {
-            ImageLoader.getInstance().displayImage(WMUtils.INSTANCE.getAlbumArtUri(song.getAlbumId()).toString(),
+            ImageLoader.getInstance().displayImage(Utils.INSTANCE.getAlbumArtUri(song.getAlbumId()).toString(),
                     itemHolder.albumArt,
                     new DisplayImageOptions.Builder().
                             cacheInMemory(true).showImageOnFail(mIcons[2])
@@ -106,7 +103,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
             return;
         }
         mRoot = newRoot;
-        mFileSet = FolderLoader.INSTANCE.getMediaFiles(newRoot, true);
+        mFileSet = FolderLoader.getMediaFiles(newRoot, true);
         getSongsForFiles(mFileSet);
     }
 
@@ -173,6 +170,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     private class NavigateTask extends AsyncTask<File, Void, List<File>> {
 
         @Override
@@ -183,7 +181,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
 
         @Override
         protected List<File> doInBackground(File... params) {
-            List<File> files = FolderLoader.INSTANCE.getMediaFiles(params[0], true);
+            List<File> files = FolderLoader.getMediaFiles(params[0], true);
             getSongsForFiles(files);
             return files;
         }
@@ -194,7 +192,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
             mFileSet = files;
             notifyDataSetChanged();
             mBusy = false;
-            PreferencesUtility.Companion.getInstance(mContext).storeLastFolder(mRoot.getPath());
+            PreferencesUtils.Companion.getInstance(mContext).storeLastFolder(mRoot.getPath());
         }
     }
 
@@ -244,7 +242,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
                                 j++;
                             }
                         }
-                        //MusicPlayer.playAll(mContext, ret, current, -1, WMUtils.IdType.NA, false);
+                        //MusicPlayer.playAll(mContext, ret, current, -1, Utils.IdType.NA, false);
                     }
                 }, 100);
 
