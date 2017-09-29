@@ -83,7 +83,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
         if (localItem.isDirectory()) {
             itemHolder.albumArt.setImageDrawable("..".equals(localItem.getName()) ? mIcons[1] : mIcons[0]);
         } else {
-            ImageLoader.getInstance().displayImage(WMUtils.getAlbumArtUri(song.albumId).toString(),
+            ImageLoader.getInstance().displayImage(WMUtils.INSTANCE.getAlbumArtUri(song.getAlbumId()).toString(),
                     itemHolder.albumArt,
                     new DisplayImageOptions.Builder().
                             cacheInMemory(true).showImageOnFail(mIcons[2])
@@ -106,7 +106,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
             return;
         }
         mRoot = newRoot;
-        mFileSet = FolderLoader.getMediaFiles(newRoot, true);
+        mFileSet = FolderLoader.INSTANCE.getMediaFiles(newRoot, true);
         getSongsForFiles(mFileSet);
     }
 
@@ -183,7 +183,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
 
         @Override
         protected List<File> doInBackground(File... params) {
-            List<File> files = FolderLoader.getMediaFiles(params[0], true);
+            List<File> files = FolderLoader.INSTANCE.getMediaFiles(params[0], true);
             getSongsForFiles(files);
             return files;
         }
@@ -194,7 +194,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
             mFileSet = files;
             notifyDataSetChanged();
             mBusy = false;
-            PreferencesUtility.getInstance(mContext).storeLastFolder(mRoot.getPath());
+            PreferencesUtility.Companion.getInstance(mContext).storeLastFolder(mRoot.getPath());
         }
     }
 
@@ -226,19 +226,19 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
                     @Override
                     public void run() {
                         int current = -1;
-                        long songId = SongLoader.getSongFromPath(mFileSet.get(getAdapterPosition()).getAbsolutePath(), mContext).id;
+                        long songId = SongLoader.getSongFromPath(mFileSet.get(getAdapterPosition()).getAbsolutePath(), mContext).getId();
                         int count = 0;
                         for (Song song : mSongs) {
-                            if (song.id != -1) {
+                            if (song.getId() != -1) {
                                 count++;
                             }
                         }
                         long[] ret = new long[count];
                         int j = 0;
                         for (int i = 0; i < getItemCount(); i++) {
-                            if (mSongs.get(i).id != -1) {
-                                ret[j] = mSongs.get(i).id;
-                                if (mSongs.get(i).id == songId) {
+                            if (mSongs.get(i).getId() != -1) {
+                                ret[j] = mSongs.get(i).getId();
+                                if (mSongs.get(i).getId() == songId) {
                                     current = j;
                                 }
                                 j++;

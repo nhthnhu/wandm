@@ -12,23 +12,27 @@
  * See the GNU General Public License for more details.
  */
 
-package com.wandm.models;
+package com.wandm.models
 
-public class Playlist {
+class Artist {
 
-    public final long id;
-    public final String name;
-    public final int songCount;
+    val albumCount: Int
+    val id: Long
+    val name: String
+    val songCount: Int
 
-    public Playlist() {
-        this.id = -1;
-        this.name = "";
-        this.songCount = -1;
+    constructor() {
+        this.id = -1
+        this.name = ""
+        this.songCount = -1
+        this.albumCount = -1
     }
 
-    public Playlist(long _id, String _name, int _songCount) {
-        this.id = _id;
-        this.name = _name;
-        this.songCount = _songCount;
+    constructor(_id: Long, _name: String, _albumCount: Int, _songCount: Int) {
+        this.id = _id
+        this.name = _name
+        this.songCount = _songCount
+        this.albumCount = _albumCount
     }
+
 }

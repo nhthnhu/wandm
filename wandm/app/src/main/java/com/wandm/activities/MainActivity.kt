@@ -1,6 +1,5 @@
 package com.wandm.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SlidingPaneLayout
@@ -78,8 +77,6 @@ class MainActivity : BaseActivity() {
         menuRecyclerView.adapter = MenuAdapter()
 
         addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
-
-        startActivity(Intent(this, NowPlayingActivity::class.java))
     }
 
     override fun onResume() {

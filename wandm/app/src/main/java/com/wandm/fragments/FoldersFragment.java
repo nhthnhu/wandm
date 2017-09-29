@@ -48,9 +48,9 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(R.string.folders);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
-        fastScroller = (FastScroller) rootView.findViewById(R.id.fastscroller);
-        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        recyclerView = rootView.findViewById(R.id.recyclerview);
+        fastScroller = rootView.findViewById(R.id.fastscroller);
+        mProgressBar = rootView.findViewById(R.id.progressBar);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -119,7 +119,7 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
         protected String doInBackground(String... params) {
             Activity activity = getActivity();
             if (activity != null) {
-                mAdapter = new FolderAdapter(activity, new File(PreferencesUtility.getInstance(activity).getLastFolder()));
+                mAdapter = new FolderAdapter(activity, new File(PreferencesUtility.Companion.getInstance(activity).getLastFolder()));
                 updateTheme();
          }
             return "Executed";

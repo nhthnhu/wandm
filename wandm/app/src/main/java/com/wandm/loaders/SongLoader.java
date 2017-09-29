@@ -138,7 +138,7 @@ public class SongLoader {
 
 
     public static Cursor makeSongCursor(Context context, String selection, String[] paramArrayOfString) {
-        final String songSortOrder = PreferencesUtility.getInstance(context).getSongSortOrder();
+        final String songSortOrder = PreferencesUtility.Companion.getInstance(context).getSongSortOrder();
         return makeSongCursor(context, selection, paramArrayOfString, songSortOrder);
     }
 
