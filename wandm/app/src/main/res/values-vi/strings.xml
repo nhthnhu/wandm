@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="songs">Bài hát</string>
+    <string name="artists">Ca sĩ</string>
+    <string name="albums">Albums</string>
+    <string name="folders">Thư mục</string>
+</resources>

@@ -51,13 +51,13 @@ class MainActivity : BaseActivity() {
 
         val pagerItems = FragmentPagerItems(this)
 
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.fragment_songs),
+        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.songs),
                 SongsFragment::class.java))
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.fragment_artists),
+        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.artists),
                 ArtistsFragment::class.java))
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.fragment_albums),
+        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.albums),
                 AlbumsFragment::class.java))
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.fragment_folders),
+        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.folders),
                 FoldersFragment::class.java))
 
         val fragmentAdapter = FragmentPagerItemAdapter(supportFragmentManager, pagerItems)
