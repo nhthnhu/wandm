@@ -70,6 +70,8 @@ class MainActivity : BaseActivity() {
 
         menuRecyclerView.layoutManager = LinearLayoutManager(this)
         menuRecyclerView.adapter = MenuAdapter()
+
+        addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
     }
 
     override fun onResume() {

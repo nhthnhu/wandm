@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/controlFragment"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/view_background"
+              android:gravity="center"
+              android:orientation="horizontal"
+              android:padding="8dp">
+
+
+    <com.wandm.views.SquareImageView
+        android:id="@+id/albumeImageView"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_action_headset_dark"/>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="8dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/titleSongTextView"
+            style="@style/WMTextStyleDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="Em gai mua"
+            android:textSize="16sp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/artistSongTextView"
+            style="@style/WMTextStyleDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="Huong tram"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <net.steamcrafted.materialiconlib.MaterialIconView
+        android:id="@+id/preButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="center"
+        app:materialIcon="skip_previous"
+        app:materialIconColor="#fff"
+        app:materialIconSize="35dp"/>
+
+    <FrameLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="5dp">
+
+        <com.wandm.views.PlayPauseButton
+            android:id="@+id/playPauseButton"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_gravity="center"/>
+
+        <View
+            android:id="@+id/playPauseWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+    </FrameLayout>
+
+    <net.steamcrafted.materialiconlib.MaterialIconView
+        android:id="@+id/nextButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="center"
+        app:materialIcon="skip_next"
+        app:materialIconColor="#fff"
+        app:materialIconSize="35dp"/>
+
+
+</LinearLayout>

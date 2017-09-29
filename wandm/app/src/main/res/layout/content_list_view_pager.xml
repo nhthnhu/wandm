@@ -3,12 +3,12 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:padding="8dp"
               android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:elevation="0dp">
 
@@ -27,6 +27,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/listTabs"
+        style="@style/WMTextStyleDark"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
         android:paddingBottom="4dp"
@@ -42,11 +43,12 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/listViewPagers"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"/>
 
     <FrameLayout
         android:id="@+id/controlFragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"/>
+        android:layout_height="wrap_content"/>
 </LinearLayout>
