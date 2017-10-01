@@ -45,9 +45,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RuntimePermissionHelper {
+public class PermissionHelper {
 
-    private static final String TAG = RuntimePermissionHelper.class.getSimpleName();
+    private static final String TAG = PermissionHelper.class.getSimpleName();
     private static Context context;
     private static SharedPreferences sharedPreferences;
     private static final String KEY_PREV_PERMISSIONS = "previous_permissions";
@@ -59,7 +59,7 @@ public class RuntimePermissionHelper {
     public static void init(Context context) {
         sharedPreferences =
                 context.getSharedPreferences("pl.tajchert.runtimepermissionhelper", Context.MODE_PRIVATE);
-        RuntimePermissionHelper.context = context;
+        PermissionHelper.context = context;
     }
 
     /**
@@ -259,7 +259,7 @@ public class RuntimePermissionHelper {
     //Permission monitoring part below
 
     /**
-     * Get list of currently granted permissions, without saving it inside RuntimePermissionHelper
+     * Get list of currently granted permissions, without saving it inside PermissionHelper
      *
      * @return currently granted permissions
      */
@@ -387,7 +387,7 @@ public class RuntimePermissionHelper {
     public static void permissionCompare(PermissionListener permissionListener) {
         if (context == null) {
             throw new RuntimeException(
-                    "Before comparing permissions you need to call RuntimePermissionHelper.init(context)");
+                    "Before comparing permissions you need to call PermissionHelper.init(context)");
         }
         ArrayList<String> previouslyGranted = getPreviousPermissions();
         ArrayList<String> currentPermissions = getGrantedPermissions();
@@ -435,7 +435,7 @@ public class RuntimePermissionHelper {
     public static boolean checkPermission(String permissionName) {
         if (context == null) {
             throw new RuntimeException(
-                    "Before comparing permissions you need to call RuntimePermissionHelper.init(context)");
+                    "Before comparing permissions you need to call PermissionHelper.init(context)");
         }
         return PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context,
                 permissionName);
@@ -453,7 +453,7 @@ public class RuntimePermissionHelper {
                     "Before comparing permissions you need to call PermissionManager.init(context)");
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            Log.e("RuntimePermissionHelper", "Special permission cannot be checked as Android version is below Android 6.0");
+            Log.e("PermissionHelper", "Special permission cannot be checked as Android version is below Android 6.0");
             return false;
         }
         switch (permissionName) {

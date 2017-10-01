@@ -5,6 +5,7 @@ import android.app.Application
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader
+import com.wandm.permissions.PermissionHelper
 import com.wandm.utils.PreferencesUtils
 import java.io.IOException
 import java.io.InputStream
@@ -18,6 +19,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        PermissionHelper.init(this)
         SmartAsyncPolicyHolder.INSTANCE.init(applicationContext)
 
         val localImageLoaderConfiguration = ImageLoaderConfiguration.Builder(this).imageDownloader(object : BaseImageDownloader(this) {

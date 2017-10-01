@@ -1,5 +1,6 @@
 package com.wandm.activities
 
+import android.Manifest
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SlidingPaneLayout
@@ -14,6 +15,8 @@ import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.adapters.MenuAdapter
 import com.wandm.fragments.*
+import com.wandm.permissions.PermissionCallback
+import com.wandm.permissions.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_list_view_pager.*
 import kotlinx.android.synthetic.main.sliding_pane.*
@@ -43,6 +46,15 @@ class MainActivity : BaseActivity() {
         }
 
     }
+    private val permissionReadStorageCallback = object : PermissionCallback {
+        override fun permissionGranted() {
+            setupUI()
+        }
+
+        override fun permissionRefused() {
+            finish()
+        }
+    }
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_main
@@ -52,7 +64,47 @@ class MainActivity : BaseActivity() {
         setupToolbar()
         instance = this
         blurringView.blurConfig(AppConfig.getBlurViewConfig())
+        checkPermissionReadStorage()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        setBlurBackground(background, blurringView)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.search_item_menu -> {
+                val dialog = SearchDialogFragment()
+                dialog.show(supportFragmentManager, "SearchDialogFragment")
+            }
+        }
+        return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        PermissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    /**
+     * Used to setup toolbar
+     */
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false)
+        }
+    }
+
+    private fun setupUI() {
         val pagerItems = FragmentPagerItems(this)
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.songs),
                 SongsFragment::class.java))
@@ -77,35 +129,14 @@ class MainActivity : BaseActivity() {
         addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
     }
 
-    override fun onResume() {
-        super.onResume()
-        setBlurBackground(background, blurringView)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.search_item_menu -> {
-                val dialog = SearchDialogFragment()
-                dialog.show(supportFragmentManager, "SearchDialogFragment")
-            }
-        }
-        return true
-    }
-
-    /**
-     * Used to setup toolbar
-     */
-    private fun setupToolbar() {
-        setSupportActionBar(toolbar)
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false)
+    private fun checkPermissionReadStorage() {
+        val permission = Manifest.permission.READ_EXTERNAL_STORAGE
+        if (PermissionHelper.checkPermission(permission)) {
+            setupUI()
+        } else {
+            PermissionHelper.askForPermission(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    permissionReadStorageCallback)
         }
     }
 }
