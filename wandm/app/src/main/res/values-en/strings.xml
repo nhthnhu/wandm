@@ -4,4 +4,6 @@
     <string name="artists">Artists</string>
     <string name="albums">Albums</string>
     <string name="folders">Folders</string>
+
+    <string name="request_read_storage_permission">W&amp;M will need to read external storage to display songs on your device.</string>
 </resources>

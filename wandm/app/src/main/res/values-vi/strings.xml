@@ -4,4 +4,6 @@
     <string name="artists">Ca sĩ</string>
     <string name="albums">Albums</string>
     <string name="folders">Thư mục</string>
+
+    <string name="request_read_storage_permission">W&amp;M cần quyền đọc bộ nhớ của thiết bị để hiển thị danh sách nhạc.</string>
 </resources>
