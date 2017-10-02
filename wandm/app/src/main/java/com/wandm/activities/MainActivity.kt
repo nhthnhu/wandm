@@ -66,6 +66,7 @@ class MainActivity : BaseActivity() {
         setupToolbar()
         instance = this
         blurringView.blurConfig(AppConfig.getBlurViewConfig())
+        addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
     }
 
     override fun onResume() {
@@ -129,8 +130,6 @@ class MainActivity : BaseActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MenuAdapter()
-
-        addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
     }
 
     private fun checkPermissionReadStorage() {

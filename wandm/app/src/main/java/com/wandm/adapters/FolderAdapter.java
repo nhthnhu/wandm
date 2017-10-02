@@ -192,7 +192,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
             mFileSet = files;
             notifyDataSetChanged();
             mBusy = false;
-            PreferencesUtils.Companion.getInstance(mContext).storeLastFolder(mRoot.getPath());
+            PreferencesUtils.INSTANCE.storeLastFolder(mRoot.getPath());
         }
     }
 
