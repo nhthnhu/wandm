@@ -115,7 +115,7 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
         protected String doInBackground(String... params) {
             Activity activity = getActivity();
             if (activity != null) {
-                mAdapter = new FolderAdapter(activity, new File(PreferencesUtils.Companion.getInstance(activity).getLastFolder()));
+                mAdapter = new FolderAdapter(activity, new File(PreferencesUtils.Companion.getInstance().getLastFolder()));
                 updateTheme();
          }
             return "Executed";

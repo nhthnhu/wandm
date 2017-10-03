@@ -16,17 +16,12 @@ class PreferencesUtils(context: Context) {
         private val LAST_FOLDER = "last_folder"
         private val ARTIST_IMAGE = "artist_image"
         private val ARTIST_IMAGE_MOBILE = "artist_image_mobile"
+        val ENABLE_SHUFFLE = "enable_shuffle"
+        val ENABLE_REPEAT = "enable_repeat"
 
-        private var instance: PreferencesUtils? = null
+        val instance by lazy { PreferencesUtils(App.instance) }
 
         private lateinit var mPreferences: SharedPreferences
-
-        fun getInstance(context: Context): PreferencesUtils {
-            if (instance == null) {
-                instance = PreferencesUtils(context.applicationContext)
-            }
-            return instance as PreferencesUtils
-        }
     }
 
     private var connManager: ConnectivityManager? = null
@@ -64,6 +59,26 @@ class PreferencesUtils(context: Context) {
             return true
         }
         return false
+    }
+
+    fun storeRepeatState(state: Boolean) {
+        val editor = mPreferences.edit()
+        editor.putBoolean(ENABLE_REPEAT, state)
+        editor.apply()
+    }
+
+    fun getRepeatState(): Boolean {
+        return mPreferences.getBoolean(ENABLE_REPEAT, false)
+    }
+
+    fun storeShuffleState(state: Boolean) {
+        val editor = mPreferences.edit()
+        editor.putBoolean(ENABLE_SHUFFLE, state)
+        editor.apply()
+    }
+
+    fun getShuffleState(): Boolean {
+        return mPreferences.getBoolean(ENABLE_SHUFFLE, false)
     }
 }
 
