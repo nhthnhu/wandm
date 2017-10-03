@@ -98,7 +98,6 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     fun playNew() {
         val song = CurrentPlaylistManager.mSong
         stop()
-        mPlayer.reset()
         init(song.data)
     }
 

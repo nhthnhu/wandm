@@ -10,7 +10,6 @@ import android.content.IntentFilter
 import android.media.AudioManager
 import android.media.session.MediaSessionManager
 import android.os.IBinder
-import android.os.RemoteException
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.media.MediaMetadataCompat
@@ -72,18 +71,6 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
         if (!requestAudioFocus()) {
             stopSelf()
         }
-
-        try {
-            val song = CurrentPlaylistManager.mSong
-            initMediaSession()
-            mPlayer.init(song.data)
-        } catch (e: RemoteException) {
-            e.printStackTrace()
-            stopSelf()
-        }
-        getNotification(PlaybackStatus.PLAYING)
-
-
         return mBinder
     }
 
@@ -188,6 +175,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
 
         override fun playNew() {
             mPlayer.playNew()
+            initMediaSession()
             updateMetaData()
             getNotification(PlaybackStatus.PLAYING)
         }
@@ -305,11 +293,11 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
 
         val actionString = playbackAction.action
         when (actionString) {
-            ACTION_PLAY -> transportControls!!.play()
-            ACTION_PAUSE -> transportControls!!.pause()
-            ACTION_NEXT -> transportControls!!.skipToNext()
-            ACTION_PREVIOUS -> transportControls!!.skipToPrevious()
-            ACTION_STOP -> transportControls!!.stop()
+            ACTION_PLAY -> transportControls?.play()
+            ACTION_PAUSE -> transportControls?.pause()
+            ACTION_NEXT -> transportControls?.skipToNext()
+            ACTION_PREVIOUS -> transportControls?.skipToPrevious()
+            ACTION_STOP -> transportControls?.stop()
         }
     }
 

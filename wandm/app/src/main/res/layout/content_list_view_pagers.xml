@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
         android:paddingBottom="4dp"
-        app:stl_defaultTabTextColor="@color/color_grey"
+        app:stl_defaultTabTextColor="@color/color_white"
         app:stl_distributeEvenly="true"
         app:stl_indicatorColor="@color/color_grey"
         app:stl_indicatorCornerRadius="1.5dp"

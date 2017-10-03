@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="4dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/songsRecyclerview"
+        android:id="@+id/songsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/toolbar"
         android:fadeScrollbars="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
@@ -18,8 +21,20 @@
         android:id="@+id/songsFastScroller"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_alignBottom="@id/songsRecyclerView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/songsRecyclerView"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
         android:visibility="invisible"/>
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/songsProgressBar"
+        style="?android:progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:tag="tint_accent_color"/>
+
+
+</RelativeLayout>

@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,14 +34,9 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
         View rootView = inflater.inflate(
                 R.layout.fragment_folders, container, false);
 
-        ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setTitle(R.string.folders);
-
-        recyclerView = rootView.findViewById(R.id.foldersRecyclerview);
+        recyclerView = rootView.findViewById(R.id.foldersRecyclerView);
         fastScroller = rootView.findViewById(R.id.foldersFastScroller);
-        mProgressBar = rootView.findViewById(R.id.progressBar);
+        mProgressBar = rootView.findViewById(R.id.foldersProgressBar);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

@@ -8,8 +8,13 @@ object CurrentPlaylistManager {
     val instance = CurrentPlaylistManager
 
     var mListSongs = ArrayList<Song>()
-    var mSong = Song()
     var mPosition = 0
+        set(value){
+            field = value
+            mSong = mListSongs[value]
+        }
+
+    var mSong = Song()
 
     fun next(): Song {
         if (mPosition == mListSongs.size - 1) {
