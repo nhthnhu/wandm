@@ -1,7 +1,6 @@
 package com.wandm.utils
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.net.ConnectivityManager
 import android.os.Environment
@@ -9,36 +8,27 @@ import android.preference.PreferenceManager
 import com.wandm.App
 
 
-class PreferencesUtils(context: Context) {
-    companion object {
+object PreferencesUtils {
+    val SONG_SORT_ORDER = "song_sort_order"
+    val ARTIST_SORT_ORDER = "artist_sort_order"
+    val ARTIST_SONG_SORT_ORDER = "artist_song_sort_order"
+    val ARTIST_ALBUM_SORT_ORDER = "artist_album_sort_order"
+    val ALBUM_SORT_ORDER = "album_sort_order"
+    val ALBUM_SONG_SORT_ORDER = "album_song_sort_order"
+    private val LAST_FOLDER = "last_folder"
+    private val ARTIST_IMAGE = "artist_image"
+    private val ARTIST_IMAGE_MOBILE = "artist_image_mobile"
 
-        val SONG_SORT_ORDER = "song_sort_order"
-        private val LAST_FOLDER = "last_folder"
-        private val ARTIST_IMAGE = "artist_image"
-        private val ARTIST_IMAGE_MOBILE = "artist_image_mobile"
-        val ENABLE_SHUFFLE = "enable_shuffle"
-        val ENABLE_REPEAT = "enable_repeat"
-
-        val instance by lazy { PreferencesUtils(App.instance) }
-
-        private lateinit var mPreferences: SharedPreferences
-    }
+    private val mPreferences = PreferenceManager.getDefaultSharedPreferences(App.instance)
 
     private var connManager: ConnectivityManager? = null
 
-    val songSortOrder: String
-        get() = mPreferences.getString(SONG_SORT_ORDER, SortOrder.SongSortOrder.SONG_A_Z)
-
-    val lastFolder: String
-        get() = mPreferences.getString(LAST_FOLDER, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).path)
-
-    init {
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    }
-
-
     fun setOnSharedPreferenceChangeListener(listener: OnSharedPreferenceChangeListener) {
         mPreferences.registerOnSharedPreferenceChangeListener(listener)
+    }
+
+    fun getLastFolder(): String {
+        return mPreferences.getString(LAST_FOLDER, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).path)
     }
 
     fun storeLastFolder(path: String) {
@@ -61,24 +51,61 @@ class PreferencesUtils(context: Context) {
         return false
     }
 
-    fun storeRepeatState(state: Boolean) {
+    private fun setSortOrder(key: String, value: String) {
         val editor = mPreferences.edit()
-        editor.putBoolean(ENABLE_REPEAT, state)
+        editor.putString(key, value)
         editor.apply()
     }
 
-    fun getRepeatState(): Boolean {
-        return mPreferences.getBoolean(ENABLE_REPEAT, false)
+    fun getArtistSortOrder(): String? {
+        return mPreferences.getString(ARTIST_SORT_ORDER, SortOrder.ArtistSortOrder.ARTIST_A_Z)
     }
 
-    fun storeShuffleState(state: Boolean) {
-        val editor = mPreferences.edit()
-        editor.putBoolean(ENABLE_SHUFFLE, state)
-        editor.apply()
+    fun setArtistSortOrder(value: String) {
+        setSortOrder(ARTIST_SORT_ORDER, value)
     }
 
-    fun getShuffleState(): Boolean {
-        return mPreferences.getBoolean(ENABLE_SHUFFLE, false)
+    fun getArtistSongSortOrder(): String? {
+        return mPreferences.getString(ARTIST_SONG_SORT_ORDER,
+                SortOrder.ArtistSongSortOrder.SONG_A_Z)
+    }
+
+    fun setArtistSongSortOrder(value: String) {
+        setSortOrder(ARTIST_SONG_SORT_ORDER, value)
+    }
+
+    fun getArtistAlbumSortOrder(): String? {
+        return mPreferences.getString(ARTIST_ALBUM_SORT_ORDER,
+                SortOrder.ArtistAlbumSortOrder.ALBUM_A_Z)
+    }
+
+    fun setArtistAlbumSortOrder(value: String) {
+        setSortOrder(ARTIST_ALBUM_SORT_ORDER, value)
+    }
+
+    fun getAlbumSortOrder(): String? {
+        return mPreferences.getString(ALBUM_SORT_ORDER, SortOrder.AlbumSortOrder.ALBUM_A_Z)
+    }
+
+    fun setAlbumSortOrder(value: String) {
+        setSortOrder(ALBUM_SORT_ORDER, value)
+    }
+
+    fun getAlbumSongSortOrder(): String? {
+        return mPreferences.getString(ALBUM_SONG_SORT_ORDER,
+                SortOrder.AlbumSongSortOrder.SONG_TRACK_LIST)
+    }
+
+    fun setAlbumSongSortOrder(value: String) {
+        setSortOrder(ALBUM_SONG_SORT_ORDER, value)
+    }
+
+    fun getSongSortOrder(): String? {
+        return mPreferences.getString(SONG_SORT_ORDER, SortOrder.SongSortOrder.SONG_A_Z)
+    }
+
+    fun setSongSortOrder(value: String) {
+        setSortOrder(SONG_SORT_ORDER, value)
     }
 }
 

@@ -15,7 +15,7 @@
         android:gravity="center">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/menuRecyclerView"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -24,7 +24,7 @@
     </LinearLayout>
 
 
-    <include layout="@layout/content_list_view_pager"/>
+    <include layout="@layout/content_list_view_pagers"/>
 
 
 </com.wandm.views.PagerEnabledSlidingPaneLayout>

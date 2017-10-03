@@ -23,11 +23,14 @@ class App : Application() {
         SmartAsyncPolicyHolder.INSTANCE.init(applicationContext)
 
         val localImageLoaderConfiguration = ImageLoaderConfiguration.Builder(this).imageDownloader(object : BaseImageDownloader(this) {
-            internal var prefs = PreferencesUtils.instance
+
+
+            internal var prefs = PreferencesUtils
 
             @Throws(IOException::class)
             override fun getStreamFromNetwork(imageUri: String, extra: Any): InputStream {
-                if (prefs.loadArtistImages()) return super.getStreamFromNetwork(imageUri, extra)
+                if (prefs.loadArtistImages())
+                    return super.getStreamFromNetwork(imageUri, extra)
                 throw IOException()
             }
         }).build()

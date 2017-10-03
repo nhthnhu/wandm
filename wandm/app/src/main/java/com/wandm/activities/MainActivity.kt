@@ -2,6 +2,7 @@ package com.wandm.activities
 
 import android.Manifest
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SlidingPaneLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -17,8 +18,9 @@ import com.wandm.adapters.MenuAdapter
 import com.wandm.fragments.*
 import com.wandm.permissions.PermissionCallback
 import com.wandm.permissions.PermissionHelper
+import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_list_view_pager.*
+import kotlinx.android.synthetic.main.content_list_view_pagers.*
 import kotlinx.android.synthetic.main.sliding_pane.*
 
 
@@ -64,12 +66,15 @@ class MainActivity : BaseActivity() {
         setupToolbar()
         instance = this
         blurringView.blurConfig(AppConfig.getBlurViewConfig())
-        checkPermissionReadStorage()
+        addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
     }
 
     override fun onResume() {
         super.onResume()
         setBlurBackground(background, blurringView)
+        if (Utils.isMarshmallow())
+            checkPermissionReadStorage()
+        else setupUI()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -123,10 +128,8 @@ class MainActivity : BaseActivity() {
         slidingPane.parallaxDistance = 100
         slidingPane.sliderFadeColor = ContextCompat.getColor(this, android.R.color.transparent)
 
-        menuRecyclerView.layoutManager = LinearLayoutManager(this)
-        menuRecyclerView.adapter = MenuAdapter()
-
-        addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = MenuAdapter()
     }
 
     private fun checkPermissionReadStorage() {
@@ -134,9 +137,18 @@ class MainActivity : BaseActivity() {
         if (PermissionHelper.checkPermission(permission)) {
             setupUI()
         } else {
-            PermissionHelper.askForPermission(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    permissionReadStorageCallback)
+            if (PermissionHelper.shouldShowRequestPermissionRationale(this, permission)) {
+                Snackbar.make(slidingPane, getString(R.string.request_read_storage_permission), Snackbar.LENGTH_INDEFINITE)
+                        .setAction(android.R.string.ok) {
+                            PermissionHelper.askForPermission(this,
+                                    permission,
+                                    permissionReadStorageCallback)
+                        }.show()
+            } else {
+                PermissionHelper.askForPermission(this,
+                        permission,
+                        permissionReadStorageCallback)
+            }
         }
     }
 }
