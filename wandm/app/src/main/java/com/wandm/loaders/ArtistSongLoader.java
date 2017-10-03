@@ -40,8 +40,9 @@ public class ArtistSongLoader {
                 int trackNumber = cursor.getInt(5);
                 long albumId = cursor.getInt(6);
                 long artistId = artistID;
+                String data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
 
-                songsList.add(new Song(id, albumId, artistID, title, artist, album, duration, trackNumber));
+                songsList.add(new Song(id, albumId, artistID, title, artist, album, duration, trackNumber, data));
             }
             while (cursor.moveToNext());
         if (cursor != null)

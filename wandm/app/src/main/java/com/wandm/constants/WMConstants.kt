@@ -1,5 +1,6 @@
 package com.wandm.constants
 
-/**
- * Created by phongmeo on 10/3/17.
- */
+object WMConstants{
+    val ACTION_PREPARED_MEDIA = "action_prepare_media"
+    val ACTION_COMPLETE_MEDIA = "action_complete_media"
+}

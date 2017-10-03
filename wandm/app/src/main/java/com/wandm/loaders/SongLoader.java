@@ -31,8 +31,9 @@ public class SongLoader {
                 int trackNumber = cursor.getInt(5);
                 long artistId = cursor.getInt(6);
                 long albumId = cursor.getLong(7);
+                String data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
 
-                arrayList.add(new Song(id, albumId, artistId, title, artist, album, duration, trackNumber));
+                arrayList.add(new Song(id, albumId, artistId, title, artist, album, duration, trackNumber, data));
             }
             while (cursor.moveToNext());
         if (cursor != null)
@@ -52,7 +53,7 @@ public class SongLoader {
             long artistId = cursor.getInt(6);
             long albumId = cursor.getLong(7);
 
-            song = new Song(id, albumId, artistId, title, artist, album, duration, trackNumber);
+            song = new Song(id, albumId, artistId, title, artist, album, duration, trackNumber, "");
         }
 
         if (cursor != null)
@@ -88,7 +89,7 @@ public class SongLoader {
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String selection = MediaStore.Audio.Media.DATA;
         String[] selectionArgs = {songPath};
-        String[] projection = new String[]{"_id", "title", "artist", "album", "duration", "track", "artist_id", "album_id"};
+        String[] projection = new String[]{"_id", "title", "artist", "album", "duration", "track", "artist_id", "album_id", "_data"};
         String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
 
         Cursor cursor = cr.query(uri, projection, selection + "=?", selectionArgs, sortOrder);
@@ -135,7 +136,7 @@ public class SongLoader {
         if (!TextUtils.isEmpty(selection)) {
             selectionStatement = selectionStatement + " AND " + selection;
         }
-        return context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, new String[]{"_id", "title", "artist", "album", "duration", "track", "artist_id", "album_id"}, selectionStatement, paramArrayOfString, sortOrder);
+        return context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, new String[]{"_id", "title", "artist", "album", "duration", "track", "artist_id", "album_id", "_data"}, selectionStatement, paramArrayOfString, sortOrder);
 
     }
 
@@ -150,7 +151,7 @@ public class SongLoader {
                 mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST),
                 mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM),
                 Integer.parseInt(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)),
-                0
+                0, ""
         );
     }
 
