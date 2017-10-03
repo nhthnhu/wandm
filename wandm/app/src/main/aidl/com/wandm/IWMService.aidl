@@ -11,4 +11,9 @@ interface IWMService {
     void play();
     void resume();
     boolean isPlaying();
+    void playNew();
+    int duration();
+    int position();
+    void seekTo(int position);
+    void setVolume(float left, float right);
 }

@@ -2,11 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:padding="4dp">
 
-    <android.support.v7.widget.AppCompatTextView
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/songsRecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="songs"/>
+        android:layout_height="match_parent"
+        android:fadeScrollbars="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <com.wandm.views.FastScroller
+        android:id="@+id/songsFastScroller"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:visibility="invisible"/>
 
 </LinearLayout>

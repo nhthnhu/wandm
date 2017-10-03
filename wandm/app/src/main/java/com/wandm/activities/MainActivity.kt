@@ -130,6 +130,7 @@ class MainActivity : BaseActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MenuAdapter()
+
     }
 
     private fun checkPermissionReadStorage() {
@@ -151,4 +152,5 @@ class MainActivity : BaseActivity() {
             }
         }
     }
+
 }

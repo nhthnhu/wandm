@@ -11,9 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -44,8 +41,8 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(R.string.folders);
 
-        recyclerView = rootView.findViewById(R.id.recyclerview);
-        fastScroller = rootView.findViewById(R.id.fastscroller);
+        recyclerView = rootView.findViewById(R.id.foldersRecyclerview);
+        fastScroller = rootView.findViewById(R.id.foldersFastScroller);
         mProgressBar = rootView.findViewById(R.id.progressBar);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -77,23 +74,6 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_folders, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_storages) {
-            new StorageSelectDialog(getActivity())
-                    .setDirSelectListener(this)
-                    .show();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void updateTheme() {

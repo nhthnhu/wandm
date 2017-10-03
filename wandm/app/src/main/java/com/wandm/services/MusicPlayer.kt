@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
+import com.wandm.App
 import com.wandm.IWMService
 
 object MusicPlayer {
@@ -23,10 +24,10 @@ object MusicPlayer {
         }
     }
 
-    fun bind(context: Context, callback: Callback) {
-        val intent = Intent(context, WMService::class.java)
+    fun bind(callback: Callback) {
+        val intent = Intent(App.instance, WMService::class.java)
         intent.action = IWMService::class.java.name
-        context.bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
+        App.instance.bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
         mCallback = callback
     }
 
