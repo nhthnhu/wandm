@@ -14,7 +14,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class QuickControlFragment : BaseFragment(), View.OnClickListener{
+class QuickControlFragment : BaseFragment(), View.OnClickListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
@@ -61,6 +61,13 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener{
         titleSongTextView.isSelected = true
         artistSongTextView.isSelected = true
 
+        if (MusicPlayer.isServiceBound) {
+            controlFragment.visibility = View.VISIBLE
+            titleSongTextView.text = CurrentPlaylistManager.mSong.title
+            artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
+            playPauseButton.isPlayed = MusicPlayer.isPlaying()
+            playPauseButton.startAnimation()
+        }
     }
 
     override fun onStart() {

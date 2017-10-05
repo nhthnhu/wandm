@@ -14,13 +14,13 @@ object MusicPlayer {
 
     private var mService: IWMService? = null
     private var mCallback: Callback? = null
-    private var mServiceBound = false
+    var isServiceBound = false
 
     private val mConnection = object : ServiceConnection {
         override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
             mService = IWMService.Stub.asInterface(p1)
             mCallback?.onServiceConnected()
-            mServiceBound = true
+            isServiceBound = true
             mService?.playNew()
             Log.d(TAG, "Service connected")
         }
@@ -28,13 +28,13 @@ object MusicPlayer {
         override fun onServiceDisconnected(p0: ComponentName?) {
             mService = null
             mCallback?.onServiceDisconnected()
-            mServiceBound = false
+            isServiceBound = false
             Log.d(TAG, "Service disconnected")
         }
     }
 
     fun bind(callback: Callback?) {
-        if (!mServiceBound) {
+        if (!isServiceBound) {
             val intent = Intent(App.instance, WMService::class.java)
             intent.action = IWMService::class.java.name
             App.instance.startService(intent)
@@ -45,7 +45,7 @@ object MusicPlayer {
     }
 
     fun unbind(context: Context) {
-        if (mServiceBound) {
+        if (isServiceBound) {
             context.unbindService(mConnection)
         }
     }
@@ -82,7 +82,6 @@ object MusicPlayer {
     fun isPlaying(): Boolean {
         return mService!!.isPlaying
     }
-
 
     interface Callback {
         fun onServiceConnected()
