@@ -44,7 +44,7 @@ abstract class BaseActivity : AppCompatActivity() {
      *  @param containerViewId is fragment's ID
      *  @param tag is fragment's TAG
      */
-    protected fun addFragment(fragment: Fragment, containerViewId: Int, tag: String) {
+    fun addFragment(fragment: Fragment, containerViewId: Int, tag: String) {
         supportFragmentManager
                 .beginTransaction()
                 .add(containerViewId, fragment, tag)

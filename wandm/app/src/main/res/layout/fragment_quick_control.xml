@@ -7,11 +7,12 @@
               android:background="@drawable/view_background"
               android:gravity="center"
               android:orientation="horizontal"
-              android:padding="8dp">
+              android:padding="8dp"
+              android:visibility="gone">
 
 
     <com.wandm.views.SquareImageView
-        android:id="@+id/albumeImageView"
+        android:id="@+id/albumImageView"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_alignParentLeft="true"
@@ -22,17 +23,19 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginStart="8dp">
+        android:orientation="vertical">
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/titleSongTextView"
             style="@style/WMTextStyleDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
             android:gravity="start"
-            android:text="Em gai mua"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
             android:textSize="16sp"/>
 
         <android.support.v7.widget.AppCompatTextView
@@ -40,8 +43,10 @@
             style="@style/WMTextStyleDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
             android:gravity="start"
-            android:text="Huong tram"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
             android:textSize="16sp"/>
 
     </LinearLayout>
@@ -84,6 +89,5 @@
         app:materialIcon="skip_next"
         app:materialIconColor="#fff"
         app:materialIconSize="35dp"/>
-
-
 </LinearLayout>
+

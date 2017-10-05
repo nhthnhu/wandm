@@ -24,6 +24,11 @@ import com.wandm.R
 import com.wandm.constants.Constants
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.data.PlaybackStatus
+import com.wandm.events.MessageEvent
+import com.wandm.events.MusicEvent
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
     companion object {
@@ -52,11 +57,31 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
     private var playPauseAction: PendingIntent? = null
     private val NOTIFICATION_ID = 101
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEvent) {
+
+        when (event.message) {
+            MusicEvent.PLAY_ACTION -> {
+                getNotification(PlaybackStatus.PLAYING)
+            }
+
+            MusicEvent.PAUSE_ACTION -> {
+                getNotification(PlaybackStatus.PAUSE)
+            }
+
+            MusicEvent.RESUME_ACTION -> {
+                getNotification(PlaybackStatus.PLAYING)
+            }
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         register()
         callStateListener()
+        EventBus.getDefault().register(this)
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -65,6 +90,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
         stopCallStateListener()
         unregister()
         removeNotification()
+        EventBus.getDefault().unregister(this)
     }
 
     override fun onBind(p0: Intent?): IBinder {
@@ -162,7 +188,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
         }
 
         override fun play() {
-            mPlayer.pause()
+            mPlayer.play()
         }
 
         override fun resume() {
@@ -285,6 +311,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
         notificationManager.cancel(NOTIFICATION_ID)
         mPlayer.stop()
         stopSelf()
+        EventBus.getDefault().post(MessageEvent(MusicEvent.REMOVE_NOTI_ACTION))
     }
 
     private fun handleIncomingActions(playbackAction: Intent?) {
@@ -354,6 +381,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
     fun stopCallStateListener() {
         mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE)
     }
+
 
     private fun register() {
         val noisyIntent = IntentFilter(Constants.ACTION_BECOMING_NOISY)

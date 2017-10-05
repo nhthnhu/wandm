@@ -37,5 +37,4 @@ class App : Application() {
         ImageLoader.getInstance().init(localImageLoaderConfiguration)
     }
 
-
 }

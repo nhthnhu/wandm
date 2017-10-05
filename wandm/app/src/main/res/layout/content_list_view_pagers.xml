@@ -47,8 +47,11 @@
         android:layout_weight="1"
         android:padding="8dp"/>
 
+
     <FrameLayout
         android:id="@+id/controlFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
 </LinearLayout>

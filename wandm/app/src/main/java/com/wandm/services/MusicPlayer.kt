@@ -61,11 +61,28 @@ object MusicPlayer {
     fun playOrPause() {
         if (mService != null) {
             if (mService!!.isPlaying)
-                mService!!.pause()
+                mService?.pause()
             else
-                mService!!.resume()
+                mService?.resume()
         }
     }
+
+    fun position(): Int {
+        return mService!!.position()
+    }
+
+    fun duration(): Int {
+        return mService!!.duration()
+    }
+
+    fun seekTo(postion: Int) {
+        mService?.seekTo(position())
+    }
+
+    fun isPlaying(): Boolean {
+        return mService!!.isPlaying
+    }
+
 
     interface Callback {
         fun onServiceConnected()
