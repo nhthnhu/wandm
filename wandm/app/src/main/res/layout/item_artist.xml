@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="?attr/selectableItemBackground"
+              android:orientation="vertical"
+              android:paddingBottom="8dp"
+              android:paddingStart="5dp"
+              android:paddingTop="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/artistImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:padding="1dp"
+            android:src="@drawable/ic_action_headset_dark"
+            android:transitionName="transition_artist_image"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@+id/artistImage"
+            android:layout_toStartOf="@+id/currentlyPlayingIndicator"
+            android:orientation="vertical"
+            android:paddingStart="15dp"
+            android:paddingTop="5dp">
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/artistName"
+                style="@style/WMTextStyleDark"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/albumSongsSount"
+                style="@style/WMTextStyleDark"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingTop="3dp"
+                android:singleLine="true"
+                android:textSize="13sp"/>
+
+
+        </LinearLayout>
+
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            android:id="@+id/currentlyPlayingIndicator"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="center"
+            android:visibility="invisible"
+            app:materialIconColor="#fff"
+            app:materialIconSize="35dp"/>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

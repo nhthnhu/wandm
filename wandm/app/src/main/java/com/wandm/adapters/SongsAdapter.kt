@@ -11,7 +11,7 @@ import com.wandm.services.MusicPlayer
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
 
-class SongAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<SongAdapter.SongHolder>(), BubbleTextGetter {
+class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
     override fun getTextToShowInBubble(pos: Int): String {
         return listSongs[pos].title[0].toString()
     }

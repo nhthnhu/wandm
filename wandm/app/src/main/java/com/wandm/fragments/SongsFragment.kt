@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wandm.App
 import com.wandm.R
-import com.wandm.adapters.SongAdapter
+import com.wandm.adapters.SongsAdapter
 import com.wandm.loaders.SongLoader
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
@@ -27,7 +27,7 @@ class SongsFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-               val adapter = SongAdapter(SongLoader.getAllSongs(App.instance))
+               val adapter = SongsAdapter(SongLoader.getAllSongs(App.instance))
 
                 uiThread {
                     songsRecyclerView.adapter = adapter

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.wandm.R;
-import com.wandm.adapters.FolderAdapter;
+import com.wandm.adapters.FoldersAdapter;
 import com.wandm.dialogs.StorageSelectDialog;
 import com.wandm.utils.PreferencesUtils;
 import com.wandm.views.DividerItemDecoration;
@@ -24,7 +24,7 @@ import java.io.File;
 
 public class FoldersFragment extends Fragment implements StorageSelectDialog.OnDirSelectListener {
 
-    private FolderAdapter mAdapter;
+    private FoldersAdapter mAdapter;
     private RecyclerView recyclerView;
     private FastScroller fastScroller;
     private ProgressBar mProgressBar;
@@ -89,7 +89,7 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
             Activity activity = getActivity();
             if (activity != null) {
 
-                mAdapter = new FolderAdapter(activity, new File(PreferencesUtils.INSTANCE.getLastFolder()));
+                mAdapter = new FoldersAdapter(activity, new File(PreferencesUtils.INSTANCE.getLastFolder()));
 
                 updateTheme();
          }

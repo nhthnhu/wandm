@@ -32,7 +32,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder> implements BubbleTextGetter {
+public class FoldersAdapter extends RecyclerView.Adapter<FoldersAdapter.ItemHolder> implements BubbleTextGetter {
 
     @NonNull
     private List<File> mFileSet;
@@ -43,7 +43,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
     private boolean mBusy = false;
 
 
-    public FolderAdapter(Activity context, File root) {
+    public FoldersAdapter(Activity context, File root) {
         mContext = context;
         mIcons = new Drawable[]{
                 ContextCompat.getDrawable(context, R.drawable.ic_folder_open_black_24dp),
@@ -67,13 +67,13 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ItemHolder
     }
 
     @Override
-    public FolderAdapter.ItemHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public FoldersAdapter.ItemHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_folder_list, viewGroup, false);
         return new ItemHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final FolderAdapter.ItemHolder itemHolder, int i) {
+    public void onBindViewHolder(final FoldersAdapter.ItemHolder itemHolder, int i) {
         File localItem = mFileSet.get(i);
         Song song = mSongs.get(i);
         itemHolder.title.setText(localItem.getName());
