@@ -4,6 +4,10 @@
     <string name="artists">Ca sĩ</string>
     <string name="albums">Albums</string>
     <string name="folders">Thư mục</string>
+    <string name="download">Tải xuống</string>
+    <string name="downloading">Đang tải</string>
+    <string name="download_failed">Tải thất bại</string>
+    <string name="download_completed">Đã tải xong</string>
 
     <string name="request_read_storage_permission">W&amp;M cần quyền đọc bộ nhớ của thiết bị để hiển thị danh sách nhạc.</string>
 </resources>
