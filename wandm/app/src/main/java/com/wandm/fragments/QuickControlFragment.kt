@@ -9,6 +9,7 @@ import com.wandm.data.CurrentPlaylistManager
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.MusicPlayer
+import com.wandm.services.MusicPlayer.playOrPause
 import kotlinx.android.synthetic.main.fragment_quick_control.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -80,18 +81,14 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
         EventBus.getDefault().unregister(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.preButton -> {
-                pre()
+                MusicPlayer.pre()
             }
 
             R.id.nextButton -> {
-                next()
+                MusicPlayer.next()
             }
 
             R.id.playPauseButton -> {
@@ -100,7 +97,7 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
             }
 
             R.id.playPauseWrapper -> {
-                playOrPause()
+                MusicPlayer.playOrPause()
                 playPauseButton.startAnimation()
             }
 
@@ -111,19 +108,5 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
             }
         }
     }
-
-    fun next() {
-        MusicPlayer.next()
-    }
-
-    fun pre() {
-        MusicPlayer.pre()
-    }
-
-
-    fun playOrPause() {
-        MusicPlayer.playOrPause()
-    }
-
 
 }

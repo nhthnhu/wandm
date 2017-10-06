@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import com.wandm.R
-import com.wandm.constants.Constants
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.fragments.BaseFragment
@@ -34,7 +33,7 @@ class SeekbarManager : BaseFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
         when (event.message) {
-            MusicEvent.COMPLETED_ACTION -> {
+            MusicEvent.PREPARED_ACTION -> {
                 mServiceBound = true
                 mHandler = Handler()
 
@@ -71,7 +70,6 @@ class SeekbarManager : BaseFragment() {
     }
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
-        val intentInfoSeekbar = android.content.IntentFilter(Constants.CONTROL_INFO)
     }
 
     override fun onStart() {

@@ -76,7 +76,7 @@ object MusicPlayer {
     }
 
     fun seekTo(postion: Int) {
-        mService?.seekTo(position())
+        mService?.seekTo(postion)
     }
 
     fun isPlaying(): Boolean {
