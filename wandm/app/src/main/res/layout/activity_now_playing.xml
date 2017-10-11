@@ -46,24 +46,14 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:orientation="horizontal">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardElevation="10dp"
-                    app:layout_heightPercent="60%"
-                    app:layout_widthPercent="60%">
 
-                    <android.support.v7.widget.AppCompatImageView
-                        android:id="@+id/albumArtImageView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="1dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="centerCrop"/>
+                <co.mobiwise.library.MusicPlayerView
+                    android:id="@+id/albumImage"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="80dp"/>
 
-                </android.support.v7.widget.CardView>
             </android.support.percent.PercentRelativeLayout>
 
 
@@ -74,8 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/headerView"
             android:layout_gravity="bottom"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatTextView
@@ -83,6 +73,7 @@
                 style="@style/WMTextStyleDark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:ellipsize="marquee"
                 android:gravity="start"
                 android:marqueeRepeatLimit="marquee_forever"
@@ -94,6 +85,7 @@
                 style="@style/WMTextStyleDark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:ellipsize="marquee"
                 android:gravity="start"
                 android:marqueeRepeatLimit="marquee_forever"
@@ -154,7 +146,38 @@
 
             </LinearLayout>
 
-         <include layout="@layout/music_seekbar"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/songElapsedTime"
+                    style="@style/WMTextStyleDark"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="00:00"
+                    android:textSize="16sp"/>
+
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/songProgress"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/songDuration"
+                    style="@style/WMTextStyleDark"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="00:00"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -182,7 +205,7 @@
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:scaleType="center"
-                    app:materialIcon="skip_next"
+                    app:materialIcon="skip_previous"
                     app:materialIconColor="#fff"
                     app:materialIconSize="35dp"/>
 

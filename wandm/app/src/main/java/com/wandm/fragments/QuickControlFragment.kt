@@ -2,6 +2,7 @@ package com.wandm.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.wandm.R
 import com.wandm.activities.NowPlayingActivity
@@ -9,13 +10,14 @@ import com.wandm.data.CurrentPlaylistManager
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.MusicPlayer
-import com.wandm.services.MusicPlayer.playOrPause
 import kotlinx.android.synthetic.main.fragment_quick_control.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class QuickControlFragment : BaseFragment(), View.OnClickListener {
+
+    private val TAG = "QuickControlFragment"
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
@@ -53,6 +55,8 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
+
         nextButton.setOnClickListener(this)
         preButton.setOnClickListener(this)
         playPauseButton.setOnClickListener(this)
@@ -61,6 +65,8 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
 
         titleSongTextView.isSelected = true
         artistSongTextView.isSelected = true
+
+        Log.d(TAG, "onCreatedView")
 
         if (MusicPlayer.isServiceBound) {
             controlFragment.visibility = View.VISIBLE
@@ -71,14 +77,9 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    override fun onStart() {
-        EventBus.getDefault().register(this)
-        super.onStart()
-    }
-
-    override fun onStop() {
+    override fun onDestroy() {
+        super.onDestroy()
         EventBus.getDefault().unregister(this)
-        super.onStop()
     }
 
     override fun onClick(p0: View?) {
@@ -92,7 +93,7 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
             }
 
             R.id.playPauseButton -> {
-                playOrPause()
+                MusicPlayer.playOrPause()
                 playPauseButton.startAnimation()
             }
 

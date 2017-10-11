@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#a5a5a5</color>
     <color name="colorAccent">#d4d3d3</color>
 
-    <color name="color_primary_dark">#ababab</color>
+    <color name="color_primary_dark">#868484</color>
 
     <color name="color_white">#ffffff</color>
     <color name="transparent">#00000000</color>
@@ -12,4 +12,5 @@
 
     <color name="color_grey">#d4d3d3</color>
     <color name="color_black">#111111</color>
+    <color name="color_red">#d91b1b</color>
 </resources>
