@@ -58,25 +58,35 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     }
 
     fun play() {
-        if (!mPlayer.isPlaying) {
-            mPlayer.start()
-            EventBus.getDefault().post(MessageEvent(MusicEvent.PLAY_ACTION))
+        try {
+            if (!mPlayer.isPlaying) {
+                mPlayer.start()
+                EventBus.getDefault().post(MessageEvent(MusicEvent.PLAY_ACTION))
+            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun pause() {
-        if (mPlayer.isPlaying) {
-            mPlayer.pause()
-            mPosition = mPlayer.currentPosition
-            EventBus.getDefault().post(MessageEvent(MusicEvent.PAUSE_ACTION))
+        try {
+            if (mPlayer.isPlaying) {
+                mPlayer.pause()
+                mPosition = mPlayer.currentPosition
+                EventBus.getDefault().post(MessageEvent(MusicEvent.PAUSE_ACTION))
+            }
+        } catch (e: Exception) {
         }
     }
 
     fun resume() {
-        if (!mPlayer.isPlaying) {
-            mPlayer.seekTo(mPosition)
-            mPlayer.start()
-            EventBus.getDefault().post(MessageEvent(MusicEvent.RESUME_ACTION))
+        try {
+            if (!mPlayer.isPlaying) {
+                mPlayer.seekTo(mPosition)
+                mPlayer.start()
+                EventBus.getDefault().post(MessageEvent(MusicEvent.RESUME_ACTION))
+            }
+        } catch (e: Exception) {
         }
     }
 
@@ -87,7 +97,6 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
             }
             mPlayer.release()
         } catch (e: Exception) {
-
         }
     }
 
@@ -114,26 +123,49 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     }
 
     fun duration(): Int {
-        return mPlayer.duration
+        try {
+            return mPlayer.duration
+        } catch (e: Exception) {
+            return 0
+        }
     }
 
     fun seekTo(postion: Int) {
-        mPlayer.seekTo(postion)
+        try {
+            mPlayer.seekTo(postion)
+        } catch (e: Exception) {
+        }
     }
 
     fun position(): Int {
-        return mPlayer.currentPosition
+        try {
+            return mPlayer.currentPosition
+        } catch (e: Exception) {
+            return 0
+        }
     }
 
-    fun isPlaying() = mPlayer.isPlaying
+    fun isPlaying(): Boolean {
+        try {
+            return mPlayer.isPlaying
+        } catch (e: Exception) {
+            return false
+        }
+    }
 
     fun release() {
-        mPlayer.reset()
-        mPlayer.release()
+        try {
+            mPlayer.reset()
+            mPlayer.release()
+        } catch (e: Exception) {
+        }
     }
 
     fun setVolume(left: Float, right: Float) {
-        mPlayer.setVolume(left, right)
+        try {
+            mPlayer.setVolume(left, right)
+        } catch (e: Exception) {
+        }
     }
 
 }

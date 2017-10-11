@@ -72,13 +72,13 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun onStart() {
-        super.onStart()
         EventBus.getDefault().register(this)
+        super.onStart()
     }
 
     override fun onStop() {
-        super.onStop()
         EventBus.getDefault().unregister(this)
+        super.onStop()
     }
 
     override fun onClick(p0: View?) {

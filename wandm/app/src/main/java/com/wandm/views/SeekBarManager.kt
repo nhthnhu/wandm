@@ -1,8 +1,7 @@
-package com.wandm.data
+package com.wandm.views
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import com.wandm.R
@@ -16,7 +15,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.TimeUnit
 
-class SeekbarManager : BaseFragment() {
+class SeekBarManager : BaseFragment() {
 
     private val TAG = "SeekBarManager"
 
@@ -62,7 +61,6 @@ class SeekbarManager : BaseFragment() {
             }
         }
     }
-
 
 
     override fun getLayoutResId(): Int {
@@ -119,7 +117,6 @@ class SeekbarManager : BaseFragment() {
 
                     override fun onStopTrackingTouch(seekBar: SeekBar) {
                         MusicPlayer.seekTo(seekBar.progress)
-                        Log.d("aaa", seekBar.progress.toString())
                     }
                 })
 

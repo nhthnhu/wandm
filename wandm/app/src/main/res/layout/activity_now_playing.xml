@@ -78,6 +78,30 @@
             android:layout_marginStart="20dp"
             android:orientation="vertical">
 
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/titleSongTextView"
+                style="@style/WMTextStyleDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:gravity="start"
+                android:text="ABC"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/artistSongTextView"
+                style="@style/WMTextStyleDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:gravity="start"
+                android:text="ABCD"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textSize="16sp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
