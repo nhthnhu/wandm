@@ -85,7 +85,6 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:gravity="start"
-                android:text="ABC"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:textSize="16sp"/>
@@ -97,7 +96,6 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:gravity="start"
-                android:text="ABCD"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:textSize="16sp"/>

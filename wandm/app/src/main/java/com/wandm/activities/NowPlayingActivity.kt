@@ -6,6 +6,7 @@ import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
+import com.wandm.services.MusicPlayer
 import kotlinx.android.synthetic.main.activity_now_playing.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -49,6 +50,12 @@ class NowPlayingActivity : BaseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         setupToolbar()
         EventBus.getDefault().register(this)
+
+        if (MusicPlayer.isPlaying()){
+            artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
+            titleSongTextView.text = CurrentPlaylistManager.mSong.title
+        }
+
         Log.d(TAG, "initView")
     }
 
