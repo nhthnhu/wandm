@@ -48,17 +48,13 @@ class NowPlayingActivity : BaseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         setupToolbar()
+        EventBus.getDefault().register(this)
         Log.d(TAG, "initView")
     }
 
     override fun onResume() {
         super.onResume()
         setBlurBackground(nowPlayingBackground, nowPlayingBlurringView)
-    }
-
-    override fun onStart() {
-        EventBus.getDefault().register(this)
-        super.onStart()
     }
 
     override fun onDestroy() {
