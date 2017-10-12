@@ -47,7 +47,7 @@
                 android:orientation="horizontal">
 
 
-                <co.mobiwise.library.MusicPlayerView
+                <com.wandm.views.WMPlayerView
                     android:id="@+id/albumImage"
                     android:layout_width="300dp"
                     android:layout_height="300dp"

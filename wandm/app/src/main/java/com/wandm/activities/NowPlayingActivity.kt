@@ -83,11 +83,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         shuffleButton.setOnClickListener(this)
         repeatButton.setOnClickListener(this)
         favoriteButton.setOnClickListener(this)
-        albumImage.setOnClickListener(this)
 
         albumImage.setCoverDrawable(R.drawable.ic_action_head_set_light)
-        albumImage.setAutoProgress(false)
-        albumImage.setProgressVisibility(false)
 
         artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
         titleSongTextView.text = CurrentPlaylistManager.mSong.title
@@ -256,14 +253,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                     favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
                     favoriteButton.setColorResource(R.color.color_red)
                 }
-            }
-
-            R.id.albumImage -> {
-                if (albumImage.isRotating) {
-                    albumImage.stop()
-                } else
-                    albumImage.start()
-                MusicPlayer.playOrPause()
             }
         }
     }
