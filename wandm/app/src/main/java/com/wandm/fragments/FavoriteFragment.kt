@@ -15,6 +15,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class FavoriteFragment : BaseFragment() {
+    private var adapter: SongsAdapter? = null
     override fun getLayoutResId(): Int {
         return R.layout.fragment_songs
     }
@@ -26,7 +27,6 @@ class FavoriteFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-                var adapter: SongsAdapter? = null
                 val list = SongsBaseHandler.getInstance(App.instance)?.getList()
                 if (list != null) {
                     adapter = SongsAdapter(list)
@@ -37,14 +37,16 @@ class FavoriteFragment : BaseFragment() {
                         songsFastScroller.visibility = View.VISIBLE
                         songsProgressBar.visibility = View.GONE
                     }
-                } else {
-                    notifiTextView.text = "No data"
-                    notifiTextView.visibility = View.VISIBLE
-
                 }
 
             }
         }
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser)
+            adapter?.notifyDataSetChanged()
     }
 
     private fun setItemDecoration() {

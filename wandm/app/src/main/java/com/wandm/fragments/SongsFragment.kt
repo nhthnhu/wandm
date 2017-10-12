@@ -16,6 +16,7 @@ import org.jetbrains.anko.uiThread
 
 
 class SongsFragment : BaseFragment() {
+    private var adapter: SongsAdapter? = null
     override fun getLayoutResId(): Int {
         return R.layout.fragment_songs
     }
@@ -27,7 +28,7 @@ class SongsFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-               val adapter = SongsAdapter(SongLoader.getAllSongs(App.instance))
+                adapter = SongsAdapter(SongLoader.getAllSongs(App.instance))
 
                 uiThread {
                     songsRecyclerView.adapter = adapter
@@ -38,6 +39,12 @@ class SongsFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser)
+            adapter?.notifyDataSetChanged()
     }
 
     private fun setItemDecoration() {

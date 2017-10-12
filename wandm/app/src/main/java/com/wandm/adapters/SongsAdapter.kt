@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.nostra13.universalimageloader.core.DisplayImageOptions
 import com.nostra13.universalimageloader.core.ImageLoader
+import com.wandm.App
 import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
+import com.wandm.database.SongsBaseHandler
 import com.wandm.models.Song
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
+import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 
 class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
+
     override fun getTextToShowInBubble(pos: Int): String {
         return listSongs[pos].title[0].toString()
     }
@@ -30,19 +34,27 @@ class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: SongHolder?, position: Int) {
         holder?.bind(listSongs[position])
+
         holder?.songItemView?.setOnClickListener {
             CurrentPlaylistManager.mListSongs = listSongs
             CurrentPlaylistManager.mPosition = position
 
             MusicPlayer.bind(null)
         }
+
+        holder?.songItemView?.setOnLongClickListener {
+            removeSong(position)
+        }
     }
 
 
     class SongHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var songItemView: View = itemView
+        private var isFavorite = false
 
         fun bind(song: Song) {
+            setFavorite(song, true)
+
             ImageLoader.getInstance().displayImage(
                     Utils.getAlbumArtUri(song.albumId).toString(),
                     itemView.albumArt, DisplayImageOptions.Builder().cacheInMemory(true).
@@ -55,5 +67,45 @@ class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapte
             itemView.titleItemSongTextView.isSelected = true
             itemView.artistItemSongTextView.isSelected = true
         }
+
+        private fun setFavorite(song: Song, init: Boolean) {
+            val song = SongsBaseHandler.getInstance(App.instance)?.getSong(song.data)
+
+            isFavorite = song != null
+
+            if (init) {
+                if (isFavorite) {
+                    itemView.favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
+                    itemView.favoriteButton.setColorResource(R.color.color_red)
+                } else {
+                    itemView.favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
+                    itemView.favoriteButton.setColorResource(R.color.color_white)
+                }
+            } else {
+                if (isFavorite) {
+                    isFavorite = false
+                    itemView.favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
+                    itemView.favoriteButton.setColorResource(R.color.color_white)
+                    SongsBaseHandler.getInstance(App.instance)?.removeSong(CurrentPlaylistManager.mSong)
+                } else {
+                    isFavorite = true
+                    itemView.favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
+                    itemView.favoriteButton.setColorResource(R.color.color_red)
+                    SongsBaseHandler.getInstance(App.instance)?.addSong(CurrentPlaylistManager.mSong)
+                }
+            }
+        }
+
     }
+
+    private fun removeSong(position: Int): Boolean {
+        val isSuccessfull = SongsBaseHandler.getInstance(App.instance)?.removeSong(listSongs[position])!!
+        if (isSuccessfull) {
+            listSongs.remove(listSongs[position])
+            this.notifyDataSetChanged()
+            return true
+        }
+        return false
+    }
+
 }
