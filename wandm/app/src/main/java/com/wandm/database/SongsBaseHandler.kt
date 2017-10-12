@@ -40,8 +40,8 @@ class SongsBaseHandler private constructor(context: Context) {
 
     fun removeSong(song: Song): Boolean {
         val numberRows = mDatabase?.delete(SongsTable.TABLE_NAME,
-                "${SongsTable.ID} = ?",
-                arrayOf(song.id.toString()))
+                "${SongsTable.DATA} = ?",
+                arrayOf(song.data.toString()))
         if (numberRows == 0)
             return false
         return true
@@ -63,8 +63,8 @@ class SongsBaseHandler private constructor(context: Context) {
         return mFavoriteSongs
     }
 
-    fun getSong(url: String): Song? {
-        val cursor = querySongs("${SongsTable.ID} = ?", arrayOf(url))
+    fun getSong(data: String): Song? {
+        val cursor = querySongs("${SongsTable.DATA} = ?", arrayOf(data))
         try {
             cursor.moveToFirst()
             return cursor.getSong()

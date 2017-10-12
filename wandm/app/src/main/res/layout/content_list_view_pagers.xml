@@ -23,22 +23,22 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/listTabs"
         style="@style/WMTextStyleDark"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/tab_height"
         android:paddingBottom="4dp"
+        app:stl_customTabTextLayoutId="@layout/custom_tab"
+        app:stl_customTabTextViewId="@id/custom_text"
         app:stl_defaultTabTextColor="@color/color_white"
-        app:stl_distributeEvenly="true"
         app:stl_indicatorColor="@color/color_grey"
-        app:stl_indicatorCornerRadius="1.5dp"
-        app:stl_indicatorInterpolation="smart"
+        app:stl_indicatorInterpolation="linear"
         app:stl_indicatorThickness="3dp"
         app:stl_underlineColor="@color/transparent"/>
-
 
     <android.support.v4.view.ViewPager
         android:id="@+id/listViewPagers"

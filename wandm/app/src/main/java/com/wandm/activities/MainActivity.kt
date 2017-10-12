@@ -112,6 +112,8 @@ class MainActivity : BaseActivity() {
         val pagerItems = FragmentPagerItems(this)
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.songs),
                 SongsFragment::class.java))
+        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.favorite),
+                FavoriteFragment::class.java))
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.artists),
                 ArtistsFragment::class.java))
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.albums),

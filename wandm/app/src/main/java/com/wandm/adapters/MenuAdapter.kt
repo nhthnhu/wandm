@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.wandm.App
 import com.wandm.R
 import com.wandm.models.ListMenus
 import com.wandm.models.Menu
@@ -28,7 +27,8 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
 
     inner class MenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(data: Menu) {
-            itemView.menuImageView.background = App.instance.getDrawable(data.icon)
+            itemView.menuImageView.setIcon(data.icon)
+            itemView.menuImageView.setColorResource(data.color)
             itemView.contentMenuTextView.text = data.content
         }
     }

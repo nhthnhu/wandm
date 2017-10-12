@@ -11,7 +11,6 @@ class Song {
     val trackNumber: Int
     val data: String
 
-    private var isFavorite = false
 
     constructor() {
         this.id = -1
@@ -38,9 +37,4 @@ class Song {
         this.data = _data
     }
 
-    fun setFavorite(value: Boolean) {
-        isFavorite = value
-    }
-
-    fun isFavorite() = isFavorite
 }

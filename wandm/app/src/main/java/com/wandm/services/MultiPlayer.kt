@@ -20,7 +20,10 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
 
     override fun onCompletion(p0: MediaPlayer?) {
         EventBus.getDefault().post(MessageEvent(MusicEvent.COMPLETED_ACTION))
-        next()
+        if (PreferencesUtils.getRepeatMode() == 1 ||
+                CurrentPlaylistManager.mPosition < CurrentPlaylistManager.mListSongs.size) {
+            next()
+        }
     }
 
     override fun onPrepared(p0: MediaPlayer?) {
@@ -102,12 +105,9 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     }
 
     fun next() {
-        if (PreferencesUtils.getRepeatMode() == 1 ||
-                CurrentPlaylistManager.mPosition < CurrentPlaylistManager.mListSongs.size - 1) {
-            val song = CurrentPlaylistManager.next()
-            stop()
-            init(song.data)
-        }
+        val song = CurrentPlaylistManager.next()
+        stop()
+        init(song.data)
     }
 
     fun pre() {

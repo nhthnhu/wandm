@@ -1,6 +1,7 @@
 package com.wandm.models
 
 import com.wandm.R
+import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 
 class ListMenus private constructor() {
     private val mList = ArrayList<Menu>()
@@ -10,7 +11,13 @@ class ListMenus private constructor() {
     }
 
     init {
-        val setting = Menu(R.drawable.ic_action_search_dark, "Setting", false)
+        val favorite = Menu(MaterialDrawableBuilder.IconValue.HEART, "Favorite Playlist",
+                false, R.color.color_red)
+
+        val setting = Menu(MaterialDrawableBuilder.IconValue.SETTINGS, "Setting",
+                false, R.color.color_white)
+
+        mList.add(favorite)
         mList.add(setting)
     }
 

@@ -301,7 +301,11 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setFavorite(init: Boolean) {
-        isFavorite = CurrentPlaylistManager.mSong.isFavorite()
+        val song = SongsBaseHandler.getInstance(App.instance)?.getSong(CurrentPlaylistManager.mSong.data)
+        if (song == null)
+            isFavorite = false
+        else
+            isFavorite = true
 
         if (init) {
             if (isFavorite) {
@@ -323,7 +327,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 favoriteButton.setColorResource(R.color.color_red)
                 SongsBaseHandler.getInstance(App.instance)?.addSong(CurrentPlaylistManager.mSong)
             }
-            CurrentPlaylistManager.mSong.setFavorite(isFavorite)
         }
     }
 
