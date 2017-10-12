@@ -5,7 +5,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wandm.App
 import com.wandm.R
+import com.wandm.activities.MainActivity
 import com.wandm.adapters.SongsAdapter
+import com.wandm.database.SongsBaseHandler
 import com.wandm.loaders.SongLoader
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
@@ -28,7 +30,13 @@ class SongsFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-                adapter = SongsAdapter(SongLoader.getAllSongs(App.instance))
+                adapter = SongsAdapter(SongLoader.getAllSongs(App.instance)) { song, position ->
+                    val fragmentManager = MainActivity.instance.supportFragmentManager
+                    val dialogFragment = PlaylistDialogFragment.newInstance { title ->
+                        SongsBaseHandler.getInstance(App.instance, title)?.addSong(song)
+                    }
+                    dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+                }
 
                 uiThread {
                     songsRecyclerView.adapter = adapter

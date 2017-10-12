@@ -14,7 +14,8 @@ import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
 
-class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
+class SongsAdapter(private val listSongs: ArrayList<Song>,
+                   val listener: (Song, Int) -> Unit) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
 
     override fun getTextToShowInBubble(pos: Int): String {
         return listSongs[pos].title[0].toString()
@@ -35,8 +36,11 @@ class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapte
         holder?.songItemView?.setOnClickListener {
             CurrentPlaylistManager.mListSongs = listSongs
             CurrentPlaylistManager.mPosition = position
-
             MusicPlayer.bind(null)
+        }
+
+        holder?.songItemView?.playlistButton?.setOnClickListener {
+            listener(listSongs[position], position)
         }
     }
 
