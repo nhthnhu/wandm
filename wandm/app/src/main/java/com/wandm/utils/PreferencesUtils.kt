@@ -15,6 +15,10 @@ object PreferencesUtils {
     val ARTIST_ALBUM_SORT_ORDER = "artist_album_sort_order"
     val ALBUM_SORT_ORDER = "album_sort_order"
     val ALBUM_SONG_SORT_ORDER = "album_song_sort_order"
+
+    private val REPEAT_MODE = "repeat_mode"
+    private val SHUFFLE_MODE = "shuffle_mode"
+
     private val LAST_FOLDER = "last_folder"
     private val ARTIST_IMAGE = "artist_image"
     private val ARTIST_IMAGE_MOBILE = "artist_image_mobile"
@@ -106,6 +110,26 @@ object PreferencesUtils {
 
     fun setSongSortOrder(value: String) {
         setSortOrder(SONG_SORT_ORDER, value)
+    }
+
+    fun setShuffleMode(value: Boolean) {
+        val editor = mPreferences.edit()
+        editor.putBoolean(SHUFFLE_MODE, value)
+        editor.apply()
+    }
+
+    fun getShuffleMode(): Boolean {
+        return mPreferences.getBoolean(SHUFFLE_MODE, false)
+    }
+
+    fun setRepeatMode(value: Int) {
+        val editor = mPreferences.edit()
+        editor.putInt(REPEAT_MODE, value)
+        editor.apply()
+    }
+
+    fun getRepeatMode(): Int {
+        return mPreferences.getInt(REPEAT_MODE, 0)
     }
 }
 

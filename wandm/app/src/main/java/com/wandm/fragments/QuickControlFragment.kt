@@ -44,6 +44,11 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
                 playPauseButton.startAnimation()
             }
 
+            MusicEvent.COMPLETED_ACTION -> {
+                playPauseButton.isPlayed = false
+                playPauseButton.startAnimation()
+            }
+
             MusicEvent.REMOVE_NOTI_ACTION -> {
                 controlFragment.visibility = View.GONE
             }

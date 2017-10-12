@@ -10,6 +10,7 @@ import com.wandm.data.CurrentPlaylistManager
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.MusicPlayer
+import com.wandm.utils.PreferencesUtils
 import kotlinx.android.synthetic.main.activity_now_playing.*
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 import org.greenrobot.eventbus.EventBus
@@ -32,7 +33,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     private var mHandler: Handler? = null
 
     private var isShuffle = false
-    private var isRepeat = 0
+    private var repeatMode = 0
     private var isFavorite = false
 
 
@@ -65,6 +66,12 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 playpauseButton.startAnimation()
                 albumImage.stop()
             }
+
+            MusicEvent.COMPLETED_ACTION -> {
+                playpauseButton.isPlayed = false
+                playpauseButton.startAnimation()
+                albumImage.stop()
+            }
         }
     }
 
@@ -75,6 +82,9 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     override fun initView(savedInstanceState: Bundle?) {
         setupToolbar()
         EventBus.getDefault().register(this)
+
+        setShuffleMode(true)
+        setRepeatMode(true)
 
         playpauseButton.setOnClickListener(this)
         playpauseWrapper.setOnClickListener(this)
@@ -219,28 +229,11 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             }
 
             R.id.shuffleButton -> {
-                if (isShuffle) {
-                    isShuffle = false
-                    shuffleButton.setColorResource(R.color.color_white)
-                } else {
-                    isShuffle = true
-                    shuffleButton.setColorResource(R.color.color_primary_dark)
-                }
+                setShuffleMode(false)
             }
 
             R.id.repeatButton -> {
-                if (isRepeat == 0) {
-                    isRepeat++
-                    repeatButton.setColorResource(R.color.color_primary_dark)
-                } else if (isRepeat == 1) {
-                    isRepeat++
-                    repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
-                    repeatButton.setColorResource(R.color.color_primary_dark)
-                } else {
-                    isRepeat = 0
-                    repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
-                    repeatButton.setColorResource(R.color.color_white)
-                }
+                setRepeatMode(false)
             }
 
             R.id.favoriteButton -> {
@@ -253,6 +246,62 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                     favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
                     favoriteButton.setColorResource(R.color.color_red)
                 }
+            }
+        }
+    }
+
+    private fun setRepeatMode(init: Boolean) {
+        repeatMode = PreferencesUtils.getRepeatMode()
+
+        if (init) {
+            if (repeatMode == 0) {
+                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
+                repeatButton.setColorResource(R.color.color_white)
+            } else if (repeatMode == 1) {
+                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
+                repeatButton.setColorResource(R.color.color_primary_dark)
+            } else {
+                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
+                repeatButton.setColorResource(R.color.color_primary_dark)
+            }
+
+        } else {
+            if (repeatMode == 0) {
+                repeatMode++
+                repeatButton.setColorResource(R.color.color_primary_dark)
+                PreferencesUtils.setRepeatMode(repeatMode)
+            } else if (repeatMode == 1) {
+                repeatMode++
+                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
+                repeatButton.setColorResource(R.color.color_primary_dark)
+                PreferencesUtils.setRepeatMode(repeatMode)
+            } else {
+                repeatMode = 0
+                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
+                repeatButton.setColorResource(R.color.color_white)
+                PreferencesUtils.setRepeatMode(repeatMode)
+            }
+        }
+    }
+
+    private fun setShuffleMode(init: Boolean) {
+        isShuffle = PreferencesUtils.getShuffleMode()
+
+        if (init) {
+            if (isShuffle)
+                shuffleButton.setColorResource(R.color.color_primary_dark)
+            else
+                shuffleButton.setColorResource(R.color.color_white)
+        } else {
+
+            if (isShuffle) {
+                isShuffle = false
+                shuffleButton.setColorResource(R.color.color_white)
+                PreferencesUtils.setShuffleMode(isShuffle)
+            } else {
+                isShuffle = true
+                shuffleButton.setColorResource(R.color.color_primary_dark)
+                PreferencesUtils.setShuffleMode(isShuffle)
             }
         }
     }

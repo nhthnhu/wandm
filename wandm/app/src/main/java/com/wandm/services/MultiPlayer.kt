@@ -6,6 +6,7 @@ import android.util.Log
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
+import com.wandm.utils.PreferencesUtils
 import org.greenrobot.eventbus.EventBus
 
 class MultiPlayer : MediaPlayer.OnCompletionListener,
@@ -18,8 +19,8 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
 
 
     override fun onCompletion(p0: MediaPlayer?) {
-        next()
         EventBus.getDefault().post(MessageEvent(MusicEvent.COMPLETED_ACTION))
+        next()
     }
 
     override fun onPrepared(p0: MediaPlayer?) {
@@ -101,13 +102,12 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     }
 
     fun next() {
-        if (CurrentPlaylistManager.mPosition < CurrentPlaylistManager.mListSongs.size) {
+        if (PreferencesUtils.getRepeatMode() == 1 ||
+                CurrentPlaylistManager.mPosition < CurrentPlaylistManager.mListSongs.size - 1) {
             val song = CurrentPlaylistManager.next()
             stop()
             init(song.data)
         }
-
-
     }
 
     fun pre() {
