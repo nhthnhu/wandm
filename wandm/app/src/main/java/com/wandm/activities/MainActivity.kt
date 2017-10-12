@@ -12,7 +12,6 @@ import android.view.View
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
-import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.adapters.MenuAdapter
 import com.wandm.fragments.*
@@ -65,7 +64,7 @@ class MainActivity : BaseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         setupToolbar()
         instance = this
-        blurringView.blurConfig(AppConfig.getBlurViewConfig())
+        // blurringView.blurConfig(AppConfig.getBlurViewConfig())
         addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
     }
 
