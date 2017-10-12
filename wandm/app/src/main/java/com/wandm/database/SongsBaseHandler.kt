@@ -7,31 +7,31 @@ import android.database.sqlite.SQLiteDatabase
 import com.wandm.models.Song
 
 
-class SongsBaseHandler private constructor(context: Context) {
+class SongsBaseHandler private constructor(context: Context, val tableName: String) {
     companion object {
         @SuppressLint("StaticFieldLeak")
         private var instance: SongsBaseHandler? = null
 
-        fun getInstance(context: Context): SongsBaseHandler? {
+        fun getInstance(context: Context, tableName: String): SongsBaseHandler? {
             if (instance == null) {
-                instance = SongsBaseHandler(context)
+                instance = SongsBaseHandler(context, tableName)
             }
             return instance
         }
     }
 
-    private var mFavoriteSongs: ArrayList<Song>? = null
+    private var mSongs: ArrayList<Song>? = null
     private var mContext: Context? = null
     private var mDatabase: SQLiteDatabase? = null
 
     init {
         mContext = context.applicationContext
-        mDatabase = SongsBaseHelper(mContext!!).writableDatabase
+        mDatabase = SongsBaseHelper(mContext!!, tableName).writableDatabase
     }
 
     fun addSong(song: Song): Boolean {
         val values = getContentValues(song)
-        val row = mDatabase?.insert(SongsTable.TABLE_NAME, null, values)
+        val row = mDatabase?.insert(tableName, null, values)
         if (row == (-1).toLong()) {
             return false
         }
@@ -39,8 +39,8 @@ class SongsBaseHandler private constructor(context: Context) {
     }
 
     fun removeSong(song: Song): Boolean {
-        val numberRows = mDatabase?.delete(SongsTable.TABLE_NAME,
-                "${SongsTable.DATA} = ?",
+        val numberRows = mDatabase?.delete(tableName,
+                "${FavoritesTable.DATA} = ?",
                 arrayOf(song.data.toString()))
         if (numberRows == 0)
             return false
@@ -48,23 +48,23 @@ class SongsBaseHandler private constructor(context: Context) {
     }
 
     fun getList(): ArrayList<Song>? {
-        mFavoriteSongs = ArrayList()
+        mSongs = ArrayList()
         val cursor = querySongs(null, null)
         try {
             cursor.moveToFirst()
             while (!cursor.isAfterLast) {
-                mFavoriteSongs?.add(cursor.getSong())
+                mSongs?.add(cursor.getSong())
                 cursor.moveToNext()
             }
         } finally {
             cursor.close()
         }
 
-        return mFavoriteSongs
+        return mSongs
     }
 
     fun getSong(data: String): Song? {
-        val cursor = querySongs("${SongsTable.DATA} = ?", arrayOf(data))
+        val cursor = querySongs("${FavoritesTable.DATA} = ?", arrayOf(data))
         try {
             cursor.moveToFirst()
             return cursor.getSong()
@@ -76,27 +76,27 @@ class SongsBaseHandler private constructor(context: Context) {
     }
 
     fun removeList() {
-        mDatabase?.delete(SongsTable.TABLE_NAME, null, null)
+        mDatabase?.delete(tableName, null, null)
     }
 
     private fun getContentValues(song: Song): ContentValues {
         val values = ContentValues()
-        values.put(SongsTable.ID, song.id)
-        values.put(SongsTable.TITLE, song.title)
-        values.put(SongsTable.ALBUM_ID, song.albumId)
-        values.put(SongsTable.ALBUM_NAME, song.albumName)
-        values.put(SongsTable.ARTIST_ID, song.artistId)
-        values.put(SongsTable.ARTIST_NAME, song.artistName)
-        values.put(SongsTable.DURATION, song.duration)
-        values.put(SongsTable.TRACK_NUMBER, song.trackNumber)
-        values.put(SongsTable.DATA, song.data)
+        values.put(FavoritesTable.ID, song.id)
+        values.put(FavoritesTable.TITLE, song.title)
+        values.put(FavoritesTable.ALBUM_ID, song.albumId)
+        values.put(FavoritesTable.ALBUM_NAME, song.albumName)
+        values.put(FavoritesTable.ARTIST_ID, song.artistId)
+        values.put(FavoritesTable.ARTIST_NAME, song.artistName)
+        values.put(FavoritesTable.DURATION, song.duration)
+        values.put(FavoritesTable.TRACK_NUMBER, song.trackNumber)
+        values.put(FavoritesTable.DATA, song.data)
 
         return values
     }
 
     private fun querySongs(whereClause: String?, whereArgs: Array<String>?): SongCursorWrapper {
         val cursor = mDatabase?.query(
-                SongsTable.TABLE_NAME, null,
+                tableName, null,
                 whereClause, whereArgs,
                 null, null, null)
 

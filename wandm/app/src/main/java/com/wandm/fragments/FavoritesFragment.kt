@@ -5,7 +5,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wandm.App
 import com.wandm.R
-import com.wandm.adapters.SongsAdapter
+import com.wandm.adapters.FavoritesAdapter
+import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
@@ -14,8 +15,8 @@ import kotlinx.android.synthetic.main.fragment_songs.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class FavoriteFragment : BaseFragment() {
-    private var adapter: SongsAdapter? = null
+class FavoritesFragment : BaseFragment() {
+    private var mAdapter: FavoritesAdapter? = null
     override fun getLayoutResId(): Int {
         return R.layout.fragment_songs
     }
@@ -27,11 +28,11 @@ class FavoriteFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-                val list = SongsBaseHandler.getInstance(App.instance)?.getList()
+                val list = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.getList()
                 if (list != null) {
-                    adapter = SongsAdapter(list)
+                    mAdapter = FavoritesAdapter(list)
                     uiThread {
-                        songsRecyclerView.adapter = adapter
+                        songsRecyclerView.adapter = mAdapter
                         setItemDecoration()
                         songsRecyclerView.adapter.notifyDataSetChanged()
                         songsFastScroller.visibility = View.VISIBLE
@@ -41,12 +42,6 @@ class FavoriteFragment : BaseFragment() {
 
             }
         }
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser)
-            adapter?.notifyDataSetChanged()
     }
 
     private fun setItemDecoration() {

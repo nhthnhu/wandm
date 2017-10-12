@@ -7,6 +7,7 @@ import android.widget.SeekBar
 import com.wandm.App
 import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
+import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
@@ -308,7 +309,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setFavorite(init: Boolean) {
-        val song = SongsBaseHandler.getInstance(App.instance)?.getSong(CurrentPlaylistManager.mSong.data)
+        val song = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
+                getSong(CurrentPlaylistManager.mSong.data)
         if (song == null)
             isFavorite = false
         else
@@ -327,12 +329,14 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 isFavorite = false
                 favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
                 favoriteButton.setColorResource(R.color.color_white)
-                SongsBaseHandler.getInstance(App.instance)?.removeSong(CurrentPlaylistManager.mSong)
+                SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
+                        removeSong(CurrentPlaylistManager.mSong)
             } else {
                 isFavorite = true
                 favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
                 favoriteButton.setColorResource(R.color.color_red)
-                SongsBaseHandler.getInstance(App.instance)?.addSong(CurrentPlaylistManager.mSong)
+                SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
+                        addSong(CurrentPlaylistManager.mSong)
             }
         }
     }

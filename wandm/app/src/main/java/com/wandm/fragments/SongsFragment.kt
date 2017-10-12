@@ -41,12 +41,6 @@ class SongsFragment : BaseFragment() {
         }
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser)
-            adapter?.notifyDataSetChanged()
-    }
-
     private fun setItemDecoration() {
         songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
     }

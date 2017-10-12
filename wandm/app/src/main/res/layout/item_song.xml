@@ -45,17 +45,6 @@
     </LinearLayout>
 
     <net.steamcrafted.materialiconlib.MaterialIconView
-        android:id="@+id/favoriteButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="4dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:scaleType="center"
-        app:materialIcon="heart_outline"
-        app:materialIconColor="#fff"
-        app:materialIconSize="25dp"/>
-
-    <net.steamcrafted.materialiconlib.MaterialIconView
         android:id="@+id/playlistButton"
         android:layout_width="30dp"
         android:layout_height="30dp"

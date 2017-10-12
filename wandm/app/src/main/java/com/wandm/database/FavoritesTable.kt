@@ -1,6 +1,6 @@
 package com.wandm.database
 
-object SongsTable {
+object FavoritesTable {
     val TABLE_NAME = "favoriteSong"
     val ALBUM_ID = "albumId"
     val ALBUM_NAME = "albumName"

@@ -6,15 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.nostra13.universalimageloader.core.DisplayImageOptions
 import com.nostra13.universalimageloader.core.ImageLoader
+import com.wandm.App
 import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
+import com.wandm.database.FavoritesTable
+import com.wandm.database.SongsBaseHandler
 import com.wandm.models.Song
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
 
-class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
+class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<FavoritesAdapter.FavoriteHolder>(), BubbleTextGetter {
 
     override fun getTextToShowInBubble(pos: Int): String {
         return listSongs[pos].title[0].toString()
@@ -24,12 +27,12 @@ class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapte
         return listSongs.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SongHolder {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FavoriteHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_song, parent, false)
-        return SongHolder(view)
+        return FavoriteHolder(view)
     }
 
-    override fun onBindViewHolder(holder: SongHolder?, position: Int) {
+    override fun onBindViewHolder(holder: FavoriteHolder?, position: Int) {
         holder?.bind(listSongs[position])
 
         holder?.songItemView?.setOnClickListener {
@@ -38,10 +41,14 @@ class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapte
 
             MusicPlayer.bind(null)
         }
+
+        holder?.songItemView?.setOnLongClickListener {
+            removeSong(position)
+        }
     }
 
 
-    class SongHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FavoriteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var songItemView: View = itemView
 
         fun bind(song: Song) {
@@ -59,6 +66,17 @@ class SongsAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapte
             itemView.artistItemSongTextView.isSelected = true
         }
 
+    }
+
+    private fun removeSong(position: Int): Boolean {
+        val isSuccessfull = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
+                removeSong(listSongs[position])!!
+        if (isSuccessfull) {
+            listSongs.remove(listSongs[position])
+            this.notifyDataSetChanged()
+            return true
+        }
+        return false
     }
 
 }

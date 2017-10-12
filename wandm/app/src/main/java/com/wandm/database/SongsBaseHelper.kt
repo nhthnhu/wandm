@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class SongsBaseHelper(val context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, VERSION) {
+class SongsBaseHelper(val context: Context, val tableName: String) : SQLiteOpenHelper(context, DATABASE_NAME, null, VERSION) {
 
     companion object {
         private val DATABASE_NAME = "wandm.db"
@@ -12,16 +12,16 @@ class SongsBaseHelper(val context: Context) : SQLiteOpenHelper(context, DATABASE
     }
 
     override fun onCreate(p0: SQLiteDatabase?) {
-        p0?.execSQL("create table " + SongsTable.TABLE_NAME + " (" +
-                SongsTable.DATA + " text primary key, " +
-                SongsTable.TITLE + " text, " +
-                SongsTable.ALBUM_ID + " text, " +
-                SongsTable.ALBUM_NAME + " text, " +
-                SongsTable.ARTIST_ID + " text, " +
-                SongsTable.ARTIST_NAME + " text, " +
-                SongsTable.DURATION + " text, " +
-                SongsTable.TRACK_NUMBER + " text, " +
-                SongsTable.ID + " text)"
+        p0?.execSQL("create table " + tableName + " (" +
+                FavoritesTable.DATA + " text primary key, " +
+                FavoritesTable.TITLE + " text, " +
+                FavoritesTable.ALBUM_ID + " text, " +
+                FavoritesTable.ALBUM_NAME + " text, " +
+                FavoritesTable.ARTIST_ID + " text, " +
+                FavoritesTable.ARTIST_NAME + " text, " +
+                FavoritesTable.DURATION + " text, " +
+                FavoritesTable.TRACK_NUMBER + " text, " +
+                FavoritesTable.ID + " text)"
         )
     }
 
