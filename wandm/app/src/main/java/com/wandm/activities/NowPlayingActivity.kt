@@ -2,11 +2,12 @@ package com.wandm.activities
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
+import com.wandm.App
 import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
+import com.wandm.database.SongsBaseHandler
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.MusicPlayer
@@ -42,11 +43,11 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
         when (event.message) {
             MusicEvent.PREPARED_ACTION -> {
-                Log.d(TAG, "Prepared_action")
                 titleSongTextView.text = CurrentPlaylistManager.mSong.title
                 artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
                 preparedSeekBar()
                 albumImage.start()
+                setFavorite(true)
             }
 
             MusicEvent.PLAY_ACTION -> {
@@ -85,6 +86,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
         setShuffleMode(true)
         setRepeatMode(true)
+        setFavorite(true)
 
         playpauseButton.setOnClickListener(this)
         playpauseWrapper.setOnClickListener(this)
@@ -237,15 +239,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             }
 
             R.id.favoriteButton -> {
-                if (isFavorite) {
-                    isFavorite = false
-                    favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
-                    favoriteButton.setColorResource(R.color.color_white)
-                } else {
-                    isFavorite = true
-                    favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
-                    favoriteButton.setColorResource(R.color.color_red)
-                }
+                setFavorite(false)
             }
         }
     }
@@ -303,6 +297,33 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 shuffleButton.setColorResource(R.color.color_primary_dark)
                 PreferencesUtils.setShuffleMode(isShuffle)
             }
+        }
+    }
+
+    private fun setFavorite(init: Boolean) {
+        isFavorite = CurrentPlaylistManager.mSong.isFavorite()
+
+        if (init) {
+            if (isFavorite) {
+                favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
+                favoriteButton.setColorResource(R.color.color_red)
+            } else {
+                favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
+                favoriteButton.setColorResource(R.color.color_white)
+            }
+        } else {
+            if (isFavorite) {
+                isFavorite = false
+                favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
+                favoriteButton.setColorResource(R.color.color_white)
+                SongsBaseHandler.getInstance(App.instance)?.removeSong(CurrentPlaylistManager.mSong)
+            } else {
+                isFavorite = true
+                favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
+                favoriteButton.setColorResource(R.color.color_red)
+                SongsBaseHandler.getInstance(App.instance)?.addSong(CurrentPlaylistManager.mSong)
+            }
+            CurrentPlaylistManager.mSong.setFavorite(isFavorite)
         }
     }
 
