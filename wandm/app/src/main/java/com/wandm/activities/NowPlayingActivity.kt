@@ -12,6 +12,7 @@ import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
+import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_now_playing.*
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 import org.greenrobot.eventbus.EventBus
@@ -48,6 +49,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 preparedSeekBar()
                 albumImage.start()
                 setFavorite(true)
+                setAlbumArt()
             }
 
             MusicEvent.PLAY_ACTION -> {
@@ -73,6 +75,12 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 playpauseButton.startAnimation()
                 albumImage.stop()
             }
+
+            MusicEvent.REMOVE_NOTI_ACTION -> {
+                playpauseButton.isPlayed = false
+                playpauseButton.startAnimation()
+                albumImage.stop()
+            }
         }
     }
 
@@ -87,6 +95,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         setShuffleMode(true)
         setRepeatMode(true)
         setFavorite(true)
+        setAlbumArt()
 
         playpauseButton.setOnClickListener(this)
         playpauseWrapper.setOnClickListener(this)
@@ -95,8 +104,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         shuffleButton.setOnClickListener(this)
         repeatButton.setOnClickListener(this)
         favoriteButton.setOnClickListener(this)
-
-        albumImage.setCoverDrawable(R.drawable.ic_action_head_set_light)
 
         artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
         titleSongTextView.text = CurrentPlaylistManager.mSong.title
@@ -328,6 +335,11 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 SongsBaseHandler.getInstance(App.instance)?.addSong(CurrentPlaylistManager.mSong)
             }
         }
+    }
+
+    private fun setAlbumArt() {
+        val uri = Utils.getAlbumArtUri(CurrentPlaylistManager.mSong.albumId).toString()
+        albumImage.setCoverURL(uri)
     }
 
 }

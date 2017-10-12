@@ -1,23 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="8dp">
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/titleItemSongTextView"
-        style="@style/WMTextStyleDark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/albumArt"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="4dp"/>
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/artistItemSongTextView"
-        style="@style/WMTextStyleDark"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="14sp"/>
+        android:layout_weight="1"
+        android:gravity="start"
+        android:orientation="vertical">
 
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/titleItemSongTextView"
+            style="@style/WMTextStyleDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:gravity="start"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/artistItemSongTextView"
+            style="@style/WMTextStyleDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:gravity="start"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <net.steamcrafted.materialiconlib.MaterialIconView
+        android:id="@+id/favoriteButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="center"
+        app:materialIcon="heart_outline"
+        app:materialIconColor="#fff"
+        app:materialIconSize="25dp"/>
+
+    <net.steamcrafted.materialiconlib.MaterialIconView
+        android:id="@+id/playlistButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="center"
+        app:materialIcon="playlist_plus"
+        app:materialIconColor="#fff"
+        app:materialIconSize="25dp"/>
 </LinearLayout>

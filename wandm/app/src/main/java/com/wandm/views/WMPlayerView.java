@@ -128,7 +128,7 @@ public class WMPlayerView extends View {
   /**
    * Handler will post runnable object every @ROTATE_DELAY seconds.
    */
-  private static int ROTATE_DELAY = 10;
+  private static int ROTATE_DELAY = 25;
 
   /**
    * 1 sn = 1000 ms
@@ -246,7 +246,7 @@ public class WMPlayerView extends View {
     if (mShader == null) return;
 
     //Draw cover image
-    float radius = mCenterX <= mCenterY ? mCenterX - 75.0f : mCenterY - 75.0f;
+    float radius = mCenterX <= mCenterY ? mCenterX - 25.0f : mCenterY - 25.0f;
     canvas.rotate(mRotateDegrees, mCenterX, mCenterY);
     canvas.drawCircle(mCenterX, mCenterY, radius, mPaintCover);
 

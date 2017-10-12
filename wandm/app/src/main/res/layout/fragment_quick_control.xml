@@ -11,13 +11,11 @@
               android:visibility="gone">
 
 
-    <com.wandm.views.SquareImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/albumImageView"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_alignParentLeft="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_action_headset_dark"/>
+        android:layout_marginEnd="4dp"/>
 
 
     <LinearLayout

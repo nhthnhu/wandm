@@ -2,14 +2,16 @@ package com.wandm.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import com.nostra13.universalimageloader.core.DisplayImageOptions
+import com.nostra13.universalimageloader.core.ImageLoader
 import com.wandm.R
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.MusicPlayer
+import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.fragment_quick_control.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -27,6 +29,7 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
                 controlFragment.visibility = View.VISIBLE
                 titleSongTextView.text = CurrentPlaylistManager.mSong.title
                 artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
+                setAlbumArt()
             }
 
             MusicEvent.PLAY_ACTION -> {
@@ -71,14 +74,13 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
         titleSongTextView.isSelected = true
         artistSongTextView.isSelected = true
 
-        Log.d(TAG, "onCreatedView")
-
         if (MusicPlayer.isServiceBound) {
             controlFragment.visibility = View.VISIBLE
             titleSongTextView.text = CurrentPlaylistManager.mSong.title
             artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
             playPauseButton.isPlayed = MusicPlayer.isPlaying()
             playPauseButton.startAnimation()
+            setAlbumArt()
         }
     }
 
@@ -113,6 +115,15 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun setAlbumArt(){
+        ImageLoader.getInstance().displayImage(
+                Utils.getAlbumArtUri(CurrentPlaylistManager.mSong.albumId).toString(),
+                albumImageView, DisplayImageOptions.Builder().cacheInMemory(true).
+                showImageOnFail(R.drawable.ic_action_headset_dark).
+                resetViewBeforeLoading(true).build()
+        )
     }
 
 }
