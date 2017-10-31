@@ -85,8 +85,9 @@ class MainActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.search_item_menu -> {
-                val dialog = SearchDialogFragment()
-                dialog.show(supportFragmentManager, "SearchDialogFragment")
+                val fragmentManager = MainActivity.instance.supportFragmentManager
+                val dialogFragment = SearchDialogFragment.newInstance()
+                dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
             }
         }
         return true

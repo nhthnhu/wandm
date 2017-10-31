@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.item_playlist.view.*
 
 class PlaylistAdapter(val listPlaylists: ArrayList<String>,
                       val listener: (String) -> Unit) : RecyclerView.Adapter<PlaylistAdapter.PlaylistHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PlaylistHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_playlist, parent, false)
         return PlaylistHolder(view)

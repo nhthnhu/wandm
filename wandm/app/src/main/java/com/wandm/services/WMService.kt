@@ -388,16 +388,27 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
         LocalBroadcastManager.getInstance(App.instance).
                 registerReceiver(mBecomingNoisyReceiver, noisyIntent)
 
+        val removeNotiIntent = IntentFilter(Constants.REMOVE_MUSIC_NOTI)
+        LocalBroadcastManager.getInstance(App.instance).
+                registerReceiver(mRemoveNotiReceiver, removeNotiIntent)
+
     }
 
     private fun unregister() {
         LocalBroadcastManager.getInstance(App.instance).unregisterReceiver(mBecomingNoisyReceiver)
+        LocalBroadcastManager.getInstance(App.instance).unregisterReceiver(mRemoveNotiReceiver)
     }
 
     private val mBecomingNoisyReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             mBinder.pause()
             getNotification(PlaybackStatus.PAUSE)
+        }
+    }
+
+    private val mRemoveNotiReceiver = object : BroadcastReceiver() {
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            removeNotification()
         }
     }
 }

@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wandm.R
-import com.wandm.models.ListMenus
-import com.wandm.models.Menu
+import com.wandm.models.menu.ListMenus
+import com.wandm.models.menu.Menu
 import kotlinx.android.synthetic.main.item_menu.view.*
 
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {

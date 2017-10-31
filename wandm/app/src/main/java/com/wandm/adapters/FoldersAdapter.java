@@ -23,7 +23,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wandm.R;
 import com.wandm.loaders.FolderLoader;
 import com.wandm.loaders.SongLoader;
-import com.wandm.models.Song;
+import com.wandm.models.song.Song;
 import com.wandm.utils.PreferencesUtils;
 import com.wandm.utils.Utils;
 import com.wandm.views.BubbleTextGetter;

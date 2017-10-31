@@ -1,4 +1,4 @@
-package com.wandm.models
+package com.wandm.models.playlist
 
 object ListPlaylists {
     val instance = ListPlaylists

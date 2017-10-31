@@ -1,6 +1,6 @@
 package com.wandm.data
 
-import com.wandm.models.Song
+import com.wandm.models.song.Song
 import com.wandm.utils.PreferencesUtils
 import java.util.*
 

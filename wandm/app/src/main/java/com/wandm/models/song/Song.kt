@@ -1,15 +1,19 @@
-package com.wandm.models
+package com.wandm.models.song
+
+import android.graphics.Bitmap
 
 class Song {
-    val albumId: Long
-    val albumName: String
-    val artistId: Long
-    val artistName: String
-    val duration: Int
-    val id: Long
-    val title: String
-    val trackNumber: Int
-    val data: String
+    var albumId: Long = -1
+    var albumName: String = ""
+    var artistId: Long = 0
+    var artistName: String = ""
+    var duration: Int = -1
+    var id: Long = -1
+    var title: String = ""
+    var trackNumber: Int = -1
+    var data: String = ""
+    var url: String = ""
+    var albumArt: Bitmap? = null
 
 
     constructor() {
@@ -22,6 +26,14 @@ class Song {
         this.duration = -1
         this.trackNumber = -1
         this.data = ""
+        this.url = ""
+        this.albumArt = null
+    }
+
+    constructor(_title: String, _url: String, _albumArt: Bitmap?) {
+        this.url = _url
+        this.albumArt = _albumArt
+        this.title = _title
     }
 
     constructor(_id: Long, _albumId: Long, _artistId: Long, _title: String, _artistName: String,

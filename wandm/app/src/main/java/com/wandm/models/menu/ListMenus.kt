@@ -1,4 +1,4 @@
-package com.wandm.models
+package com.wandm.models.menu
 
 import com.wandm.R
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder

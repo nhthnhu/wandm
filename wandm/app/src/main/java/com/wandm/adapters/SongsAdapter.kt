@@ -8,7 +8,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
-import com.wandm.models.Song
+import com.wandm.models.song.Song
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter

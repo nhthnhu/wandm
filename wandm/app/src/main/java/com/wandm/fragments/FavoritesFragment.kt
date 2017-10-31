@@ -8,6 +8,7 @@ import com.wandm.R
 import com.wandm.adapters.FavoritesAdapter
 import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
+import com.wandm.models.song.Song
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
 import com.wandm.views.DividerItemDecoration
@@ -16,6 +17,8 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class FavoritesFragment : BaseFragment() {
+    private var mList =  ArrayList<Song>()
+
     private var mAdapter: FavoritesAdapter? = null
     override fun getLayoutResId(): Int {
         return R.layout.fragment_songs
@@ -28,9 +31,9 @@ class FavoritesFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-                val list = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.getList()
-                if (list != null) {
-                    mAdapter = FavoritesAdapter(list)
+                mList = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.getList()!!
+                if (mList != null) {
+                    mAdapter = FavoritesAdapter(mList)
                     uiThread {
                         songsRecyclerView.adapter = mAdapter
                         setItemDecoration()
@@ -47,7 +50,7 @@ class FavoritesFragment : BaseFragment() {
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser)
-            mAdapter?.notifyDataSetChanged()
+            mList = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.getList()!!
     }
 
     private fun setItemDecoration() {

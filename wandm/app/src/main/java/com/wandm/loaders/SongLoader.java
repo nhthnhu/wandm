@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-import com.wandm.models.Song;
+import com.wandm.models.song.Song;
 import com.wandm.utils.PreferencesUtils;
 
 import java.util.ArrayList;

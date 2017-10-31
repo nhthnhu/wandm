@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.wandm.R
 import com.wandm.adapters.PlaylistAdapter
 import com.wandm.database.FavoritesTable
-import com.wandm.models.ListPlaylists
+import com.wandm.models.playlist.ListPlaylists
 import kotlinx.android.synthetic.main.dialog_playlist.*
 
 class PlaylistDialogFragment : BaseDialogFragment() {

@@ -11,7 +11,7 @@ import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
-import com.wandm.models.Song
+import com.wandm.models.song.Song
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter

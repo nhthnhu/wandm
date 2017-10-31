@@ -135,7 +135,7 @@ public class DownloadService extends IntentService {
     }
 
     /**
-     * This function will be call, when file download error
+     * This function will be called when file download error
      */
     private void doDownloadFailed() {
         builder.setProgress(0, 0, false);
