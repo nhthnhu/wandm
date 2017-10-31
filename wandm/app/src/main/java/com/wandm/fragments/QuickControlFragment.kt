@@ -3,8 +3,8 @@ package com.wandm.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.nostra13.universalimageloader.core.DisplayImageOptions
-import com.nostra13.universalimageloader.core.ImageLoader
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.data.CurrentPlaylistManager
@@ -118,12 +118,24 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setAlbumArt(){
-        ImageLoader.getInstance().displayImage(
-                Utils.getAlbumArtUri(CurrentPlaylistManager.mSong.albumId).toString(),
-                albumImageView, DisplayImageOptions.Builder().cacheInMemory(true).
-                showImageOnFail(R.drawable.ic_action_headset_dark).
-                resetViewBeforeLoading(true).build()
-        )
+        var uri = ""
+
+        if (CurrentPlaylistManager.mSong.albumId == -1.toLong())
+            uri = CurrentPlaylistManager.mSong.albumArt
+        else
+            uri = Utils.getAlbumArtUri(CurrentPlaylistManager.mSong.albumId).toString()
+
+        Picasso.with(context)
+                .load(uri)
+                .into(albumImageView, object : Callback {
+                    override fun onSuccess() {
+
+                    }
+
+                    override fun onError() {
+                        albumImageView.background = context.getDrawable(R.drawable.ic_action_headset_dark)
+                    }
+                })
     }
 
 }

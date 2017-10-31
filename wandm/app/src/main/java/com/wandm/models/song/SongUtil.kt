@@ -1,9 +1,6 @@
 package com.wandm.models.song
 
-import android.graphics.Bitmap
 import android.util.Log
-import com.wandm.models.RequestListener
-import com.wandm.models.bitmap.BitmapRequest
 import org.json.JSONArray
 import java.net.URL
 
@@ -13,7 +10,7 @@ object SongUtil {
     fun getListMusicModel(name: String): ArrayList<Song>? {
         val url = "http://j.ginggong.com/jOut.ashx?" +
                 "k=" + name.replace(" ", "%20") + "&" +
-                "h=mp3.zing.vn&" +
+                "h=nhaccuatui.com&" +
                 "code=0d014f53-b002-4126-8c4a-a3f8270fb794"
 
 
@@ -33,17 +30,7 @@ object SongUtil {
             val avatarUrl = jsonObject.getString("Avatar").replace("\u0026", "&")
             val urlDownload = jsonObject.getString("UrlJunDownload").replace("\u0026", "&")
 
-            var bitmap: Bitmap? = null
-            val bitmapListener = object : RequestListener<Bitmap> {
-                override fun onComplete(data: Bitmap?) {
-                    bitmap = data
-                    Log.d(TAG, data.toString())
-                }
-            }
-            BitmapRequest(avatarUrl, bitmapListener).execute()
-
-            val song = Song(title, urlDownload, bitmap)
-
+            val song = Song(title, urlDownload, avatarUrl)
             list.add(song)
         }
 

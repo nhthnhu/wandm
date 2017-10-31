@@ -4,15 +4,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import com.wandm.R
-import com.wandm.data.CurrentPlaylistManager
 import com.wandm.models.song.Song
-import com.wandm.services.MusicPlayer
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_online_song.view.*
 
 class SearchAdapter(private val listSongs: ArrayList<Song>,
-                    val listener: (Song) -> Unit) : RecyclerView.Adapter<SearchAdapter.SearchHolder>(), BubbleTextGetter {
+                    val listener: (Song, Int, String) -> Unit) : RecyclerView.Adapter<SearchAdapter.SearchHolder>(), BubbleTextGetter {
 
     override fun getTextToShowInBubble(pos: Int): String {
         return listSongs[pos].title[0].toString()
@@ -31,13 +30,11 @@ class SearchAdapter(private val listSongs: ArrayList<Song>,
         holder?.bind(listSongs[position])
 
         holder?.itemView?.titleItemSongTextView?.setOnClickListener {
-            CurrentPlaylistManager.mListSongs = listSongs
-            CurrentPlaylistManager.mPosition = position
-            MusicPlayer.bind(null)
+            listener(listSongs.get(position), position, "Play")
         }
 
         holder?.itemView?.downloadtButton?.setOnClickListener {
-            listener(listSongs.get(position))
+            listener(listSongs.get(position), position,"Download")
         }
     }
 
@@ -46,7 +43,7 @@ class SearchAdapter(private val listSongs: ArrayList<Song>,
         fun bind(song: Song) {
             itemView.titleItemSongTextView.text = song.title
             itemView.titleItemSongTextView.isSelected = true
-            itemView.albumArt.setImageBitmap(song.albumArt)
+            Picasso.with(itemView.context).load(song.albumArt).into(itemView.albumArt)
         }
 
     }

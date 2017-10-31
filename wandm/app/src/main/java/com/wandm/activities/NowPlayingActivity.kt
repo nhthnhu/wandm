@@ -19,6 +19,7 @@ import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.jetbrains.anko.doAsync
 import java.util.concurrent.TimeUnit
 
 class NowPlayingActivity : BaseActivity(), View.OnClickListener {
@@ -342,8 +343,16 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setAlbumArt() {
-        val uri = Utils.getAlbumArtUri(CurrentPlaylistManager.mSong.albumId).toString()
-        albumImage.setCoverURL(uri)
+        var uri = ""
+
+        if (CurrentPlaylistManager.mSong.albumId == -1.toLong())
+            uri = CurrentPlaylistManager.mSong.albumArt
+        else
+            uri = Utils.getAlbumArtUri(CurrentPlaylistManager.mSong.albumId).toString()
+
+        doAsync {
+            albumImage.setCoverURL(uri)
+        }
     }
 
 }

@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.nostra13.universalimageloader.core.DisplayImageOptions
-import com.nostra13.universalimageloader.core.ImageLoader
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.models.song.Song
@@ -50,11 +50,17 @@ class SongsAdapter(private val listSongs: ArrayList<Song>,
 
         fun bind(song: Song) {
 
-            ImageLoader.getInstance().displayImage(
-                    Utils.getAlbumArtUri(song.albumId).toString(),
-                    itemView.albumArt, DisplayImageOptions.Builder().cacheInMemory(true).
-                    showImageOnFail(R.drawable.ic_action_headset_dark).
-                    resetViewBeforeLoading(true).build())
+            Picasso.with(itemView.context)
+                    .load(Utils.getAlbumArtUri(song.albumId).toString())
+                    .into(itemView.albumArt, object : Callback {
+                override fun onSuccess() {
+
+                }
+
+                override fun onError() {
+                   itemView.albumArt.background = itemView.context.getDrawable(R.drawable.ic_action_headset_dark)
+                }
+            })
 
             itemView.titleItemSongTextView.text = song.title
             itemView.artistItemSongTextView.text = song.artistName

@@ -55,7 +55,6 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
         try {
             mPlayer.setDataSource(dataSource)
         } catch (e: Exception) {
-            e.printStackTrace()
         }
 
         mPlayer.prepareAsync()

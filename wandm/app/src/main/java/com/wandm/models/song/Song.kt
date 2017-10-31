@@ -1,7 +1,5 @@
 package com.wandm.models.song
 
-import android.graphics.Bitmap
-
 class Song {
     var albumId: Long = -1
     var albumName: String = ""
@@ -12,8 +10,7 @@ class Song {
     var title: String = ""
     var trackNumber: Int = -1
     var data: String = ""
-    var url: String = ""
-    var albumArt: Bitmap? = null
+    var albumArt: String = ""
 
 
     constructor() {
@@ -26,12 +23,11 @@ class Song {
         this.duration = -1
         this.trackNumber = -1
         this.data = ""
-        this.url = ""
-        this.albumArt = null
+        this.albumArt = ""
     }
 
-    constructor(_title: String, _url: String, _albumArt: Bitmap?) {
-        this.url = _url
+    constructor(_title: String, _url: String, _albumArt: String) {
+        this.data = _url
         this.albumArt = _albumArt
         this.title = _title
     }
