@@ -28,7 +28,6 @@ import java.net.URLConnection;
 
 public class DownloadService extends IntentService {
     public static final String FILE_NAME = "file name";
-    public static final String FILE_PATH = "file path";
     public static final String URL_PATH = "url path";
     public static final String NOTIFICATION = "notification";
     public static final String RESULT = "result";
@@ -36,7 +35,6 @@ public class DownloadService extends IntentService {
     private NotificationManager notificationManager;
     private Notification.Builder builder;
     private String fileName;
-    private String filePath;
 
     public DownloadService() {
         super("DownLoadService");
@@ -45,10 +43,9 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         fileName = intent.getStringExtra(FILE_NAME);
-        filePath = intent.getStringExtra(FILE_PATH);
         String urlPath = intent.getStringExtra(URL_PATH);
 
-        doDownload(urlPath, fileName, filePath);
+        doDownload(urlPath, fileName);
 
     }
 
@@ -57,9 +54,8 @@ public class DownloadService extends IntentService {
      *
      * @param urlPath:  url of file need download
      * @param fileName: name of file need download
-     * @param filePath: path of file need download
      */
-    public void doDownload(String urlPath, String fileName, String filePath) {
+    public void doDownload(String urlPath, String fileName) {
 
         setNotification();
         int result;
@@ -69,10 +65,12 @@ public class DownloadService extends IntentService {
             URLConnection connection = url.openConnection();
             int fileLength = connection.getContentLength();
 
-            File storagePath = new File(String.valueOf(Environment.getExternalStorageDirectory()) + "\\" + filePath);
+            File storagePath = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_MUSIC), fileName + ".mp3");
+
             //do download
             InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-            OutputStream outputStream = new FileOutputStream(new File(storagePath, fileName));
+            OutputStream outputStream = new FileOutputStream(storagePath);
             int downloaded = 0;
 
             try {
@@ -83,7 +81,7 @@ public class DownloadService extends IntentService {
                     outputStream.write(buffer, 0, bytesRead);
                     int percent = downloaded * 100 / fileLength + 1;
                     if (percent < 100) {
-                        builder.setContentText(getString(R.string.downloading) + ": " + (percent - 1));
+                        builder.setContentText(getString(R.string.downloading) + ": " + (percent - 1) + "%");
                         builder.setProgress(100, percent, false);
                     } else {
                         builder.setProgress(0, 0, false);
@@ -145,6 +143,5 @@ public class DownloadService extends IntentService {
         File storage = new File(String.valueOf(Environment.getExternalStorageDirectory()));
         File file = new File(storage, fileName);
         if (!file.delete()) Log.d(TAG, "doDownloadFailed: can't delete");
-        ;
     }
 }

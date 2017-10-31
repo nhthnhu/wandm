@@ -28,6 +28,7 @@
         <activity android:name=".activities.NowPlayingActivity"/>
 
         <service android:name=".services.WMService"/>
+        <service android:name=".services.DownloadService"/>
     </application>
 
 </manifest>

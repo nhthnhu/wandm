@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SongLoader {
-
+    private static final String TAG = "SongLoader";
     private static final long[] sEmptyList = new long[0];
 
     public static ArrayList<Song> getSongsForCursor(Cursor cursor) {
@@ -131,7 +131,7 @@ public class SongLoader {
     }
 
     private static Cursor makeSongCursor(Context context, String selection, String[] paramArrayOfString, String sortOrder) {
-        String selectionStatement = "is_music=1 AND title != ''";
+        String selectionStatement = "is_music != 0 AND title != ''";
 
         if (!TextUtils.isEmpty(selection)) {
             selectionStatement = selectionStatement + " AND " + selection;

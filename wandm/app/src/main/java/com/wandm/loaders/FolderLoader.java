@@ -1,6 +1,7 @@
 package com.wandm.loaders;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 
 public class FolderLoader {
+    private static final String TAG = "FolderLoader";
 
     private static final String[] SUPPORTED_EXT = new String[] {
             "mp3",
@@ -59,6 +61,7 @@ public class FolderLoader {
             @Override
             public boolean accept(File pathname) {
                 String name = pathname.getName();
+                Log.d(TAG, pathname.toString());
                 return !".".equals(name) && !"..".equals(name) && pathname.canRead() && (pathname.isDirectory()  || (pathname.isFile() && checkFileExt(name)));
             }
 

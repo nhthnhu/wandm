@@ -1,5 +1,6 @@
 package com.wandm.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -11,6 +12,7 @@ import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
+import com.wandm.services.DownloadService
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
@@ -39,6 +41,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     private var isShuffle = false
     private var repeatMode = 0
     private var isFavorite = false
+    private var isDownloaded = false
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -97,6 +100,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         setShuffleMode(true)
         setRepeatMode(true)
         setFavorite(true)
+        setDownload(true)
         setAlbumArt()
 
         playpauseButton.setOnClickListener(this)
@@ -106,6 +110,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         shuffleButton.setOnClickListener(this)
         repeatButton.setOnClickListener(this)
         favoriteButton.setOnClickListener(this)
+        downloadButton.setOnClickListener(this)
 
         artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
         titleSongTextView.text = CurrentPlaylistManager.mSong.title
@@ -133,10 +138,10 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         setBlurBackground(nowPlayingBackground, nowPlayingBlurringView)
     }
 
-    override fun onStop() {
-        super.onStop()
+
+    override fun onDestroy() {
+        super.onDestroy()
         EventBus.getDefault().unregister(this)
-        stop()
     }
 
     private fun setupToolbar() {
@@ -250,6 +255,10 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             R.id.favoriteButton -> {
                 setFavorite(false)
             }
+
+            R.id.downloadButton -> {
+                setDownload(false)
+            }
         }
     }
 
@@ -352,6 +361,25 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
         doAsync {
             albumImage.setCoverURL(uri)
+        }
+    }
+
+    private fun setDownload(init: Boolean) {
+        if (init) {
+            if (CurrentPlaylistManager.mSong.albumId != -1.toLong()) {
+                downloadButton.setColorResource(R.color.color_primary_dark)
+                downloadButton.isEnabled = false
+                isDownloaded = true
+            } else {
+                downloadButton.setColorResource(R.color.color_white)
+                downloadButton.isEnabled = true
+                isDownloaded = false
+            }
+        } else {
+            val intent = Intent(this, DownloadService::class.java)
+            intent.putExtra(DownloadService.FILE_NAME, CurrentPlaylistManager.mSong.title + ".mp3")
+            intent.putExtra(DownloadService.URL_PATH, CurrentPlaylistManager.mSong.data)
+            startService(intent)
         }
     }
 
