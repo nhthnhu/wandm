@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.wandm.R;
 
@@ -56,6 +57,7 @@ public class DownloadService extends IntentService {
      * @param fileName: name of file need download
      */
     public void doDownload(String urlPath, String fileName) {
+        Toast.makeText(this, getString(R.string.downloading), Toast.LENGTH_SHORT).show();
 
         setNotification();
         int result;
@@ -99,6 +101,7 @@ public class DownloadService extends IntentService {
                 inputStream.close();
                 outputStream.flush();
                 outputStream.close();
+                Toast.makeText(this, getString(R.string.download_completed), Toast.LENGTH_SHORT).show();
             }
 
         } catch (MalformedURLException e) {
@@ -143,5 +146,6 @@ public class DownloadService extends IntentService {
         File storage = new File(String.valueOf(Environment.getExternalStorageDirectory()));
         File file = new File(storage, fileName);
         if (!file.delete()) Log.d(TAG, "doDownloadFailed: can't delete");
+        Toast.makeText(this, getString(R.string.download_failed), Toast.LENGTH_SHORT).show();
     }
 }

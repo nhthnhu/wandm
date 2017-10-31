@@ -149,6 +149,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false)
+            actionBar.setShowHideAnimationEnabled(true)
+            actionBar.setDisplayHomeAsUpEnabled(true)
         }
     }
 
