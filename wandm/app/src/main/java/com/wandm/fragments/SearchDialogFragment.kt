@@ -9,9 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView.OnEditorActionListener
 import com.wandm.App
 import com.wandm.R
+import com.wandm.activities.MainActivity
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.SearchAdapter
 import com.wandm.data.CurrentPlaylistManager
@@ -20,12 +20,13 @@ import com.wandm.models.song.Song
 import com.wandm.models.song.SongRequest
 import com.wandm.services.MusicPlayer
 import kotlinx.android.synthetic.main.dialog_search.*
-
+import java.util.*
 
 
 class SearchDialogFragment : BaseDialogFragment() {
 
     private val TAG = "SearchDialogFragment"
+    private val REQ_CODE_SPEECH_INPUT = 100
     private var listSong: ArrayList<Song>? = null
 
     companion object {
@@ -43,7 +44,7 @@ class SearchDialogFragment : BaseDialogFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        keywordEditText.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+        keywordEditText.setOnEditorActionListener({ v, actionId, event ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val musicListener = object : RequestListener<ArrayList<Song>> {
@@ -57,7 +58,7 @@ class SearchDialogFragment : BaseDialogFragment() {
                             songsProgressBar.visibility = View.GONE
                             listSong = data
                             val adapter = SearchAdapter(data) { song, position, state ->
-                                when (state){
+                                when (state) {
                                     "Dowload" -> {
                                         Log.d(TAG, state)
                                     }
@@ -86,6 +87,11 @@ class SearchDialogFragment : BaseDialogFragment() {
             handled
         })
 
-    }
+        speechToTextButton.setOnClickListener {
+            val fragmentManager = MainActivity.instance.supportFragmentManager
+            val dialogFragment = SpeechDialogFragment.newInstance()
+            dialogFragment.show(fragmentManager, "SpeechDialogFragment")
+        }
 
+    }
 }

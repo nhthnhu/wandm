@@ -3,4 +3,15 @@
 
     <string name="menu_show_as_entry_default">Default</string>
     <string name="select_storage">Select storage</string>
+
+    <string name="error_audio">Lỗi ghi âm.</string>
+    <string name="error_client">Xin lỗi, tôi không nghe rõ bạn nói!</string>
+    <string name="error_insufficient_permissions">Không thể kết nối tới Microphone.</string>
+    <string name="error_network">Vui lòng kiểm tra lại kết nối mạng!</string>
+    <string name="error_network_timeout">Network timeout.</string>
+    <string name="error_no_match">Xin lỗi, tôi không nghe rõ!</string>
+    <string name="error_recognizer_busy">Dịch vụ ghi âm đang bận, vui lòng thử lại!</string>
+    <string name="error_server">Vui lòng kiểm tra lại kết nối mạng!</string>
+    <string name="error_speech_timeout">Sao bạn không nói gì cả?</string>
+    <string name="error_default">Vui lòng thử lại!</string>
 </resources>

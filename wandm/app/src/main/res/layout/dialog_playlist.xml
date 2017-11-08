@@ -20,7 +20,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
             app:materialIcon="heart"
             app:materialIconColor="@color/color_red"/>
@@ -45,7 +45,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
             app:materialIcon="playlist_plus"
             app:materialIconColor="@color/color_white"/>
@@ -81,7 +81,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="4dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
             app:materialIcon="check"
             app:materialIconColor="@color/color_white"/>

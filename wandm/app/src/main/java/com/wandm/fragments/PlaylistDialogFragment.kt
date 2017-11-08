@@ -18,7 +18,6 @@ class PlaylistDialogFragment : BaseDialogFragment() {
 
     companion object {
         private var listener: ((String) -> Unit)? = null
-        private val TABLE_NAME_EXTRA = "table_name_extra"
 
         fun newInstance(listener: (String) -> Unit): PlaylistDialogFragment {
             this.listener = listener

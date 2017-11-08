@@ -12,6 +12,7 @@ import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
+import com.wandm.fragments.PlaylistDialogFragment
 import com.wandm.services.DownloadService
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
@@ -111,6 +112,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         repeatButton.setOnClickListener(this)
         favoriteButton.setOnClickListener(this)
         downloadButton.setOnClickListener(this)
+        playlistButton.setOnClickListener(this)
 
         artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
         titleSongTextView.text = CurrentPlaylistManager.mSong.title
@@ -260,6 +262,17 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
             R.id.downloadButton -> {
                 setDownload(false)
+            }
+
+            R.id.playlistButton -> {
+                doAsync {
+                    val fragmentManager = MainActivity.instance.supportFragmentManager
+                    val dialogFragment = PlaylistDialogFragment.newInstance { title ->
+                        SongsBaseHandler.getInstance(App.instance, title)?.
+                                addSong(CurrentPlaylistManager.mSong)
+                    }
+                    dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+                }
             }
         }
     }

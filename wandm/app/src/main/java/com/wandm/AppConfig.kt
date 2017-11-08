@@ -5,6 +5,8 @@ import com.ms_square.etsyblur.BlurConfig
 
 object AppConfig {
 
+    val DEBUG = java.lang.Boolean.parseBoolean("true")
+
     /**
      * @return BlurConfig to support BlurringView of EtsyBlur
      */
@@ -16,4 +18,5 @@ object AppConfig {
                 .debug(true)
                 .build()
     }
+
 }

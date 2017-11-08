@@ -1,10 +1,12 @@
 package com.wandm.data
 
+import android.util.Log
 import com.wandm.models.song.Song
 import com.wandm.utils.PreferencesUtils
 import java.util.*
 
 object CurrentPlaylistManager {
+    val TAG = "CurrentPlaylistManager"
 
     val instance = CurrentPlaylistManager
 
@@ -31,6 +33,7 @@ object CurrentPlaylistManager {
         }
 
         mSong = mListSongs[mPosition]
+        Log.d(TAG, mSong.data)
         return mSong
     }
 
@@ -48,6 +51,7 @@ object CurrentPlaylistManager {
         }
 
         mSong = mListSongs[mPosition]
+        Log.d(TAG, mSong.data)
         return mSong
     }
 
