@@ -40,7 +40,7 @@ public class WMWaveformView extends View {
     public WMWaveformView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        WAVE_COLOR = Color.DKGRAY;
+        WAVE_COLOR = Color.LTGRAY;
         initialize();
     }
 

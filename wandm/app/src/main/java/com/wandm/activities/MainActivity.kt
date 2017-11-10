@@ -17,6 +17,7 @@ import com.wandm.adapters.MenuAdapter
 import com.wandm.fragments.*
 import com.wandm.permissions.PermissionCallback
 import com.wandm.permissions.PermissionHelper
+import com.wandm.speech.Speech
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_list_view_pagers.*
@@ -63,6 +64,7 @@ class MainActivity : BaseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         setupToolbar()
+        Speech.init(this)
         instance = this
         // blurringView.blurConfig(AppConfig.getBlurViewConfig())
         addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")

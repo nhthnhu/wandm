@@ -392,7 +392,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             }
         } else {
             val intent = Intent(this, DownloadService::class.java)
-            intent.putExtra(DownloadService.FILE_NAME, CurrentPlaylistManager.mSong.title + ".mp3")
+            intent.putExtra(DownloadService.FILE_NAME, CurrentPlaylistManager.mSong.title)
             intent.putExtra(DownloadService.URL_PATH, CurrentPlaylistManager.mSong.data)
             startService(intent)
         }
