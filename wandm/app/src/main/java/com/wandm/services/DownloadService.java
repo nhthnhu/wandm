@@ -23,10 +23,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by tien on 10/5/17.
- */
-
 public class DownloadService extends IntentService {
     public static final String FILE_NAME = "file name";
     public static final String URL_PATH = "url path";

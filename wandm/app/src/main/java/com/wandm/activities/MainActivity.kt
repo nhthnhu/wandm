@@ -30,24 +30,23 @@ class MainActivity : BaseActivity() {
         lateinit var instance: MainActivity
     }
 
+    // Listening events of SlidingPaneLayout
     private val panelListener = object : SlidingPaneLayout.PanelSlideListener {
 
         override fun onPanelClosed(arg0: View) {
-
 
         }
 
         override fun onPanelOpened(arg0: View) {
 
-
         }
 
         override fun onPanelSlide(arg0: View, arg1: Float) {
 
-
         }
 
     }
+
     private val permissionReadStorageCallback = object : PermissionCallback {
         override fun permissionGranted() {
             setupUI()
@@ -58,15 +57,12 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_main
-    }
+    override fun getLayoutResId() = R.layout.activity_main
 
     override fun initView(savedInstanceState: Bundle?) {
+        instance = this
         setupToolbar()
         Speech.init(this)
-        instance = this
-        // blurringView.blurConfig(AppConfig.getBlurViewConfig())
         addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
     }
 
@@ -111,6 +107,9 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    /**
+     *  Setup all of UI if permission was granted
+     */
     private fun setupUI() {
         val pagerItems = FragmentPagerItems(this)
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.songs),
@@ -137,6 +136,9 @@ class MainActivity : BaseActivity() {
 
     }
 
+    /**
+     * Checking PermissionReadStorage
+     */
     private fun checkPermissionReadStorage() {
         val permission = Manifest.permission.READ_EXTERNAL_STORAGE
         if (PermissionHelper.checkPermission(permission)) {

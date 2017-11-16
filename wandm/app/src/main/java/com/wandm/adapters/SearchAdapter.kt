@@ -34,7 +34,7 @@ class SearchAdapter(private val listSongs: ArrayList<Song>,
         }
 
         holder?.itemView?.downloadtButton?.setOnClickListener {
-            listener(listSongs.get(position), position,"Download")
+            listener(listSongs.get(position), position, "Download")
         }
     }
 

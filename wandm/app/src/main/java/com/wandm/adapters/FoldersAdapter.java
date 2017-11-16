@@ -9,7 +9,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,7 +33,6 @@ import java.util.List;
 
 public class FoldersAdapter extends RecyclerView.Adapter<FoldersAdapter.ItemHolder> implements BubbleTextGetter {
 
-    @NonNull
     private List<File> mFileSet;
     private List<Song> mSongs;
     private File mRoot;

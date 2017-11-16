@@ -20,9 +20,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
         return MenuHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return ListMenus.instance.size()
-    }
+    override fun getItemCount() = ListMenus.instance.size()
 
 
     inner class MenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

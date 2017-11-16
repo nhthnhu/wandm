@@ -1,7 +1,7 @@
 package com.wandm.models.playlist
 
-object ListPlaylists {
-    val instance = ListPlaylists
+object ListPlaylist {
+    val instance = ListPlaylist
 
     val mList = ArrayList<String>()
 

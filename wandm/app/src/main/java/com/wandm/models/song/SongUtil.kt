@@ -13,9 +13,7 @@ object SongUtil {
                 "h=keeng.vn&" +
                 "code=0d014f53-b002-4126-8c4a-a3f8270fb794"
 
-        //http://j.ginggong.com/jOut.ashx?k=attention&h=mp3.zing.vn&code=0d014f53-b002-4126-8c4a-a3f8270fb794
-
-
+//        http://j.ginggong.com/jOut.ashx?k=attention&h=mp3.zing.vn&code=0d014f53-b002-4126-8c4a-a3f8270fb794
 
         val jsonStr = URL(url).readText()
         Log.d(TAG, url)

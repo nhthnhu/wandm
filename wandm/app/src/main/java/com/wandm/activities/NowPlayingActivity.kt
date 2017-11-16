@@ -1,5 +1,6 @@
 package com.wandm.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -90,9 +91,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_now_playing
-    }
+    override fun getLayoutResId() = R.layout.activity_now_playing
 
     override fun initView(savedInstanceState: Bundle?) {
         setupToolbar()
@@ -121,7 +120,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
         mHandler = Handler()
 
-
         if (MusicPlayer.isPlaying()) {
             playpauseButton.isPlayed = true
             preparedSeekBar()
@@ -132,7 +130,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         }
 
         playpauseButton.startAnimation()
-
     }
 
     override fun onResume() {
@@ -157,8 +154,9 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     }
 
     private val mUpdateSongTime = object : Runnable {
+        @SuppressLint("SetTextI18n")
         override fun run() {
-            if (mServiceBound == true) {
+            if (mServiceBound) {
                 mStartTime = MusicPlayer.position()
 
                 songProgress.progress = mStartTime
@@ -205,6 +203,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun preparedSeekBar() {
         mServiceBound = true
 
@@ -281,32 +280,40 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         repeatMode = PreferencesUtils.getRepeatMode()
 
         if (init) {
-            if (repeatMode == 0) {
-                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
-                repeatButton.setColorResource(R.color.color_white)
-            } else if (repeatMode == 1) {
-                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
-                repeatButton.setColorResource(R.color.color_primary_dark)
-            } else {
-                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
-                repeatButton.setColorResource(R.color.color_primary_dark)
+            when (repeatMode) {
+                0 -> {
+                    repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
+                    repeatButton.setColorResource(R.color.color_white)
+                }
+                1 -> {
+                    repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
+                    repeatButton.setColorResource(R.color.color_primary_dark)
+                }
+                else -> {
+                    repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
+                    repeatButton.setColorResource(R.color.color_primary_dark)
+                }
             }
 
         } else {
-            if (repeatMode == 0) {
-                repeatMode++
-                repeatButton.setColorResource(R.color.color_primary_dark)
-                PreferencesUtils.setRepeatMode(repeatMode)
-            } else if (repeatMode == 1) {
-                repeatMode++
-                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
-                repeatButton.setColorResource(R.color.color_primary_dark)
-                PreferencesUtils.setRepeatMode(repeatMode)
-            } else {
-                repeatMode = 0
-                repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
-                repeatButton.setColorResource(R.color.color_white)
-                PreferencesUtils.setRepeatMode(repeatMode)
+            when (repeatMode) {
+                0 -> {
+                    repeatMode++
+                    repeatButton.setColorResource(R.color.color_primary_dark)
+                    PreferencesUtils.setRepeatMode(repeatMode)
+                }
+                1 -> {
+                    repeatMode++
+                    repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
+                    repeatButton.setColorResource(R.color.color_primary_dark)
+                    PreferencesUtils.setRepeatMode(repeatMode)
+                }
+                else -> {
+                    repeatMode = 0
+                    repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
+                    repeatButton.setColorResource(R.color.color_white)
+                    PreferencesUtils.setRepeatMode(repeatMode)
+                }
             }
         }
     }
@@ -336,10 +343,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     private fun setFavorite(init: Boolean) {
         val song = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
                 getSong(CurrentPlaylistManager.mSong.data)
-        if (song == null)
-            isFavorite = false
-        else
-            isFavorite = true
+        isFavorite = song != null
 
         if (init) {
             if (isFavorite) {
@@ -367,11 +371,11 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setAlbumArt() {
-        var uri = ""
+        val uri: String
 
-        if (CurrentPlaylistManager.mSong.albumId == -1.toLong())
+        if (CurrentPlaylistManager.mSong.albumId == (-1).toLong()) {
             uri = CurrentPlaylistManager.mSong.albumArt
-        else
+        } else
             uri = Utils.getAlbumArtUri(CurrentPlaylistManager.mSong.albumId).toString()
 
         doAsync {
@@ -381,7 +385,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
     private fun setDownload(init: Boolean) {
         if (init) {
-            if (CurrentPlaylistManager.mSong.albumId != -1.toLong()) {
+            if (CurrentPlaylistManager.mSong.albumId != (-1).toLong()) {
                 downloadButton.setColorResource(R.color.color_primary_dark)
                 downloadButton.isEnabled = false
                 isDownloaded = true

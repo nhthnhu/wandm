@@ -15,11 +15,9 @@ import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
 
 class SongsAdapter(private val listSongs: ArrayList<Song>,
-                   val listener: (Song, Int) -> Unit) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
+                   private val listener: (Song, Int) -> Unit) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
 
-    override fun getTextToShowInBubble(pos: Int): String {
-        return listSongs[pos].title[0].toString()
-    }
+    override fun getTextToShowInBubble(pos: Int) = listSongs[pos].title[0].toString()
 
     override fun getItemCount(): Int {
         return listSongs.size
@@ -53,14 +51,14 @@ class SongsAdapter(private val listSongs: ArrayList<Song>,
             Picasso.with(itemView.context)
                     .load(Utils.getAlbumArtUri(song.albumId).toString())
                     .into(itemView.albumArt, object : Callback {
-                override fun onSuccess() {
+                        override fun onSuccess() {
 
-                }
+                        }
 
-                override fun onError() {
-                   itemView.albumArt.background = itemView.context.getDrawable(R.drawable.ic_action_headset_dark)
-                }
-            })
+                        override fun onError() {
+                            itemView.albumArt.background = itemView.context.getDrawable(R.drawable.ic_action_headset_dark)
+                        }
+                    })
 
             itemView.titleItemSongTextView.text = song.title
             itemView.artistItemSongTextView.text = song.artistName

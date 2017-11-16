@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,12 +9,12 @@
         android:id="@+id/nowPlayingBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop" />
 
     <com.ms_square.etsyblur.BlurringView
         android:id="@+id/nowPlayingBlurringView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,14 +36,14 @@
                 android:layout_marginTop="@dimen/appBarTopMargin"
                 android:background="@android:color/transparent"
                 android:theme="@style/Theme.AppCompat"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <com.wandm.views.WMPlayerView
                 android:id="@+id/albumImage"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp" />
 
 
         </FrameLayout>
@@ -68,7 +67,7 @@
                 android:gravity="start"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/artistSongTextView"
@@ -80,7 +79,7 @@
                 android:gravity="start"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,7 +98,7 @@
                     android:scaleType="center"
                     app:materialIcon="heart_outline"
                     app:materialIconColor="#fff"
-                    app:materialIconSize="35dp"/>
+                    app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
                     android:id="@+id/downloadButton"
@@ -110,7 +109,7 @@
                     android:scaleType="center"
                     app:materialIcon="download"
                     app:materialIconColor="#fff"
-                    app:materialIconSize="35dp"/>
+                    app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
                     android:id="@+id/playlistButton"
@@ -121,7 +120,7 @@
                     android:scaleType="center"
                     app:materialIcon="playlist_plus"
                     app:materialIconColor="#fff"
-                    app:materialIconSize="35dp"/>
+                    app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
                     android:id="@+id/setAlarmButton"
@@ -132,7 +131,7 @@
                     android:scaleType="center"
                     app:materialIcon="alarm"
                     app:materialIconColor="#fff"
-                    app:materialIconSize="35dp"/>
+                    app:materialIconSize="35dp" />
 
 
             </LinearLayout>
@@ -150,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="00:00"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <android.support.v7.widget.AppCompatSeekBar
                     android:id="@+id/songProgress"
@@ -158,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"/>
+                    android:background="?android:attr/selectableItemBackgroundBorderless" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/songDuration"
@@ -167,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="00:00"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -189,7 +188,7 @@
                     android:scaleType="center"
                     app:materialIcon="shuffle"
                     app:materialIconColor="#fff"
-                    app:materialIconSize="35dp"/>
+                    app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
                     android:id="@+id/preButton"
@@ -200,7 +199,7 @@
                     android:scaleType="center"
                     app:materialIcon="skip_previous"
                     app:materialIconColor="#fff"
-                    app:materialIconSize="35dp"/>
+                    app:materialIconSize="35dp" />
 
                 <FrameLayout
                     android:layout_width="50dp"
@@ -211,12 +210,12 @@
                         android:id="@+id/playpauseButton"
                         android:layout_width="23dp"
                         android:layout_height="23dp"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center" />
 
                     <View
                         android:id="@+id/playpauseWrapper"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                 </FrameLayout>
 
@@ -229,7 +228,7 @@
                     android:scaleType="center"
                     app:materialIcon="skip_next"
                     app:materialIconColor="#fff"
-                    app:materialIconSize="35dp"/>
+                    app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
                     android:id="@+id/repeatButton"
@@ -240,7 +239,7 @@
                     android:scaleType="center"
                     app:materialIcon="repeat"
                     app:materialIconColor="#fff"
-                    app:materialIconSize="35dp"/>
+                    app:materialIconSize="35dp" />
 
             </LinearLayout>
 

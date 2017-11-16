@@ -1,5 +1,6 @@
 package com.wandm.adapters
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,7 @@ import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_artist.view.*
 
 class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>(), BubbleTextGetter {
-    override fun getTextToShowInBubble(pos: Int): String {
-        return mListArtists[pos].name[0].toString()
-    }
+    override fun getTextToShowInBubble(pos: Int) = mListArtists[pos].name[0].toString()
 
     override fun onBindViewHolder(holder: ArtistsHolder?, position: Int) {
         holder?.bind(mListArtists[position])
@@ -29,13 +28,14 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
 
 
     inner class ArtistsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun bind(artist: Artist) {
             itemView.artistName.text = artist.name
             val albumCount = artist.albumCount
             val songCount = artist.songCount
 
-            var albumString = ""
-            var songString = ""
+            val albumString: String
+            val songString: String
 
             if (albumCount <= 1)
                 albumString = albumCount.toString() + " album"

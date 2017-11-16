@@ -117,7 +117,7 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun setAlbumArt(){
+    private fun setAlbumArt() {
         var uri = ""
 
         if (CurrentPlaylistManager.mSong.albumId == -1.toLong())

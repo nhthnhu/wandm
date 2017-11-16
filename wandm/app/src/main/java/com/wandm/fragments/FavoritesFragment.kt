@@ -17,7 +17,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class FavoritesFragment : BaseFragment() {
-    private var mList =  ArrayList<Song>()
+    private var mList = ArrayList<Song>()
 
     private var mAdapter: FavoritesAdapter? = null
     override fun getLayoutResId(): Int {

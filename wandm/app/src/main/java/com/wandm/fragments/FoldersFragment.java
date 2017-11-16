@@ -92,7 +92,7 @@ public class FoldersFragment extends Fragment implements StorageSelectDialog.OnD
                 mAdapter = new FoldersAdapter(activity, new File(PreferencesUtils.INSTANCE.getLastFolder()));
 
                 updateTheme();
-         }
+            }
             return "Executed";
         }
 

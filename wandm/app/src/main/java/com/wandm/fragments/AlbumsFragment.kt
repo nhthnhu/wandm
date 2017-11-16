@@ -2,9 +2,7 @@ package com.wandm.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.wandm.App
 import com.wandm.R
 import com.wandm.adapters.AlbumsAdapter
@@ -15,7 +13,6 @@ import com.wandm.utils.SortOrder
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.fragment_albums.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.support.v4.uiThread
 import org.jetbrains.anko.uiThread
 
 class AlbumsFragment : BaseFragment() {
@@ -30,7 +27,7 @@ class AlbumsFragment : BaseFragment() {
 
 
 
-        if (activity != null){
+        if (activity != null) {
             doAsync {
                 val albums = AlbumLoader.getAllAlbums(App.instance) as ArrayList<Album>
 
@@ -46,8 +43,8 @@ class AlbumsFragment : BaseFragment() {
         }
     }
 
-    private fun setItemDecoration(){
-        albumsRecyclerView.addItemDecoration(DividerItemDecoration(activity,DividerItemDecoration.VERTICAL_LIST))
+    private fun setItemDecoration() {
+        albumsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
     }
 
 

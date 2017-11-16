@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.wandm.R
 import com.wandm.adapters.PlaylistAdapter
 import com.wandm.database.FavoritesTable
-import com.wandm.models.playlist.ListPlaylists
+import com.wandm.models.playlist.ListPlaylist
 import kotlinx.android.synthetic.main.dialog_playlist.*
 
 class PlaylistDialogFragment : BaseDialogFragment() {
@@ -33,7 +33,7 @@ class PlaylistDialogFragment : BaseDialogFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = PlaylistAdapter(ListPlaylists.mList) { playlist ->
+        val adapter = PlaylistAdapter(ListPlaylist.mList) { playlist ->
             listener!!(playlist)
             removeFragment()
         }
