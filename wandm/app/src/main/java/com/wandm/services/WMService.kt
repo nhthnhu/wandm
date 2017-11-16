@@ -3,13 +3,12 @@ package com.wandm.services
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.media.AudioManager
 import android.media.session.MediaSessionManager
+import android.os.CountDownTimer
 import android.os.IBinder
+import android.os.Messenger
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.media.MediaMetadataCompat
@@ -26,11 +25,14 @@ import com.wandm.data.CurrentPlaylistManager
 import com.wandm.data.PlaybackStatus
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
+import com.wandm.utils.PreferencesUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.jetbrains.anko.consumerIrManager
 
-class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
+class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
+
     companion object {
         private val TAG = "WMSerive"
 
@@ -57,6 +59,8 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
     private var playPauseAction: PendingIntent? = null
     private val NOTIFICATION_ID = 101
 
+    private var countdownTimer: CountDownTimer? = null
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
 
@@ -71,6 +75,37 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
 
             MusicEvent.RESUME_ACTION -> {
                 getNotification(PlaybackStatus.PLAYING)
+            }
+        }
+    }
+
+    override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
+        if (p1.equals(PreferencesUtils.ALARM_SET)) {
+            val timeStr = PreferencesUtils.getAlarm()
+            if (!timeStr.equals("0;;0")) {
+                val timeArr = timeStr.split(";;")
+                val minute = timeArr[0].toLong()
+                val second = timeArr[1].toLong()
+
+                Log.d(TAG, timeStr)
+
+                countdownTimer = object : CountDownTimer((1000 * (minute * 60 + second)), 1000) {
+                    override fun onFinish() {
+                        mPlayer.pause()
+                        PreferencesUtils.setAlarm("0;;0")
+                        EventBus.getDefault().post(MessageEvent(MusicEvent.ALARM_OFF))
+                        Log.d(TAG, "Finish CountDownTimer")
+                    }
+
+                    override fun onTick(p0: Long) {
+                    }
+                }
+                countdownTimer?.start()
+            } else {
+                Log.d(TAG, "Cancel CountDownTimer")
+                countdownTimer?.cancel()
+                PreferencesUtils.setAlarm("0;;0")
+
             }
         }
     }
@@ -392,11 +427,14 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener {
         LocalBroadcastManager.getInstance(App.instance).
                 registerReceiver(mRemoveNotiReceiver, removeNotiIntent)
 
+        PreferencesUtils.mPreferences.registerOnSharedPreferenceChangeListener(this)
+
     }
 
     private fun unregister() {
         LocalBroadcastManager.getInstance(App.instance).unregisterReceiver(mBecomingNoisyReceiver)
         LocalBroadcastManager.getInstance(App.instance).unregisterReceiver(mRemoveNotiReceiver)
+        PreferencesUtils.mPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
     private val mBecomingNoisyReceiver = object : BroadcastReceiver() {

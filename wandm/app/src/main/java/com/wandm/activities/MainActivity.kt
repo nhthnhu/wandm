@@ -35,13 +35,16 @@ class MainActivity : BaseActivity() {
 
         override fun onPanelClosed(arg0: View) {
 
+
         }
 
         override fun onPanelOpened(arg0: View) {
 
+
         }
 
         override fun onPanelSlide(arg0: View, arg1: Float) {
+
 
         }
 
