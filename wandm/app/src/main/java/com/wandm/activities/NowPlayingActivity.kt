@@ -2,9 +2,12 @@ package com.wandm.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.SeekBar
+import android.widget.Toast
 import com.wandm.App
 import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
@@ -12,6 +15,7 @@ import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
+import com.wandm.fragments.AlarmDialogFragment
 import com.wandm.fragments.PlaylistDialogFragment
 import com.wandm.services.DownloadService
 import com.wandm.services.MusicPlayer
@@ -87,6 +91,10 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 playpauseButton.startAnimation()
                 albumImage.stop()
             }
+
+            MusicEvent.ALARM_OFF -> {
+                setTimer(true)
+            }
         }
     }
 
@@ -103,6 +111,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         setFavorite(true)
         setDownload(true)
         setAlbumArt()
+        setTimer(true)
 
         playpauseButton.setOnClickListener(this)
         playpauseWrapper.setOnClickListener(this)
@@ -113,6 +122,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         favoriteButton.setOnClickListener(this)
         downloadButton.setOnClickListener(this)
         playlistButton.setOnClickListener(this)
+        setAlarmButton.setOnClickListener(this)
 
         artistSongTextView.text = CurrentPlaylistManager.mSong.artistName
         titleSongTextView.text = CurrentPlaylistManager.mSong.title
@@ -124,7 +134,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
         if (MusicPlayer.isPlaying()) {
             playpauseButton.isPlayed = true
-            preparedSeekBar()
             albumImage.start()
         } else {
             playpauseButton.isPlayed = false
@@ -132,6 +141,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         }
 
         playpauseButton.startAnimation()
+        preparedSeekBar()
 
     }
 
@@ -151,7 +161,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false)
-            actionBar.setShowHideAnimationEnabled(true)
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
     }
@@ -184,7 +193,11 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun stop() {
+        MusicPlayer.playOrPause()
+        playpauseButton.startAnimation()
         mServiceBound = false
+        songProgress.progress = 0
+        songElapsedTime.text = "00:00"
         mHandler?.removeCallbacks(mUpdateSongTime)
     }
 
@@ -265,17 +278,20 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             }
 
             R.id.playlistButton -> {
-                doAsync {
-                    val fragmentManager = MainActivity.instance.supportFragmentManager
-                    val dialogFragment = PlaylistDialogFragment.newInstance { title ->
-                        SongsBaseHandler.getInstance(App.instance, title)?.
-                                addSong(CurrentPlaylistManager.mSong)
-                    }
-                    dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+                val fragmentManager = supportFragmentManager
+                val dialogFragment = PlaylistDialogFragment.newInstance { title ->
+                    SongsBaseHandler.getInstance(App.instance, title)?.
+                            addSong(CurrentPlaylistManager.mSong)
                 }
+                dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+            }
+
+            R.id.setAlarmButton -> {
+                setTimer(false)
             }
         }
     }
+
 
     private fun setRepeatMode(init: Boolean) {
         repeatMode = PreferencesUtils.getRepeatMode()
@@ -395,6 +411,31 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             intent.putExtra(DownloadService.FILE_NAME, CurrentPlaylistManager.mSong.title)
             intent.putExtra(DownloadService.URL_PATH, CurrentPlaylistManager.mSong.data)
             startService(intent)
+        }
+    }
+
+    private fun setTimer(init: Boolean) {
+        val timeStr = PreferencesUtils.getAlarm()
+        if (init) {
+            if (timeStr.equals("0;;0")) {
+                setAlarmButton.setColorResource(R.color.color_white)
+            } else
+                setAlarmButton.setColorResource(R.color.color_primary_dark)
+        } else {
+            if (timeStr.equals("0;;0")) {
+                val fragmentManager = supportFragmentManager
+                val dialogFragment = AlarmDialogFragment.newInstance { isSetTimer ->
+                    if (isSetTimer)
+                        setAlarmButton.setColorResource(R.color.color_primary_dark)
+                    else
+                        setAlarmButton.setColorResource(R.color.color_white)
+                }
+                dialogFragment.show(fragmentManager, "AlarmDialogFragment")
+            } else {
+                PreferencesUtils.setAlarm("0;;0")
+                setAlarmButton.setColorResource(R.color.color_white)
+                Toast.makeText(this, "Đã huỷ hẹn giờ", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

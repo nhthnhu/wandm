@@ -23,7 +23,9 @@ object PreferencesUtils {
     private val ARTIST_IMAGE = "artist_image"
     private val ARTIST_IMAGE_MOBILE = "artist_image_mobile"
 
-    private val mPreferences = PreferenceManager.getDefaultSharedPreferences(App.instance)
+    val ALARM_SET = "alarm_set"
+
+    val mPreferences = PreferenceManager.getDefaultSharedPreferences(App.instance)
 
     private var connManager: ConnectivityManager? = null
 
@@ -130,6 +132,16 @@ object PreferencesUtils {
 
     fun getRepeatMode(): Int {
         return mPreferences.getInt(REPEAT_MODE, 0)
+    }
+
+    fun setAlarm(value: String) {
+        val editor = mPreferences.edit()
+        editor.putString(ALARM_SET, value)
+        editor.apply()
+    }
+
+    fun getAlarm(): String {
+        return mPreferences.getString(ALARM_SET, "")
     }
 }
 

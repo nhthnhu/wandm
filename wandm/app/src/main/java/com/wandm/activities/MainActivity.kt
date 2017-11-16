@@ -39,6 +39,7 @@ class MainActivity : BaseActivity() {
 
         override fun onPanelOpened(arg0: View) {
 
+            
 
         }
 
