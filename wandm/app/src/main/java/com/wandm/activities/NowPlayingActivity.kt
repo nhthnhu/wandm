@@ -219,7 +219,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 }
 
                 SongsAdapter.ACTION_PLAY -> {
-                    MusicPlayer.bind(null)f
+                    MusicPlayer.bind(null)
                     songSlidingPane.closePane()
                 }
             }
