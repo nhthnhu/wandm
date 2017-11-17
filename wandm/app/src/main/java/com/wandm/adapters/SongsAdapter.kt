@@ -1,12 +1,16 @@
 package com.wandm.adapters
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import com.wandm.App
 import com.wandm.R
+import com.wandm.activities.MainActivity
+import com.wandm.activities.NowPlayingActivity
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.models.song.Song
 import com.wandm.services.MusicPlayer
@@ -15,7 +19,12 @@ import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
 
 class SongsAdapter(private val listSongs: ArrayList<Song>,
-                   private val listener: (Song, Int) -> Unit) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
+                   private val listener: (Song, Int, String) -> Unit) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
+
+    companion object {
+        val ACTION_PLAY = "action_play"
+        val ACTION_ADD_PLAYLIST = "action_add_playlist"
+    }
 
     override fun getTextToShowInBubble(pos: Int) = listSongs[pos].title[0].toString()
 
@@ -34,11 +43,11 @@ class SongsAdapter(private val listSongs: ArrayList<Song>,
         holder?.songItemView?.setOnClickListener {
             CurrentPlaylistManager.mListSongs = listSongs
             CurrentPlaylistManager.mPosition = position
-            MusicPlayer.bind(null)
+            listener(listSongs[position], position, ACTION_PLAY)
         }
 
         holder?.songItemView?.playlistButton?.setOnClickListener {
-            listener(listSongs[position], position)
+            listener(listSongs[position], position, ACTION_ADD_PLAYLIST)
         }
     }
 

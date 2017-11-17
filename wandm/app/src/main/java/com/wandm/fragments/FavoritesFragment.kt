@@ -17,7 +17,7 @@ import com.wandm.models.song.Song
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
 import com.wandm.views.DividerItemDecoration
-import kotlinx.android.synthetic.main.activity_now_playing.*
+import kotlinx.android.synthetic.main.content_now_playing.*
 import kotlinx.android.synthetic.main.fragment_songs.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

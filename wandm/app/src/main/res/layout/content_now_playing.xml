@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/headerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarNowPlaying"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/appBarTopMargin"
+                android:background="@android:color/transparent"
+                android:theme="@style/Theme.AppCompat"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <com.wandm.views.WMPlayerView
+                android:id="@+id/albumImage"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp" />
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/titleSongTextView"
+                style="@style/WMTextStyleDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:ellipsize="marquee"
+                android:gravity="start"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/artistSongTextView"
+                style="@style/WMTextStyleDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:ellipsize="marquee"
+                android:gravity="start"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="20dp">
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/favoriteButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
+                    app:materialIcon="heart_outline"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/downloadButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
+                    app:materialIcon="download"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/playlistButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
+                    app:materialIcon="playlist_plus"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/setAlarmButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
+                    app:materialIcon="alarm"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/songElapsedTime"
+                    style="@style/WMTextStyleDark"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="00:00"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/songProgress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/songDuration"
+                    style="@style/WMTextStyleDark"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="00:00"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/shuffleButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
+                    app:materialIcon="shuffle"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/preButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
+                    app:materialIcon="skip_previous"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1">
+
+                    <com.wandm.views.PlayPauseButton
+                        android:id="@+id/playpauseButton"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center" />
+
+                    <View
+                        android:id="@+id/playpauseWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </FrameLayout>
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/nextButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
+                    app:materialIcon="skip_next"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/repeatButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:scaleType="center"
+                    app:materialIcon="repeat"
+                    app:materialIconColor="#fff"
+                    app:materialIconSize="35dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
+
+
+

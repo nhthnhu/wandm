@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.view.View
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.wandm.App
 import com.wandm.R
-import com.wandm.activities.MainActivity
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.data.CurrentPlaylistManager
-import com.wandm.database.SongsBaseHandler
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.MusicPlayer

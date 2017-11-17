@@ -1,14 +1,18 @@
 package com.wandm.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wandm.App
 import com.wandm.R
 import com.wandm.activities.MainActivity
+import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.SongsAdapter
 import com.wandm.database.SongsBaseHandler
 import com.wandm.loaders.SongLoader
+import com.wandm.models.song.Song
+import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
 import com.wandm.views.DividerItemDecoration
@@ -30,12 +34,24 @@ class SongsFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-                adapter = SongsAdapter(SongLoader.getAllSongs(App.instance)) { song, position ->
-                    val fragmentManager = MainActivity.instance.supportFragmentManager
-                    val dialogFragment = PlaylistDialogFragment.newInstance { title ->
-                        SongsBaseHandler.getInstance(App.instance, title)?.addSong(song)
+                adapter = SongsAdapter(SongLoader.getAllSongs(App.instance)) { song, position, action ->
+                    when (action) {
+                        SongsAdapter.ACTION_ADD_PLAYLIST -> {
+                            val fragmentManager = MainActivity.instance.supportFragmentManager
+                            val dialogFragment = PlaylistDialogFragment.newInstance { title ->
+                                SongsBaseHandler.getInstance(App.instance, title)?.addSong(song)
+                            }
+                            dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+                        }
+
+                        SongsAdapter.ACTION_PLAY -> {
+                            MusicPlayer.bind(null)
+
+                            val intent = Intent(activity, NowPlayingActivity::class.java)
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            activity.startActivity(intent)
+                        }
                     }
-                    dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
                 }
 
                 uiThread {

@@ -3,14 +3,19 @@ package com.wandm.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.Handler
-import android.util.Log
+import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SlidingPaneLayout
+import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import com.wandm.App
 import com.wandm.R
+import com.wandm.adapters.MenuAdapter
+import com.wandm.adapters.SongsAdapter
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
@@ -18,11 +23,14 @@ import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.fragments.AlarmDialogFragment
 import com.wandm.fragments.PlaylistDialogFragment
+import com.wandm.models.song.Song
 import com.wandm.services.DownloadService
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_now_playing.*
+import kotlinx.android.synthetic.main.content_now_playing.*
+import kotlinx.android.synthetic.main.sliding_pane_songs.*
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -49,6 +57,29 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     private var isFavorite = false
     private var isDownloaded = false
 
+    companion object {
+        lateinit var instance: NowPlayingActivity
+    }
+
+    // Listening events of SlidingPaneLayout
+    private val panelListener = object : SlidingPaneLayout.PanelSlideListener {
+
+        override fun onPanelClosed(arg0: View) {
+
+
+        }
+
+        override fun onPanelOpened(arg0: View) {
+
+
+        }
+
+        override fun onPanelSlide(arg0: View, arg1: Float) {
+
+
+        }
+
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
@@ -99,10 +130,15 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    override fun getLayoutResId() = R.layout.activity_now_playing
+    override fun getLayoutResId(): Int {
+        return R.layout.activity_now_playing
+
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
+        instance = this
         setupToolbar()
+
         EventBus.getDefault().register(this)
 
         setShuffleMode(true)
@@ -140,26 +176,53 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
         playpauseButton.startAnimation()
         preparedSeekBar()
-
     }
 
     override fun onResume() {
         super.onResume()
-        setBlurBackground(nowPlayingBackground, nowPlayingBlurringView)
+        setupUI()
+        setBlurBackground(songBackground, songBlurringView)
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
     }
 
+    /**
+     * Used to setup toolbar
+     */
     private fun setupToolbar() {
         setSupportActionBar(toolbarNowPlaying)
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false)
             actionBar.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+
+    private fun setupUI() {
+        songSlidingPane.setPanelSlideListener(panelListener)
+        songSlidingPane.parallaxDistance = 100
+        songSlidingPane.sliderFadeColor = ContextCompat.getColor(this, android.R.color.transparent)
+
+        songRecyclerView.layoutManager = LinearLayoutManager(this)
+        songRecyclerView.adapter = SongsAdapter(CurrentPlaylistManager.mListSongs) { song, position, action ->
+            when(action){
+                SongsAdapter.ACTION_ADD_PLAYLIST -> {
+                    val fragmentManager = supportFragmentManager
+                    val dialogFragment = PlaylistDialogFragment.newInstance { title ->
+                        SongsBaseHandler.getInstance(App.instance, title)?.addSong(song)
+                    }
+                    dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+                }
+
+                SongsAdapter.ACTION_PLAY -> {
+                    MusicPlayer.bind(null)f
+                    songSlidingPane.closePane()
+                }
+            }
         }
     }
 
@@ -442,5 +505,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
 
 }
