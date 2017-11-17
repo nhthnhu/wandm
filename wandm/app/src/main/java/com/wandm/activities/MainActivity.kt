@@ -9,19 +9,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import com.wandm.R
 import com.wandm.adapters.MenuAdapter
-import com.wandm.fragments.*
+import com.wandm.fragments.CategoryFragment
+import com.wandm.fragments.QuickControlFragment
+import com.wandm.fragments.SearchDialogFragment
 import com.wandm.permissions.PermissionCallback
 import com.wandm.permissions.PermissionHelper
 import com.wandm.speech.Speech
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_list_view_pagers.*
-import kotlinx.android.synthetic.main.sliding_pane.*
+import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.sliding_pane_main.*
 
 
 class MainActivity : BaseActivity() {
@@ -66,7 +65,7 @@ class MainActivity : BaseActivity() {
         instance = this
         setupToolbar()
         Speech.init(this)
-        addFragment(QuickControlFragment(), R.id.controlFragmentContainer, "QuickControlFragment")
+        addFragment(QuickControlFragment(), R.id.quick_control_container, "QuickControlFragment")
     }
 
     override fun onResume() {
@@ -114,22 +113,6 @@ class MainActivity : BaseActivity() {
      *  Setup all of UI if permission was granted
      */
     private fun setupUI() {
-        val pagerItems = FragmentPagerItems(this)
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.songs),
-                SongsFragment::class.java))
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.favorite),
-                FavoritesFragment::class.java))
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.artists),
-                ArtistsFragment::class.java))
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.albums),
-                AlbumsFragment::class.java))
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.folders),
-                FoldersFragment::class.java))
-
-        val fragmentAdapter = FragmentPagerItemAdapter(supportFragmentManager, pagerItems)
-        listViewPagers.adapter = fragmentAdapter
-        listTabs.setViewPager(listViewPagers)
-
         slidingPane.setPanelSlideListener(panelListener)
         slidingPane.parallaxDistance = 100
         slidingPane.sliderFadeColor = ContextCompat.getColor(this, android.R.color.transparent)
@@ -137,6 +120,7 @@ class MainActivity : BaseActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MenuAdapter()
 
+        addFragment(CategoryFragment(), R.id.fragment_container, CategoryFragment::class.java.name)
     }
 
     /**
@@ -161,5 +145,4 @@ class MainActivity : BaseActivity() {
             }
         }
     }
-
 }

@@ -23,7 +23,7 @@
     </LinearLayout>
 
 
-    <include layout="@layout/content_list_view_pagers" />
+    <include layout="@layout/content_main" />
 
 
 </com.wandm.views.PagerEnabledSlidingPaneLayout>

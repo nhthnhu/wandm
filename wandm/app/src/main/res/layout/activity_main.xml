@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/sliding_pane" />
+        <include layout="@layout/sliding_pane_main" />
 
     </LinearLayout>
 
