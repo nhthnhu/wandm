@@ -29,6 +29,8 @@ class MainActivity : BaseActivity() {
         lateinit var instance: MainActivity
     }
 
+    private var isSetup = false
+
     // Listening events of SlidingPaneLayout
     private val panelListener = object : SlidingPaneLayout.PanelSlideListener {
 
@@ -113,6 +115,9 @@ class MainActivity : BaseActivity() {
      *  Setup all of UI if permission was granted
      */
     private fun setupUI() {
+        if (isSetup) return
+
+        isSetup = true
         slidingPane.setPanelSlideListener(panelListener)
         slidingPane.parallaxDistance = 100
         slidingPane.sliderFadeColor = ContextCompat.getColor(this, android.R.color.transparent)

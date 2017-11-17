@@ -47,7 +47,7 @@ abstract class BaseActivity : AppCompatActivity() {
     fun addFragment(fragment: Fragment, containerViewId: Int, tag: String) {
         supportFragmentManager
                 .beginTransaction()
-                .add(containerViewId, fragment, tag)
+                .replace(containerViewId, fragment, tag)
                 .commit()
 
     }

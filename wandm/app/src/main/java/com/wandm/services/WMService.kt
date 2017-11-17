@@ -8,7 +8,6 @@ import android.media.AudioManager
 import android.media.session.MediaSessionManager
 import android.os.CountDownTimer
 import android.os.IBinder
-import android.os.Messenger
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.media.MediaMetadataCompat
@@ -20,26 +19,26 @@ import android.util.Log
 import com.wandm.App
 import com.wandm.IWMService
 import com.wandm.R
-import com.wandm.constants.Constants
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.data.PlaybackStatus
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
+import com.wandm.utils.Constants
 import com.wandm.utils.PreferencesUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.jetbrains.anko.consumerIrManager
 
 class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     companion object {
-        private val TAG = "WMSerive"
+        private val TAG = "WMService"
+        private val NOTIFICATION_ID = 101
 
         val ACTION_PLAY = "ACTION_PLAY"
         val ACTION_PAUSE = "ACTION_PAUSE"
-        val ACTION_PREVIOUS = "ACTION_PREVIOUS"
         val ACTION_NEXT = "ACTION_NEXT"
+        val ACTION_PREVIOUS = "ACTION_PREVIOUS"
         val ACTION_STOP = "ACTION_STOP"
     }
 
@@ -57,8 +56,6 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
     private var mAudioManager = App.instance.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     private var playPauseAction: PendingIntent? = null
-    private val NOTIFICATION_ID = 101
-
     private var countdownTimer: CountDownTimer? = null
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -149,7 +146,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
         when (p0) {
             AudioManager.AUDIOFOCUS_GAIN -> {
                 Log.d(TAG, "AUDIOFOCUS_GAIN")
-                if (mBinder.isPlaying() == false) {
+                if (!mBinder.isPlaying) {
                     mBinder.resume()
                 }
 
@@ -159,7 +156,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
             AudioManager.AUDIOFOCUS_LOSS -> {
                 Log.d(TAG, "AUDIOFOCUS_LOSS")
 
-                if (mBinder.isPlaying()) {
+                if (mBinder.isPlaying) {
                     mBinder.pause()
                     getNotification(PlaybackStatus.PAUSE)
                 } else
@@ -169,15 +166,15 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
 
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                 Log.d(TAG, "AUDIOFOCUS_LOSS_TRANSIENT")
-                if (mBinder.isPlaying()) {
+                if (mBinder.isPlaying) {
                     mBinder.pause()
                     getNotification(PlaybackStatus.PAUSE)
                 }
             }
 
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
-                Log.d(TAG, "AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK")
-                if (mBinder.isPlaying())
+                Log.d(TAG, "AUDIO_FOCUS_LOSS_TRANSIENT_CAN_DUCK")
+                if (mBinder.isPlaying)
                     mBinder.setVolume(1.0f, 1.0f)
 
             }
@@ -196,9 +193,8 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
         return false
     }
 
-    fun removeAudioFocus(): Boolean {
-        return AudioManager.AUDIOFOCUS_REQUEST_GRANTED == mAudioManager.abandonAudioFocus(this)
-    }
+    private fun removeAudioFocus() =
+            AudioManager.AUDIOFOCUS_REQUEST_GRANTED == mAudioManager.abandonAudioFocus(this)
 
     inner class ServiceStub : IWMService.Stub() {
         override fun playNext() {
@@ -241,13 +237,9 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
             getNotification(PlaybackStatus.PLAYING)
         }
 
-        override fun duration(): Int {
-            return mPlayer.duration()
-        }
+        override fun duration() = mPlayer.duration()
 
-        override fun position(): Int {
-            return mPlayer.position()
-        }
+        override fun position() = mPlayer.position()
 
         override fun seekTo(position: Int) {
             mPlayer.seekTo(position)
@@ -392,7 +384,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
         return null
     }
 
-    fun callStateListener() {
+    private fun callStateListener() {
         mPhoneStateListener = object : PhoneStateListener() {
             override fun onCallStateChanged(state: Int, incomingNumber: String) {
                 when (state) {
@@ -413,7 +405,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
                 PhoneStateListener.LISTEN_CALL_STATE)
     }
 
-    fun stopCallStateListener() {
+    private fun stopCallStateListener() {
         mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE)
     }
 
@@ -423,7 +415,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
         LocalBroadcastManager.getInstance(App.instance).
                 registerReceiver(mBecomingNoisyReceiver, noisyIntent)
 
-        val removeNotiIntent = IntentFilter(Constants.REMOVE_MUSIC_NOTI)
+        val removeNotiIntent = IntentFilter(Constants.REMOVE_MUSIC_NOTIFY)
         LocalBroadcastManager.getInstance(App.instance).
                 registerReceiver(mRemoveNotiReceiver, removeNotiIntent)
 

@@ -13,13 +13,17 @@ import kotlinx.android.synthetic.main.item_artist.view.*
 class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>(), BubbleTextGetter {
     override fun getTextToShowInBubble(pos: Int) = mListArtists[pos].name[0].toString()
 
-    override fun onBindViewHolder(holder: ArtistsHolder?, position: Int) {
-        holder?.bind(mListArtists[position])
+    private var onItemClickListener: ((artist: Artist, position: Int) -> Unit)? = null
+
+    fun setOnItemClickListener(onItemClickListener: ((artist: Artist, position: Int) -> Unit)?) {
+        this.onItemClickListener = onItemClickListener
     }
 
-    override fun getItemCount(): Int {
-        return mListArtists.size
+    override fun onBindViewHolder(holder: ArtistsHolder?, position: Int) {
+        holder?.bind(mListArtists[position], position)
     }
+
+    override fun getItemCount() = mListArtists.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ArtistsHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_artist, parent, false)
@@ -29,7 +33,7 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
 
     inner class ArtistsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
-        fun bind(artist: Artist) {
+        fun bind(artist: Artist, pos: Int) {
             itemView.artistName.text = artist.name
             val albumCount = artist.albumCount
             val songCount = artist.songCount
@@ -48,6 +52,10 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
                 songString = songCount.toString() + " songs"
 
             itemView.albumSongsSount.text = albumString + " | " + songString
+
+            itemView.setOnClickListener {
+                onItemClickListener?.invoke(artist, pos)
+            }
         }
     }
 }

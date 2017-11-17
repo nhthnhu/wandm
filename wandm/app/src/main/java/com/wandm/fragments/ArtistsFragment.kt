@@ -1,6 +1,7 @@
 package com.wandm.fragments
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wandm.App
@@ -8,6 +9,7 @@ import com.wandm.R
 import com.wandm.adapters.ArtistsAdapter
 import com.wandm.loaders.ArtistLoader
 import com.wandm.models.Artist
+import com.wandm.utils.NavigationUtils
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
 import com.wandm.views.DividerItemDecoration
@@ -35,6 +37,9 @@ class ArtistsFragment : BaseFragment() {
                     artistsRecyclerView.adapter.notifyDataSetChanged()
                     artistsFastScroller.visibility = View.VISIBLE
                     artistsProgressBar.visibility = View.GONE
+                    adapter.setOnItemClickListener { artist, _ ->
+                        NavigationUtils.goToArtistDetail(activity as AppCompatActivity, artist.id)
+                    }
                 }
             }
         }

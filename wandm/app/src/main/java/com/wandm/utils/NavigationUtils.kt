@@ -10,6 +10,7 @@ object NavigationUtils {
         val fragment = ArtistDetailFragment.newInstance(artistId)
         fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment)
+                .addToBackStack(null)
                 .commit()
     }
 }

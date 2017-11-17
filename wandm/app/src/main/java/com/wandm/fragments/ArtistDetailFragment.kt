@@ -34,7 +34,6 @@ class ArtistDetailFragment : BaseFragment() {
     override fun getLayoutResId(): Int = R.layout.fragment_artist_detail
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
-        artistId = getArtistId()
         loadArtistDetail()
     }
 
@@ -55,23 +54,22 @@ class ArtistDetailFragment : BaseFragment() {
     private fun getArtistId(): Long = arguments.getLong(ARG_ARTIST_ID, 0)
 
     private fun loadArtistDetail() {
+        artistId = getArtistId()
         showView(ACTION_LOADING)
 
         doAsync {
             val artistAlbums = ArtistAlbumLoader.getAlbumsForArtist(activity, artistId)
             val artistSongs = ArtistSongLoader.getSongsForArtist(activity, artistId)
+            val albumsAdapter = AlbumsAdapter(artistAlbums)
+            val songsAdapter = SongsAdapter(artistSongs) { _, _, _ -> }
             uiThread {
-                albumsList.layoutManager = LinearLayoutManager(activity)
-                songsList.layoutManager = LinearLayoutManager(activity,
+                showView(ACTION_ARTIST_DETAIL)
+
+                albumsList.layoutManager = LinearLayoutManager(activity,
                         LinearLayoutManager.HORIZONTAL, false)
-
-                val albumsAdapter = AlbumsAdapter(artistAlbums)
-                val songsAdapter = SongsAdapter(artistSongs) { _, _ -> }
-
+                songsList.layoutManager = LinearLayoutManager(activity)
                 albumsList.adapter = albumsAdapter
                 songsList.adapter = songsAdapter
-
-                showView(ACTION_ARTIST_DETAIL)
             }
         }
     }
