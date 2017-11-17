@@ -24,6 +24,16 @@ class SongsBaseHandler private constructor(context: Context, val tableName: Stri
     private var mContext: Context? = null
     private var mDatabase: SQLiteDatabase? = null
 
+    private var event: AddSongEvent? = null
+
+    interface AddSongEvent {
+        fun onAddSong()
+    }
+
+    fun setAddSongEvent(e: AddSongEvent) {
+        event = e
+    }
+
     init {
         mContext = context.applicationContext
         mDatabase = SongsBaseHelper(mContext!!, tableName).writableDatabase
@@ -35,6 +45,8 @@ class SongsBaseHandler private constructor(context: Context, val tableName: Stri
         if (row == (-1).toLong()) {
             return false
         }
+
+        event?.onAddSong()
         return true
     }
 

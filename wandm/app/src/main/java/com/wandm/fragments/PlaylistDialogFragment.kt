@@ -3,17 +3,22 @@ package com.wandm.fragments
 import android.app.DialogFragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wandm.R
 import com.wandm.adapters.PlaylistAdapter
 import com.wandm.database.FavoritesTable
+import com.wandm.events.MessageEvent
+import com.wandm.events.MusicEvent
 import com.wandm.models.playlist.ListPlaylist
 import kotlinx.android.synthetic.main.dialog_playlist.*
+import org.greenrobot.eventbus.EventBus
 
 class PlaylistDialogFragment : BaseDialogFragment() {
 
+    private val TAG = "PlaylistDialogFragment"
     private var tableName = ""
 
     companion object {
@@ -43,6 +48,7 @@ class PlaylistDialogFragment : BaseDialogFragment() {
 
         favoriteButton.setOnClickListener {
             listener!!("favoriteSong")
+            EventBus.getDefault().post(MessageEvent(MusicEvent.ADD_FAVORITE))
         }
 
         newPlaylistButton.setOnClickListener {

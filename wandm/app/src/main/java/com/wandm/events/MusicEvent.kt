@@ -8,4 +8,5 @@ object MusicEvent {
     val RESUME_ACTION = "resume_action"
     val REMOVE_NOTI_ACTION = "remove_noti_action"
     val ALARM_OFF = "alarm_off"
+    val ADD_FAVORITE = "add_favorite"
 }

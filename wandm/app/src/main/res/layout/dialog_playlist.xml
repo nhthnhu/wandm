@@ -11,6 +11,7 @@
         android:id="@+id/favoriteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp">
@@ -36,6 +37,7 @@
         android:id="@+id/newPlaylistButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp">
