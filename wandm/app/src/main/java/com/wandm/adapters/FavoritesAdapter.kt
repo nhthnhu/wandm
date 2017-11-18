@@ -1,5 +1,6 @@
 package com.wandm.adapters
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.wandm.App
 import com.wandm.R
+import com.wandm.activities.NowPlayingActivity
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
@@ -15,9 +17,10 @@ import com.wandm.models.song.Song
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
-import kotlinx.android.synthetic.main.item_song.view.*
+import kotlinx.android.synthetic.main.item_favorite_song.view.*
 
 class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<FavoritesAdapter.FavoriteHolder>(), BubbleTextGetter {
+
 
     override fun getTextToShowInBubble(pos: Int): String {
         return listSongs[pos].title[0].toString()
@@ -28,7 +31,7 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FavoriteHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_song, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_favorite_song, parent, false)
         return FavoriteHolder(view)
     }
 
@@ -38,11 +41,19 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
         holder?.songItemView?.setOnClickListener {
             CurrentPlaylistManager.mListSongs = listSongs
             CurrentPlaylistManager.mPosition = position
-
             MusicPlayer.bind(null)
+
+
+            val intent = Intent(App.instance, NowPlayingActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            App.instance.startActivity(intent)
         }
 
         holder?.songItemView?.setOnLongClickListener {
+            removeSong(position)
+        }
+
+        holder?.songItemView?.favoriteButton?.setOnClickListener {
             removeSong(position)
         }
     }
