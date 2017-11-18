@@ -1,4 +1,4 @@
-package com.wandm.fragments
+package com.wandm.dialogs
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -6,6 +6,7 @@ import android.view.View
 import com.wandm.R
 import com.wandm.adapters.AlbumsAdapter
 import com.wandm.adapters.SongsAdapter
+import com.wandm.fragments.BaseFragment
 import com.wandm.loaders.ArtistAlbumLoader
 import com.wandm.loaders.ArtistSongLoader
 import kotlinx.android.synthetic.main.fragment_artist_detail.*

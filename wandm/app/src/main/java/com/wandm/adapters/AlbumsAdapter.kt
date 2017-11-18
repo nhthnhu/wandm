@@ -5,8 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.models.Album
+import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_album.view.*
 
@@ -30,6 +33,17 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
         fun bind(album: Album) {
             itemView.albumName.text = album.title
             itemView.numbersongs.text = album.artistName + " | " + album.songCount + itemView.context.getString(R.string.songs)
+            Picasso.with(itemView.context)
+                    .load(Utils.getAlbumArtUri(album.id).toString())
+                    .into(itemView.albumImage, object : Callback {
+                        override fun onSuccess() {
+
+                        }
+
+                        override fun onError() {
+                            itemView.albumImage.background = itemView.context.getDrawable(R.drawable.ic_action_headset_dark)
+                        }
+                    })
         }
     }
 

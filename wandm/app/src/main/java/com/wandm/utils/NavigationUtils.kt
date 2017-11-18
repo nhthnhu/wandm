@@ -2,7 +2,7 @@ package com.wandm.utils
 
 import android.support.v7.app.AppCompatActivity
 import com.wandm.R
-import com.wandm.fragments.ArtistDetailFragment
+import com.wandm.dialogs.ArtistDetailFragment
 
 object NavigationUtils {
     fun goToArtistDetail(activity: AppCompatActivity, artistId: Long) {

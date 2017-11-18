@@ -383,7 +383,7 @@ public class WMPlayerView extends View {
             postInvalidate();
         } catch (IOException e) {
             mBitmapCover = Utils.INSTANCE.ConvertDrawableToBitmap(
-                    getResources().getDrawable(R.drawable.ic_action_headset_dark));
+                    getResources().getDrawable(R.drawable.ic_music));
             createShader();
             postInvalidate();
         }

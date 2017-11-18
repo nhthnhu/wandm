@@ -5,8 +5,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.wandm.R
+import com.wandm.loaders.ArtistAlbumLoader
 import com.wandm.models.Artist
+import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_artist.view.*
 
@@ -53,9 +57,27 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
 
             itemView.albumSongsSount.text = albumString + " | " + songString
 
+            val albums = ArtistAlbumLoader.getAlbumsForArtist(itemView.context, artist.id)
+
+            Picasso.with(itemView.context)
+                    .load(Utils.getAlbumArtUri(albums[0].id).toString())
+                    .into(itemView.artistImage, object : Callback {
+                        override fun onSuccess() {
+
+                        }
+
+                        override fun onError() {
+                            itemView.artistImage.background = itemView.context.getDrawable(R.drawable.ic_action_headset_dark)
+                        }
+                    })
+
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(artist, pos)
             }
         }
+    }
+
+    fun loadImage(){
+
     }
 }
