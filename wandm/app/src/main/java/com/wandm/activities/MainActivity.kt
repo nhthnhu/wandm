@@ -107,7 +107,7 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false)
+            actionBar.setDisplayShowTitleEnabled(true)
         }
     }
 

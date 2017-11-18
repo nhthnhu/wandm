@@ -13,15 +13,22 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <EditText
-            android:id="@+id/keywordEditText"
+        <AutoCompleteTextView
+            android:id="@+id/keywordAutoCompleteTextView"
             style="@style/WMTextStyleDark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/background_search"
+            android:completionThreshold="1"
             android:imeOptions="actionSearch"
             android:inputType="text"
-            android:lines="1" />
+            android:lines="1"
+            android:padding="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
 
         <net.steamcrafted.materialiconlib.MaterialIconView
             android:id="@+id/speechToTextButton"
@@ -40,7 +47,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textError"
@@ -59,12 +67,11 @@
             style="@style/WMTextStyleDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:padding="8dp"
             android:gravity="right"
+            android:padding="8dp"
+            android:textSize="18sp"
             android:textStyle="italic"
-            android:visibility="gone"
-            android:textSize="18sp" />
+            android:visibility="gone" />
 
     </LinearLayout>
 

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import com.wandm.App
 import com.wandm.R
 import com.wandm.activities.NowPlayingActivity
@@ -40,6 +41,9 @@ class SearchDialogFragment : BaseDialogFragment(), View.OnClickListener {
         private val LOADING_TYPE = 2
         private val ERROR_TYPE = 3
 
+        private val listNames = ArrayList<String>()
+        private var adapter: ArrayAdapter<String>? = null
+
         fun newInstance(): SearchDialogFragment {
             val fragment = SearchDialogFragment()
             fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.EtsyBlurDialogTheme)
@@ -56,7 +60,18 @@ class SearchDialogFragment : BaseDialogFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         waveformView.setOnClickListener(this)
 
-        keywordEditText.setOnEditorActionListener({ v, actionId, event ->
+        listNames.add("Cham khe tim anh mot chut thoi")
+        listNames.add("Cham moi em roi")
+        listNames.add("Hom nay")
+        listNames.add("Hom qua")
+        listNames.add("Hom kia")
+
+
+        adapter = ArrayAdapter(context, R.layout.item_auto_complete_song, listNames)
+        keywordAutoCompleteTextView.setAdapter(adapter)
+        keywordAutoCompleteTextView.setDropDownBackgroundDrawable(context.getDrawable(R.drawable.background_search))
+
+        keywordAutoCompleteTextView.setOnEditorActionListener({ v, actionId, event ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 searchOnline()
@@ -67,7 +82,7 @@ class SearchDialogFragment : BaseDialogFragment(), View.OnClickListener {
 
         speechToTextButton.setOnClickListener {
             startSpeech()
-            keywordEditText.setText("")
+            keywordAutoCompleteTextView.setText("")
         }
 
     }
@@ -92,12 +107,12 @@ class SearchDialogFragment : BaseDialogFragment(), View.OnClickListener {
                 Log.d(TAG, "SpeechResult: " + result)
 
                 if (result == "") {
-                    waveformView.visibility = View.INVISIBLE
+                    waveformView.visibility = View.GONE
                     waveformView.reset()
                     return
                 }
 
-                keywordEditText.setText(result)
+                keywordAutoCompleteTextView.setText(result)
                 searchOnline()
                 showView(LOADING_TYPE, "")
             }
@@ -129,7 +144,7 @@ class SearchDialogFragment : BaseDialogFragment(), View.OnClickListener {
         when (type) {
             DEFAULT_TYPE -> {
                 textError.visibility = View.GONE
-                keywordEditText.setText("")
+                keywordAutoCompleteTextView.setText("")
                 textListening.visibility = View.GONE
                 waveformView.visibility = View.GONE
                 waveformView.reset()
@@ -138,7 +153,7 @@ class SearchDialogFragment : BaseDialogFragment(), View.OnClickListener {
             LISTENING_TYPE -> {
                 textError.visibility = View.GONE
                 textListening.text = message
-                textListening.visibility = View.GONE
+                textListening.visibility = View.VISIBLE
                 waveformView.visibility = View.VISIBLE
             }
 
@@ -248,6 +263,6 @@ class SearchDialogFragment : BaseDialogFragment(), View.OnClickListener {
                 }
             }
         }
-        SongRequest(keywordEditText.text.toString(), musicListener).execute()
+        SongRequest(keywordAutoCompleteTextView.text.toString(), musicListener).execute()
     }
 }

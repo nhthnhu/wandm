@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.nostra13.universalimageloader.core.DisplayImageOptions
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.wandm.App
@@ -20,7 +21,6 @@ import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_favorite_song.view.*
 
 class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<FavoritesAdapter.FavoriteHolder>(), BubbleTextGetter {
-
 
     override fun getTextToShowInBubble(pos: Int): String {
         return listSongs[pos].title[0].toString()

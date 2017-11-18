@@ -13,4 +13,6 @@
     <color name="color_grey">#d4d3d3</color>
     <color name="color_black">#111111</color>
     <color name="color_red">#d91b1b</color>
+
+    <color name="color_search_background">#210d0c0c</color>
 </resources>
