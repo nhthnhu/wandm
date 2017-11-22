@@ -8,6 +8,16 @@ import android.graphics.drawable.Drawable
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
+import android.graphics.BitmapFactory
+import android.R.attr.src
+import android.content.Context
+import android.graphics.Matrix
+import com.wandm.models.Album
+import java.io.IOException
+import android.provider.MediaStore
+import com.wandm.R
+import org.jetbrains.anko.matchParent
+
 
 object Utils {
 

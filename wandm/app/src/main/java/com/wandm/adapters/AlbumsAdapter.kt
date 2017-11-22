@@ -31,8 +31,16 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
     inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(album: Album) {
+            var string = ""
+            if (album.songCount <= 1)
+                string = itemView.context.getString(R.string.song)
+            else
+                string = itemView.context.getString(R.string.songs)
+
             itemView.albumName.text = album.title
-            itemView.numbersongs.text = album.artistName + " | " + album.songCount + itemView.context.getString(R.string.songs)
+
+            itemView.numbersongs.text = album.artistName + " | " + album.songCount + " " + string
+
             Picasso.with(itemView.context)
                     .load(Utils.getAlbumArtUri(album.id).toString())
                     .into(itemView.albumImage, object : Callback {

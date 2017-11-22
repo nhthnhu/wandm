@@ -204,7 +204,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         songSlidingPane.sliderFadeColor = ContextCompat.getColor(this, android.R.color.transparent)
 
         songRecyclerView.layoutManager = LinearLayoutManager(this)
-        songRecyclerView.adapter = SongsAdapter(CurrentPlaylistManager.mListSongs) { song, position, action ->
+        songRecyclerView.adapter = SongsAdapter(CurrentPlaylistManager.mListSongs, false) { song, position, action ->
             when(action){
                 SongsAdapter.ACTION_ADD_PLAYLIST -> {
                     val fragmentManager = supportFragmentManager

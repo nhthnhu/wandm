@@ -15,5 +15,8 @@
     <string name="error_speech_timeout">Sao bạn không nói gì cả?</string>
     <string name="error_default">Vui lòng thử lại!</string>
     <string name="ok">Ok</string>
+    <string name="list_albums">Albums</string>
+    <string name="list_songs">Songs</string>
+
     <style name="cancel_alarm">Đã huỷ hẹn giờ</style>
 </resources>

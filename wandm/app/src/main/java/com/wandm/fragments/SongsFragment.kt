@@ -34,7 +34,7 @@ class SongsFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-                adapter = SongsAdapter(SongLoader.getAllSongs(App.instance)) { song, position, action ->
+                adapter = SongsAdapter(SongLoader.getAllSongs(App.instance), true) { song, position, action ->
                     when (action) {
                         SongsAdapter.ACTION_ADD_PLAYLIST -> {
                             val fragmentManager = MainActivity.instance.supportFragmentManager

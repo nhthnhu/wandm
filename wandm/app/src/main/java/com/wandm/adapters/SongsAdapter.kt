@@ -19,6 +19,7 @@ import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
 
 class SongsAdapter(private val listSongs: ArrayList<Song>,
+                   private val isAddFavorite: Boolean,
                    private val listener: (Song, Int, String) -> Unit) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
 
     companion object {
@@ -52,10 +53,12 @@ class SongsAdapter(private val listSongs: ArrayList<Song>,
     }
 
 
-    class SongHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class SongHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var songItemView: View = itemView
 
         fun bind(song: Song) {
+            if (!isAddFavorite)
+                itemView.playlistButton.visibility = View.GONE
 
             Picasso.with(itemView.context)
                     .load(Utils.getAlbumArtUri(song.albumId).toString())
