@@ -9,7 +9,6 @@ import com.wandm.R
 import com.wandm.adapters.ArtistsAdapter
 import com.wandm.loaders.ArtistLoader
 import com.wandm.models.Artist
-import com.wandm.utils.NavigationUtils
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
 import com.wandm.views.DividerItemDecoration
@@ -38,7 +37,7 @@ class ArtistsFragment : BaseFragment() {
                     artistsFastScroller.visibility = View.VISIBLE
                     artistsProgressBar.visibility = View.GONE
                     adapter.setOnItemClickListener { artist, _ ->
-                        NavigationUtils.goToArtistDetail(activity as AppCompatActivity, artist.id)
+
                     }
                 }
             }

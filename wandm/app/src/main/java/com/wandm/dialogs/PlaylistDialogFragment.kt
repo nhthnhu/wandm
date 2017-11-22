@@ -1,9 +1,8 @@
-package com.wandm.fragments
+package com.wandm.dialogs
 
 import android.app.DialogFragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,7 @@ class PlaylistDialogFragment : BaseDialogFragment() {
         private var listener: ((String) -> Unit)? = null
 
         fun newInstance(listener: (String) -> Unit): PlaylistDialogFragment {
-            this.listener = listener
+            Companion.listener = listener
             val fragment = PlaylistDialogFragment()
             fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.EtsyBlurDialogTheme)
             return fragment

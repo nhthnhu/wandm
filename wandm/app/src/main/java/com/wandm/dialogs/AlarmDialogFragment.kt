@@ -1,4 +1,4 @@
-package com.wandm.fragments
+package com.wandm.dialogs
 
 import android.app.DialogFragment
 import android.os.Bundle
@@ -20,7 +20,7 @@ class AlarmDialogFragment : BaseDialogFragment(), View.OnClickListener {
         private var listener: ((Boolean) -> Unit)? = null
 
         fun newInstance(listener: (Boolean) -> Unit): AlarmDialogFragment {
-            this.listener = listener
+            Companion.listener = listener
             val fragment = AlarmDialogFragment()
             fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.EtsyBlurDialogTheme)
             return fragment
@@ -66,7 +66,7 @@ class AlarmDialogFragment : BaseDialogFragment(), View.OnClickListener {
                 minute = minuteNumberPicker.value
                 second = secondNumberPicker.value
                 PreferencesUtils.setAlarm(minute.toString() + ";;" + second.toString())
-                Toast.makeText(App.instance, "Tắt nhạc sau $minute phút $second giây", Toast.LENGTH_SHORT).show()
+                Toast.makeText(App.instance, "Tắt nhạc sau ${minute} phút ${second} giây", Toast.LENGTH_SHORT).show()
                 listener!!(true)
                 dismiss()
             }

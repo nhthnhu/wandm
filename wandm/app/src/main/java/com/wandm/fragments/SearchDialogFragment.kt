@@ -16,6 +16,7 @@ import com.wandm.R
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.SearchAdapter
 import com.wandm.data.CurrentPlaylistManager
+import com.wandm.dialogs.BaseDialogFragment
 import com.wandm.models.RequestListener
 import com.wandm.models.song.Song
 import com.wandm.models.song.SongRequest

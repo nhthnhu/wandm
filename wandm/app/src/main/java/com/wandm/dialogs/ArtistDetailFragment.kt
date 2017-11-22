@@ -41,13 +41,11 @@ class ArtistDetailFragment : BaseFragment() {
     private fun showView(action: String) {
         when (action) {
             ACTION_LOADING -> {
-                artistLoading.visibility = View.VISIBLE
-                artistDetailLayout.visibility = View.GONE
+
             }
 
             ACTION_ARTIST_DETAIL -> {
-                artistLoading.visibility = View.GONE
-                artistDetailLayout.visibility = View.VISIBLE
+
             }
         }
     }
@@ -66,11 +64,6 @@ class ArtistDetailFragment : BaseFragment() {
             uiThread {
                 showView(ACTION_ARTIST_DETAIL)
 
-                albumsList.layoutManager = LinearLayoutManager(activity,
-                        LinearLayoutManager.HORIZONTAL, false)
-                songsList.layoutManager = LinearLayoutManager(activity)
-                albumsList.adapter = albumsAdapter
-                songsList.adapter = songsAdapter
             }
         }
     }

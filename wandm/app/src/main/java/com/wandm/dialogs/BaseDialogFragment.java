@@ -1,4 +1,4 @@
-package com.wandm.fragments;
+package com.wandm.dialogs;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;

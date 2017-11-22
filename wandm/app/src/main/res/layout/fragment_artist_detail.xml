@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_black"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/artistLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:tag="tint_accent_color"
-        android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/artistDetailLayout"
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/songsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/toolbar"
+        android:fadeScrollbars="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/imageAlbums"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+    <com.wandm.views.FastScroller
+        android:id="@+id/songsFastScroller"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@id/songsRecyclerView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/songsRecyclerView"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:visibility="invisible" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/albumsList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
+    <ProgressBar
+        android:id="@+id/songsProgressBar"
+        style="?android:progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:tag="tint_accent_color" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/songsList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3" />
-    </LinearLayout>
 
-</FrameLayout>
+</RelativeLayout>

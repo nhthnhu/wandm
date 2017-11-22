@@ -10,8 +10,8 @@ import com.wandm.activities.MainActivity
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.SongsAdapter
 import com.wandm.database.SongsBaseHandler
+import com.wandm.dialogs.PlaylistDialogFragment
 import com.wandm.loaders.SongLoader
-import com.wandm.models.song.Song
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
