@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
+
 import com.wandm.models.Album
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
@@ -43,15 +44,13 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
     inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(album: Album, pos: Int) {
-            var string = ""
-            if (album.songCount <= 1)
-                string = itemView.context.getString(R.string.song)
-            else
-                string = itemView.context.getString(R.string.songs)
+            val countStr = itemView?.context?.resources?.
+                    getQuantityString(R.plurals.song_count, album.songCount, album.songCount)
 
             itemView.albumName.text = album.title
 
-            itemView.numbersongs.text = album.artistName + " | " + album.songCount + " " + string
+            itemView.numbersongs.text = itemView?.context?.resources?.
+                    getString(R.string.count, album.artistName, countStr)
 
             Picasso.with(itemView.context)
                     .load(Utils.getAlbumArtUri(album.id).toString())

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="song_count">
+        <item quantity="one">%1$s Song</item>
+        <item quantity="zero">%1$s Song</item>
+        <item quantity="other">%1$s Songs</item>
+    </plurals>
+
+    <plurals name="album_count">
+        <item quantity="one">%1$s Album</item>
+        <item quantity="zero">%1$s Album</item>
+        <item quantity="other">%1$s Albums</item>
+    </plurals>
+
+    <plurals name="artist_count">
+        <item quantity="one">%1$s Artist</item>
+        <item quantity="zero">%1$s Artist</item>
+        <item quantity="other">%1$s Artists</item>
+    </plurals>
+
+    <plurals name="second_count">
+        <item quantity="one">%1$s Second</item>
+        <item quantity="zero">%1$s Second</item>
+        <item quantity="other">%1$s Seconds</item>
+    </plurals>
+
+    <plurals name="minute_count">
+        <item quantity="one">%1$s Minute</item>
+        <item quantity="zero">%1$s Minute</item>
+        <item quantity="other">%1$s Minutes</item>
+    </plurals>
+</resources>

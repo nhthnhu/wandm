@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="song_count">
+        <item quantity="one">%1$s Bài hát</item>
+        <item quantity="zero">%1$s Bài hát</item>
+        <item quantity="other">%1$s Bài hát</item>
+    </plurals>
+
+    <plurals name="album_count">
+        <item quantity="one">%1$s Album</item>
+        <item quantity="zero">%1$s Album</item>
+        <item quantity="other">%1$s Album</item>
+    </plurals>
+
+    <plurals name="artist_count">
+        <item quantity="one">%1$s Ca sĩ</item>
+        <item quantity="zero">%1$s Ca sĩ</item>
+        <item quantity="other">%1$s Ca sĩ</item>
+    </plurals>
+
+    <plurals name="second_count">
+        <item quantity="one">%1$s Giây</item>
+        <item quantity="zero">%1$s Giây</item>
+        <item quantity="other">%1$s Giây</item>
+    </plurals>
+
+    <plurals name="minute_count">
+        <item quantity="one">%1$s Phút</item>
+        <item quantity="zero">%1$s Phút</item>
+        <item quantity="other">%1$s Phút</item>
+    </plurals>
+</resources>

@@ -41,27 +41,13 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
         @SuppressLint("SetTextI18n")
         fun bind(artist: Artist, pos: Int) {
             itemView.artistName.text = artist.name
-            val albumCount = artist.albumCount
-            val songCount = artist.songCount
 
-            val albumString: String
-            val songString: String
+            val albumString = itemView?.resources?.getQuantityString(R.plurals.album_count,
+                    artist.albumCount, artist.albumCount)
+            val songString = itemView?.resources?.getQuantityString(R.plurals.song_count,
+                    artist.songCount, artist.songCount)
 
-            if (albumCount <= 1)
-                albumString = albumCount.toString() + " " +
-                        itemView.context.resources.getString(R.string.album)
-            else
-                albumString = albumCount.toString() + " " +
-                        itemView.context.resources.getString(R.string.albums)
-
-            if (songCount <= 1)
-                songString = songCount.toString() + " " +
-                        itemView.context.resources.getString(R.string.song)
-            else
-                songString = songCount.toString() + " " +
-                        itemView.context.resources.getString(R.string.songs)
-
-            itemView.albumSongsSount.text = albumString + " | " + songString
+            itemView.albumSongsSount.text = itemView?.resources?.getString(R.string.count, albumString, songString)
 
             val albums = ArtistAlbumLoader.getAlbumsForArtist(itemView.context, artist.id)
 

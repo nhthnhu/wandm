@@ -61,13 +61,8 @@ class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerVie
 
             itemView.albumNameTextView.text = album.title
 
-            var string = ""
-            if (album.songCount <= 1)
-                string = itemView.context.getString(R.string.song)
-            else
-                string = itemView.context.getString(R.string.songs)
-
-            itemView.detailAlbumTextView.text = album.songCount.toString() + " " + string
+            itemView.detailAlbumTextView.text = itemView?.resources?.
+                    getQuantityString(R.plurals.song_count, album.songCount, album.songCount)
         }
     }
 }

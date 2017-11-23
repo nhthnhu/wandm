@@ -39,7 +39,11 @@ class AlbumsFragment : BaseFragment() {
                     albumsRecyclerView.adapter = adapter
                     setItemDecoration()
                     albumsRecyclerView.adapter.notifyDataSetChanged()
-                    albumsFastScroller.visibility = View.VISIBLE
+
+                    if (albums.size > 0)
+                        albumsFastScroller.visibility = View.VISIBLE
+
+
                     albumsProgressBar.visibility = View.GONE
 
                     adapter.setOnItemClickListener { album, position ->

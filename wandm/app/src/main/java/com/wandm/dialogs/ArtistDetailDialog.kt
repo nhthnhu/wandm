@@ -87,11 +87,10 @@ class ArtistDetailDialog() : BaseDialogFragment() {
         loadArtistDetail()
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         handler.removeCallbacks(runable)
     }
-
 
     private fun showView(action: String) {
         when (action) {

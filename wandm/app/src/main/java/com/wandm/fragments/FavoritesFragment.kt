@@ -65,7 +65,10 @@ class FavoritesFragment : BaseFragment() {
                     songsRecyclerView.adapter = mAdapter
                     setItemDecoration()
                     songsRecyclerView.adapter.notifyDataSetChanged()
-                    songsFastScroller.visibility = View.VISIBLE
+
+                    if (mList!!.size > 0)
+                        songsFastScroller.visibility = View.VISIBLE
+
                     songsProgressBar.visibility = View.GONE
                 }
             }

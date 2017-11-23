@@ -29,13 +29,17 @@ class ArtistsFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-                val adapter = ArtistsAdapter(ArtistLoader.getAllArtists(App.instance) as ArrayList<Artist>)
+                val artists = ArtistLoader.getAllArtists(App.instance) as ArrayList<Artist>
+                val adapter = ArtistsAdapter(artists)
 
                 uiThread {
                     artistsRecyclerView.adapter = adapter
                     setItemDecoration()
                     artistsRecyclerView.adapter.notifyDataSetChanged()
-                    artistsFastScroller.visibility = View.VISIBLE
+
+                    if (artists.size > 0)
+                        ArtistLoader.getAllArtists(App.instance) as ArrayList<Artist>
+
                     artistsProgressBar.visibility = View.GONE
                     adapter.setOnItemClickListener { artist, _ ->
                         val fragmentManager = MainActivity.instance.supportFragmentManager
