@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">We \u0026 Music</string>
+    <string name="speech">Speech</string>
 
+    <style name="cancel_alarm">Đã huỷ hẹn giờ</style>
 </resources>

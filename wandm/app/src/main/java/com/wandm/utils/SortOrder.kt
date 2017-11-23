@@ -99,55 +99,55 @@ class SortOrder {
     }
 
     /**
-     * Album song sort order entries.
+     * Album currentSong sort order entries.
      */
     interface AlbumSongSortOrder {
         companion object {
-            /* Album song sort order A-Z */
+            /* Album currentSong sort order A-Z */
             val SONG_A_Z = MediaStore.Audio.Media.DEFAULT_SORT_ORDER
 
-            /* Album song sort order Z-A */
+            /* Album currentSong sort order Z-A */
             val SONG_Z_A = SONG_A_Z + " DESC"
 
-            /* Album song sort order track list */
+            /* Album currentSong sort order track list */
             val SONG_TRACK_LIST = (MediaStore.Audio.Media.TRACK + ", "
                     + MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
 
-            /* Album song sort order duration */
+            /* Album currentSong sort order duration */
             val SONG_DURATION = SongSortOrder.SONG_DURATION
 
             /* Album Song sort order year */
             val SONG_YEAR = MediaStore.Audio.Media.YEAR + " DESC"
 
-            /* Album song sort order filename */
+            /* Album currentSong sort order filename */
             val SONG_FILENAME = SongSortOrder.SONG_FILENAME
         }
     }
 
     /**
-     * Artist song sort order entries.
+     * Artist currentSong sort order entries.
      */
     interface ArtistSongSortOrder {
         companion object {
-            /* Artist song sort order A-Z */
+            /* Artist currentSong sort order A-Z */
             val SONG_A_Z = MediaStore.Audio.Media.DEFAULT_SORT_ORDER
 
-            /* Artist song sort order Z-A */
+            /* Artist currentSong sort order Z-A */
             val SONG_Z_A = SONG_A_Z + " DESC"
 
-            /* Artist song sort order album */
+            /* Artist currentSong sort order album */
             val SONG_ALBUM = MediaStore.Audio.Media.ALBUM
 
-            /* Artist song sort order year */
+            /* Artist currentSong sort order year */
             val SONG_YEAR = MediaStore.Audio.Media.YEAR + " DESC"
 
-            /* Artist song sort order duration */
+            /* Artist currentSong sort order duration */
             val SONG_DURATION = MediaStore.Audio.Media.DURATION + " DESC"
 
-            /* Artist song sort order date */
+            /* Artist currentSong sort order date */
             val SONG_DATE = MediaStore.Audio.Media.DATE_ADDED + " DESC"
 
-            /* Artist song sort order filename */
+            /* Artist currentSong sort order filename */
             val SONG_FILENAME = SongSortOrder.SONG_FILENAME
         }
     }

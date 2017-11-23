@@ -55,4 +55,5 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.github.iammert:MusicPlayerView:e3b937c729'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
 }

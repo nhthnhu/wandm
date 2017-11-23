@@ -10,49 +10,49 @@ object CurrentPlaylistManager {
 
     val instance = CurrentPlaylistManager
 
-    var mListSongs = ArrayList<Song>()
-    var mPosition = 0
+    var listSongs = ArrayList<Song>()
+    var position = 0
         set(value) {
             field = value
-            mSong = mListSongs[value]
+            currentSong = listSongs[value]
         }
 
-    var mSong = Song()
+    var currentSong = Song()
 
     fun next(): Song {
         if (PreferencesUtils.getRepeatMode() == 2) {
-            mPosition = mPosition
+            position = position
         } else if (PreferencesUtils.getShuffleMode()) {
             val random = Random()
-            mPosition = random.nextInt(mListSongs.size)
+            position = random.nextInt(listSongs.size)
         } else {
-            if (mPosition == mListSongs.size - 1) {
-                mPosition = 0
+            if (position == listSongs.size - 1) {
+                position = 0
             } else
-                mPosition++
+                position++
         }
 
-        mSong = mListSongs[mPosition]
-        Log.d(TAG, mSong.data)
-        return mSong
+        currentSong = listSongs[position]
+        Log.d(TAG, currentSong.data)
+        return currentSong
     }
 
     fun previous(): Song {
         if (PreferencesUtils.getRepeatMode() == 2) {
-            mPosition = mPosition
+            position = position
         } else if (PreferencesUtils.getShuffleMode()) {
             val random = Random()
-            mPosition = random.nextInt(mListSongs.size)
+            position = random.nextInt(listSongs.size)
         } else {
-            if (mPosition == 0) {
-                mPosition = mListSongs.size - 1
+            if (position == 0) {
+                position = listSongs.size - 1
             } else
-                mPosition--
+                position--
         }
 
-        mSong = mListSongs[mPosition]
-        Log.d(TAG, mSong.data)
-        return mSong
+        currentSong = listSongs[position]
+        Log.d(TAG, currentSong.data)
+        return currentSong
     }
 
 }

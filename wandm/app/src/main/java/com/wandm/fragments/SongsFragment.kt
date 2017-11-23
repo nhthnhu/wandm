@@ -9,6 +9,7 @@ import com.wandm.R
 import com.wandm.activities.MainActivity
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.SongsAdapter
+import com.wandm.data.SearchDataHelper
 import com.wandm.database.SongsBaseHandler
 import com.wandm.dialogs.PlaylistDialogFragment
 import com.wandm.loaders.SongLoader
@@ -34,7 +35,10 @@ class SongsFragment : BaseFragment() {
 
         if (activity != null) {
             doAsync {
-                adapter = SongsAdapter(SongLoader.getAllSongs(App.instance), true) { song, position, action ->
+                val songs = SongLoader.getAllSongs(App.instance)
+                SearchDataHelper.setSongSuggestions(songs)
+
+                adapter = SongsAdapter(songs, true) { song, position, action ->
                     when (action) {
                         SongsAdapter.ACTION_ADD_PLAYLIST -> {
                             val fragmentManager = MainActivity.instance.supportFragmentManager
@@ -48,7 +52,7 @@ class SongsFragment : BaseFragment() {
                             MusicPlayer.bind(null)
 
                             val intent = Intent(activity, NowPlayingActivity::class.java)
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             activity.startActivity(intent)
                         }
                     }

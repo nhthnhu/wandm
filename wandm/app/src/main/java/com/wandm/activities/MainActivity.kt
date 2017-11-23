@@ -1,6 +1,7 @@
 package com.wandm.activities
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
@@ -13,7 +14,6 @@ import com.wandm.R
 import com.wandm.adapters.MenuAdapter
 import com.wandm.fragments.CategoryFragment
 import com.wandm.fragments.QuickControlFragment
-import com.wandm.fragments.SearchDialogFragment
 import com.wandm.permissions.PermissionCallback
 import com.wandm.permissions.PermissionHelper
 import com.wandm.speech.Speech
@@ -87,9 +87,9 @@ class MainActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.search_item_menu -> {
-                val fragmentManager = MainActivity.instance.supportFragmentManager
-                val dialogFragment = SearchDialogFragment.newInstance()
-                dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             }
         }
         return true

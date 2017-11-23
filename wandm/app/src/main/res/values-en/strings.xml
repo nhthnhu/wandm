@@ -36,4 +36,6 @@
     <string name="select_storage">Select storage</string>
 
     <string name="ok">OK</string>
+    <string name="offline_searching">Offline searching</string>
+    <string name="online_searching">Online searching</string>
 </resources>

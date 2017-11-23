@@ -291,7 +291,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
 
 
     private fun updateMetaData() {
-        val song = CurrentPlaylistManager.mSong
+        val song = CurrentPlaylistManager.currentSong
         mediaSession!!.setMetadata(MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
                 .build())
@@ -308,12 +308,12 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
             playPauseAction = playbackAction(0)
         }
 
-        val song = CurrentPlaylistManager.mSong
+        val song = CurrentPlaylistManager.currentSong
 
         val notificationBuilder = NotificationCompat.Builder(this)
                 .setShowWhen(false)
                 .setColor(resources.getColor(R.color.color_primary_dark))
-                .setSmallIcon(android.R.drawable.stat_sys_headset)
+                .setSmallIcon(R.drawable.ic_music)
                 .setContentText(song.title)
                 .addAction(R.drawable.ic_action_skip_pre_dark, "previous", playbackAction(3))
                 .addAction(notificationAction, "pause", playPauseAction)

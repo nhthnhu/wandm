@@ -5,12 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.models.Album
-import com.wandm.models.Artist
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_album.view.*
@@ -63,7 +61,7 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
                         }
 
                         override fun onError() {
-                            itemView.albumImage.background = itemView.context.getDrawable(R.drawable.ic_action_headset_dark)
+                            itemView.albumImage.background = itemView.context.getDrawable(R.drawable.ic_action_music)
                         }
                     })
 

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wandm.activities.SearchActivity">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/searchBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.ms_square.etsyblur.BlurringView
+        android:id="@+id/blurringView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="64dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/searchOfflineLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/resultsOfflineLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/labelSearchOffline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/offline_searching"
+                    android:textColor="@color/color_white"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/resultsOfflineView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/searchOnlineLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/resultsOnlineLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/labelSearchOnline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/online_searching"
+                    android:textColor="@color/color_white"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/resultsOnlineView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:floatingSearch_close_search_on_keyboard_dismiss="false"
+        app:floatingSearch_dimBackground="false"
+        app:floatingSearch_leftActionMode="showHome"
+        app:floatingSearch_menu="@menu/menu_search"
+        app:floatingSearch_searchHint="Search..."
+        app:floatingSearch_showSearchKey="true"
+        app:floatingSearch_suggestionsListAnimDuration="250" />
+
+</FrameLayout>

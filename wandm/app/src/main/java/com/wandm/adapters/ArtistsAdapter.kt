@@ -73,7 +73,7 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
                         }
 
                         override fun onError() {
-                            itemView.artistImage.background = itemView.context.getDrawable(R.drawable.ic_action_headset_dark)
+                            itemView.artistImage.background = itemView.context.getDrawable(R.drawable.ic_action_music)
                         }
                     })
 

@@ -21,7 +21,7 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     override fun onCompletion(p0: MediaPlayer?) {
         EventBus.getDefault().post(MessageEvent(MusicEvent.COMPLETED_ACTION))
         if (PreferencesUtils.getRepeatMode() == 1 ||
-                CurrentPlaylistManager.mPosition < CurrentPlaylistManager.mListSongs.size) {
+                CurrentPlaylistManager.position < CurrentPlaylistManager.listSongs.size) {
             next()
         }
     }
@@ -116,7 +116,7 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     }
 
     fun playNew() {
-        val song = CurrentPlaylistManager.mSong
+        val song = CurrentPlaylistManager.currentSong
         stop()
         init(song.data)
     }

@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import com.nostra13.universalimageloader.core.DisplayImageOptions
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.wandm.App
@@ -39,8 +38,8 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
         holder?.bind(listSongs[position])
 
         holder?.songItemView?.setOnClickListener {
-            CurrentPlaylistManager.mListSongs = listSongs
-            CurrentPlaylistManager.mPosition = position
+            CurrentPlaylistManager.listSongs = listSongs
+            CurrentPlaylistManager.position = position
             MusicPlayer.bind(null)
 
 
@@ -67,7 +66,7 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
             ImageLoader.getInstance().displayImage(
                     Utils.getAlbumArtUri(song.albumId).toString(),
                     itemView.albumArt, DisplayImageOptions.Builder().cacheInMemory(true).
-                    showImageOnFail(R.drawable.ic_action_headset_dark).
+                    showImageOnFail(R.drawable.ic_action_music).
                     resetViewBeforeLoading(true).build())
 
             itemView.titleItemSongTextView.text = song.title

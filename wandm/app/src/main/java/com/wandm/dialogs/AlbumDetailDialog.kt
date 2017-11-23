@@ -111,7 +111,7 @@ class AlbumDetailDialog : BaseDialogFragment() {
                                 }
 
                                 override fun onError() {
-                                    albumImageView.background = activity.getDrawable(R.drawable.ic_action_headset_dark)
+                                    albumImageView.background = activity.getDrawable(R.drawable.ic_action_music)
                                 }
                             })
 

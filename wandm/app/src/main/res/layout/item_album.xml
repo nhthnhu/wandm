@@ -19,7 +19,7 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:padding="1dp"
-            android:src="@drawable/ic_action_headset_dark"
+            android:src="@drawable/ic_action_music"
             android:transitionName="transition_artist_image" />
 
         <LinearLayout

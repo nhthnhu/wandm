@@ -4,15 +4,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.models.song.Song
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_online_song.view.*
 
-class SearchAdapter(private val listSongs: ArrayList<Song>,
-                    val listener: (Song, Int, String) -> Unit) : RecyclerView.Adapter<SearchAdapter.SearchHolder>(), BubbleTextGetter {
+class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
+                         private val listener: (Song, Int, String) -> Unit) : RecyclerView.Adapter<OnlineSongsAdapter.SearchHolder>(), BubbleTextGetter {
 
     companion object {
         val ACTION_PLAY = "action_play"
@@ -28,19 +28,17 @@ class SearchAdapter(private val listSongs: ArrayList<Song>,
         return SearchHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return listSongs.size
-    }
+    override fun getItemCount() = listSongs.size
 
     override fun onBindViewHolder(holder: SearchHolder?, position: Int) {
         holder?.bind(listSongs[position])
 
         holder?.itemView?.titleItemSongTextView?.setOnClickListener {
-            listener(listSongs.get(position), position, ACTION_PLAY)
+            listener(listSongs[position], position, ACTION_PLAY)
         }
 
         holder?.itemView?.downloadtButton?.setOnClickListener {
-            listener(listSongs.get(position), position, ACTION_DOWNLOAD)
+            listener(listSongs[position], position, ACTION_DOWNLOAD)
         }
     }
 
@@ -49,7 +47,15 @@ class SearchAdapter(private val listSongs: ArrayList<Song>,
         fun bind(song: Song) {
             itemView.titleItemSongTextView.text = song.title
             itemView.titleItemSongTextView.isSelected = true
-            Picasso.with(itemView.context).load(song.albumArt).into(itemView.albumArt)
+            Picasso.with(itemView.context).load(song.albumArt).into(itemView.albumArt, object : Callback {
+                override fun onSuccess() {
+
+                }
+
+                override fun onError() {
+                    itemView.albumArt.background = itemView.context.getDrawable(R.drawable.ic_action_music)
+                }
+            })
         }
 
     }

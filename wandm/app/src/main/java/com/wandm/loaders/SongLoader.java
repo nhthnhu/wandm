@@ -115,9 +115,9 @@ public class SongLoader {
     }
 
     public static List<Song> searchSongs(Context context, String searchString, int limit) {
-        ArrayList<Song> result = getSongsForCursor(makeSongCursor(context, "title LIKE ?", new String[]{searchString + "%"}));
+        ArrayList<Song> result = getSongsForCursor(makeSongCursor(context, "UPPER(title) LIKE ?", new String[]{searchString.toUpperCase() + "%"}));
         if (result.size() < limit) {
-            result.addAll(getSongsForCursor(makeSongCursor(context, "title LIKE ?", new String[]{"%_" + searchString + "%"})));
+            result.addAll(getSongsForCursor(makeSongCursor(context, "UPPER(title) LIKE ?", new String[]{"%_" + searchString.toUpperCase() + "%"})));
         }
         return result.size() < limit ? result : result.subList(0, limit);
     }

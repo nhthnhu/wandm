@@ -1,24 +1,19 @@
 package com.wandm.adapters
 
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.wandm.App
 import com.wandm.R
-import com.wandm.activities.MainActivity
-import com.wandm.activities.NowPlayingActivity
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.models.song.Song
-import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
 
-class SongsAdapter(private val listSongs: ArrayList<Song>,
+class SongsAdapter(var listSongs: ArrayList<Song>,
                    private val isAddFavorite: Boolean,
                    private val listener: (Song, Int, String) -> Unit) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
 
@@ -42,8 +37,8 @@ class SongsAdapter(private val listSongs: ArrayList<Song>,
         holder?.bind(listSongs[position])
 
         holder?.songItemView?.setOnClickListener {
-            CurrentPlaylistManager.mListSongs = listSongs
-            CurrentPlaylistManager.mPosition = position
+            CurrentPlaylistManager.listSongs = listSongs
+            CurrentPlaylistManager.position = position
             listener(listSongs[position], position, ACTION_PLAY)
         }
 
@@ -68,7 +63,7 @@ class SongsAdapter(private val listSongs: ArrayList<Song>,
                         }
 
                         override fun onError() {
-                            itemView.albumArt.background = itemView.context.getDrawable(R.drawable.ic_action_headset_dark)
+                            itemView.albumArt.background = itemView.context.getDrawable(R.drawable.ic_action_music)
                         }
                     })
 

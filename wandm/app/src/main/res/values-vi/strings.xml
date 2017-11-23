@@ -36,5 +36,6 @@
     <string name="select_storage">Chọn nơi lưu trữ</string>
 
     <string name="ok">Ok</string>
-
+    <string name="offline_searching">Tìm kiếm offline</string>
+    <string name="online_searching">Tìm kiếm online</string>
 </resources>
