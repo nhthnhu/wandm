@@ -14,12 +14,15 @@ import com.wandm.R
 import com.wandm.adapters.MenuAdapter
 import com.wandm.fragments.CategoryFragment
 import com.wandm.fragments.QuickControlFragment
+import com.wandm.fragments.SongsFragment
+import com.wandm.models.menu.ListMenus
 import com.wandm.permissions.PermissionCallback
 import com.wandm.permissions.PermissionHelper
 import com.wandm.speech.Speech
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.fragment_category.*
 import kotlinx.android.synthetic.main.sliding_pane_main.*
 
 
@@ -30,13 +33,13 @@ class MainActivity : BaseActivity() {
     }
 
     private var isSetup = false
+    private var itemPagerPosition = 0
 
     // Listening events of SlidingPaneLayout
     private val panelListener = object : SlidingPaneLayout.PanelSlideListener {
 
         override fun onPanelClosed(arg0: View) {
-
-
+            CategoryFragment.instance?.listViewPagers?.currentItem = itemPagerPosition
         }
 
         override fun onPanelOpened(arg0: View) {
@@ -123,7 +126,14 @@ class MainActivity : BaseActivity() {
         slidingPane.sliderFadeColor = ContextCompat.getColor(this, android.R.color.transparent)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = MenuAdapter()
+        val adapter = MenuAdapter()
+        recyclerView.adapter = adapter
+        adapter.setOnItemClickListener { position ->
+            itemPagerPosition = position
+            slidingPane.closePane()
+        }
+
+
 
         addFragment(CategoryFragment(), R.id.fragment_container, CategoryFragment::class.java.name)
     }

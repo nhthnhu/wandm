@@ -5,14 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wandm.R
+import com.wandm.models.Artist
 import com.wandm.models.menu.ListMenus
 import com.wandm.models.menu.Menu
 import kotlinx.android.synthetic.main.item_menu.view.*
 
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
 
+    private var onItemClickListener: ((position: Int) -> Unit)? = null
+
+    fun setOnItemClickListener(onItemClickListener: ((position: Int) -> Unit)?) {
+        this.onItemClickListener = onItemClickListener
+    }
+
     override fun onBindViewHolder(holder: MenuHolder?, position: Int) {
-        holder?.bind(ListMenus.instance[position])
+        holder?.bind(ListMenus.instance[position], position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MenuHolder {
@@ -24,10 +31,14 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
 
 
     inner class MenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(data: Menu) {
+        fun bind(data: Menu, position: Int) {
             itemView.menuImageView.setIcon(data.icon)
             itemView.menuImageView.setColorResource(data.color)
             itemView.contentMenuTextView.text = data.content
+
+            itemView?.setOnClickListener {
+                onItemClickListener?.invoke(position)
+            }
         }
     }
 

@@ -1,10 +1,9 @@
 package com.wandm.models.menu
 
-import android.content.res.Resources
 import com.wandm.App
 import com.wandm.R
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
-import net.steamcrafted.materialiconlib.MaterialIconUtils
+
 
 class ListMenus private constructor() {
     private val mList = ArrayList<Menu>()
@@ -14,20 +13,26 @@ class ListMenus private constructor() {
     }
 
     init {
-        val songs = Menu(MaterialDrawableBuilder.IconValue.MUSIC_NOTE, App.instance.resources.getString(R.string.songs),
-                false, R.color.color_white)
+        val songs = Menu(MaterialDrawableBuilder.IconValue.MUSIC_NOTE, Menu.SONGS,
+                R.color.color_white)
 
-        val favorite = Menu(MaterialDrawableBuilder.IconValue.HEART, App.instance.resources.getString(R.string.favorites),
-                false, R.color.color_red)
+        val favorite = Menu(MaterialDrawableBuilder.IconValue.HEART, Menu.FAVORITES,
+                R.color.color_red)
 
-        val artists = Menu(MaterialDrawableBuilder.IconValue.MUSIC_NOTE, App.instance.resources.getString(R.string.artists),
-                false, R.color.color_white)
+        val artists = Menu(MaterialDrawableBuilder.IconValue.ACCOUNT, Menu.ARTISTS,
+                R.color.color_white)
 
-        val setting = Menu(MaterialDrawableBuilder.IconValue.SETTINGS, "Setting",
-                false, R.color.color_white)
+        val albums = Menu(MaterialDrawableBuilder.IconValue.ALBUM, Menu.ALBUMS,
+                R.color.color_white)
 
+        val folders = Menu(MaterialDrawableBuilder.IconValue.FOLDER, Menu.FOLDERS,
+                R.color.color_white)
+
+        mList.add(songs)
         mList.add(favorite)
-        mList.add(setting)
+        mList.add(artists)
+        mList.add(albums)
+        mList.add(folders)
     }
 
     operator fun get(position: Int): Menu {

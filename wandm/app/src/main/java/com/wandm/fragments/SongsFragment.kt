@@ -1,5 +1,6 @@
 package com.wandm.fragments
 
+import android.app.DialogFragment
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.SongsAdapter
 import com.wandm.data.SearchDataHelper
 import com.wandm.database.SongsBaseHandler
+import com.wandm.dialogs.ArtistDetailDialog
 import com.wandm.dialogs.PlaylistDialogFragment
 import com.wandm.loaders.SongLoader
 import com.wandm.services.MusicPlayer
@@ -24,6 +26,14 @@ import org.jetbrains.anko.uiThread
 
 class SongsFragment : BaseFragment() {
     private var adapter: SongsAdapter? = null
+
+    companion object {
+        fun newInstance(): SongsFragment {
+            val fragment = SongsFragment()
+            return fragment
+        }
+    }
+
     override fun getLayoutResId(): Int {
         return R.layout.fragment_songs
     }

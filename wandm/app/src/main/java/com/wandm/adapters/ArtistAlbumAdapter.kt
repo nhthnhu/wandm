@@ -35,7 +35,7 @@ class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerVie
     override fun onViewAttachedToWindow(holder: AlbumHolder?) {
         super.onViewAttachedToWindow(holder)
 
-        var anim = AnimationUtils.loadAnimation(holder?.itemView?.context, R.anim.anim_left_from_right)
+        val anim = AnimationUtils.loadAnimation(holder?.itemView?.context, R.anim.anim_left_from_right)
         holder?.itemView?.startAnimation(anim)
     }
 
