@@ -19,6 +19,7 @@ import android.util.Log
 import com.wandm.App
 import com.wandm.IWMService
 import com.wandm.R
+import com.wandm.activities.NowPlayingActivity
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.data.PlaybackStatus
 import com.wandm.events.MessageEvent
@@ -28,6 +29,9 @@ import com.wandm.utils.PreferencesUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import com.wandm.activities.MainActivity
+import android.content.Intent
+
 
 class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -321,8 +325,10 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
                 .setStyle(android.support.v4.media.app.NotificationCompat.MediaStyle()
                         .setMediaSession(mediaSession!!.sessionToken)
                         .setShowActionsInCompactView(0, 1, 2))
-
-        notificationBuilder.setDeleteIntent(playbackAction(4))
+                .setDeleteIntent(playbackAction(4))
+                .setContentIntent(PendingIntent.getActivity(this, 0,
+                        Intent(this, NowPlayingActivity::class.java)
+                        , PendingIntent.FLAG_UPDATE_CURRENT))
 
         (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFICATION_ID, notificationBuilder.build())
 
