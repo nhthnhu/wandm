@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
@@ -36,6 +37,10 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
     }
 
     override fun getItemCount() = mListAlbums.size
+
+    override fun onViewAttachedToWindow(holder: AlbumsHolder?) {
+        super.onViewAttachedToWindow(holder)
+    }
 
     inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")

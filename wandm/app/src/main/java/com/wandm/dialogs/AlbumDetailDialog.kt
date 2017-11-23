@@ -100,9 +100,9 @@ class AlbumDetailDialog : BaseDialogFragment() {
                     else
                         song = resources.getString(R.string.songs)
 
-                    artistNameTextView.text = album.artistName
-                    numbersongsTextView.text = album.songCount.toString() + " " + song
-                    
+                    albumNameTextView.text = album.title
+                    detailAlbumTextView.text = album.artistName + " | " + album.songCount.toString() + " " + song
+
                     Picasso.with(activity)
                             .load(Utils.getAlbumArtUri(album.id).toString())
                             .into(albumImageView, object : Callback {

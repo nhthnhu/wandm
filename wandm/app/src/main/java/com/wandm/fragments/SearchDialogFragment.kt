@@ -70,7 +70,7 @@ class SearchDialogFragment : BaseDialogFragment(), View.OnClickListener {
 
         adapter = ArrayAdapter(context, R.layout.item_auto_complete_song, listNames)
         keywordAutoCompleteTextView.setAdapter(adapter)
-        keywordAutoCompleteTextView.setDropDownBackgroundDrawable(context.getDrawable(R.drawable.background_search))
+        keywordAutoCompleteTextView.setDropDownBackgroundDrawable(context.getDrawable(R.drawable.background_general))
 
         keywordAutoCompleteTextView.setOnEditorActionListener({ v, actionId, event ->
             var handled = false

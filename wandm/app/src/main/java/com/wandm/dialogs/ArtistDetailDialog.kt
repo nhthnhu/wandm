@@ -2,8 +2,8 @@ package com.wandm.dialogs
 
 import android.app.DialogFragment
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,23 +13,30 @@ import com.wandm.R
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.ArtistAlbumAdapter
 import com.wandm.adapters.SongsAdapter
-import com.wandm.loaders.AlbumSongLoader
 import com.wandm.loaders.ArtistAlbumLoader
 import com.wandm.loaders.ArtistSongLoader
 import com.wandm.services.MusicPlayer
-import com.wandm.utils.Utils
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_artist_detail.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class ArtistDetailDialog : BaseDialogFragment() {
+class ArtistDetailDialog() : BaseDialogFragment() {
     private var artistId = 0L
     private val TAG = "ArtistDetailDialog"
 
+    private val speedScroll = 7000
+    private val handler = Handler()
+    private var count = 0
+
+    private var min = true
+    private var max = false
+
+    private var songsAdapter: SongsAdapter? = null
+    private var albumsAdapter: ArtistAlbumAdapter? = null
+
     companion object {
         private val ARG_ARTIST_ID = "arg_artist_id"
-
         private val ACTION_LOADING = "action_loading"
         private val ACTION_ARTIST_DETAIL = "action_artist_detail"
 
@@ -44,6 +51,28 @@ class ArtistDetailDialog : BaseDialogFragment() {
         }
     }
 
+    private val runable = object : Runnable {
+        override fun run() {
+
+            if (count == 0) {
+                min = true
+                max = false
+            } else if (count == albumsAdapter?.itemCount!! - 1) {
+                min = false
+                max = true
+            }
+
+            if (min && !max)
+                count++
+            else if (!min && max)
+                count--
+
+
+            albumsRecyclerView.scrollToPosition(count)
+            handler.postDelayed(this, speedScroll.toLong())
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.dialog_artist_detail, container, false)
     }
@@ -52,10 +81,17 @@ class ArtistDetailDialog : BaseDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         songsRecyclerView.layoutManager = LinearLayoutManager(activity)
         albumsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
         songsFastScroller.setRecyclerView(songsRecyclerView)
 
         loadArtistDetail()
     }
+
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacks(runable)
+    }
+
 
     private fun showView(action: String) {
         when (action) {
@@ -82,7 +118,7 @@ class ArtistDetailDialog : BaseDialogFragment() {
                 val artistAlbums = ArtistAlbumLoader.getAlbumsForArtist(activity, artistId)
                 val songs = ArtistSongLoader.getSongsForArtist(activity, artistId)
 
-                val songsAdapter = SongsAdapter(songs, false) { song, position, action ->
+                songsAdapter = SongsAdapter(songs, false) { song, position, action ->
                     when (action) {
                         SongsAdapter.ACTION_PLAY -> {
                             dismiss()
@@ -95,12 +131,13 @@ class ArtistDetailDialog : BaseDialogFragment() {
                     }
                 }
 
-                val albumsAdapter = ArtistAlbumAdapter(artistAlbums)
+                albumsAdapter = ArtistAlbumAdapter(artistAlbums)
 
                 uiThread {
                     showView(ACTION_ARTIST_DETAIL)
                     songsRecyclerView.adapter = songsAdapter
                     albumsRecyclerView.adapter = albumsAdapter
+                    albumsRecyclerView.postDelayed(runable, speedScroll.toLong())
                     setItemDecoration()
                 }
             }
@@ -110,4 +147,5 @@ class ArtistDetailDialog : BaseDialogFragment() {
     private fun setItemDecoration() {
         songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
     }
+
 }

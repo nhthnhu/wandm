@@ -24,7 +24,7 @@
         android:textSize="14sp" />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/numbersongsTextView"
+        android:id="@+id/detailAlbumTextView"
         style="@style/WMTextStyleDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

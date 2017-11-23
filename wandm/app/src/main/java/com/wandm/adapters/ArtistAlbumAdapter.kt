@@ -1,12 +1,12 @@
 package com.wandm.adapters
 
 import android.annotation.SuppressLint
-import android.nfc.Tag
+import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
@@ -32,8 +32,14 @@ class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerVie
         return listAlbums.size
     }
 
+    override fun onViewAttachedToWindow(holder: AlbumHolder?) {
+        super.onViewAttachedToWindow(holder)
 
-    class AlbumHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var anim = AnimationUtils.loadAnimation(holder?.itemView?.context, R.anim.anim_left_from_right)
+        holder?.itemView?.startAnimation(anim)
+    }
+
+    inner class AlbumHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private var mAlbum: Album? = null
 
@@ -61,7 +67,7 @@ class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerVie
             else
                 string = itemView.context.getString(R.string.songs)
 
-            itemView.numbersongsTextView.text = album.songCount.toString() + " " + string
+            itemView.detailAlbumTextView.text = album.songCount.toString() + " " + string
         }
     }
 }
