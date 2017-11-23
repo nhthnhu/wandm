@@ -5,7 +5,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wandm.App
 import com.wandm.R
+import com.wandm.activities.MainActivity
 import com.wandm.adapters.AlbumsAdapter
+import com.wandm.dialogs.AlbumDetailDialog
+import com.wandm.dialogs.ArtistDetailDialog
 import com.wandm.loaders.AlbumLoader
 import com.wandm.models.Album
 import com.wandm.utils.PreferencesUtils
@@ -36,8 +39,14 @@ class AlbumsFragment : BaseFragment() {
                     albumsRecyclerView.adapter = adapter
                     setItemDecoration()
                     albumsRecyclerView.adapter.notifyDataSetChanged()
-                    albumsFastScroller.visibility = View.VISIBLE;
-                    albumsProgressBar.visibility = View.GONE;
+                    albumsFastScroller.visibility = View.VISIBLE
+                    albumsProgressBar.visibility = View.GONE
+
+                    adapter.setOnItemClickListener { album, position ->
+                        val fragmentManager = MainActivity.instance.supportFragmentManager
+                        val dialogFragment = AlbumDetailDialog.newInstance(album.id)
+                        dialogFragment.show(fragmentManager, "AlbumDetailDialog")
+                    }
                 }
             }
         }

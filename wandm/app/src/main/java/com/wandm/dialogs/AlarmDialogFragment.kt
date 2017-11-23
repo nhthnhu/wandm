@@ -2,6 +2,7 @@ package com.wandm.dialogs
 
 import android.app.DialogFragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +16,14 @@ import kotlinx.android.synthetic.main.dialog_timer.*
 class AlarmDialogFragment : BaseDialogFragment(), View.OnClickListener {
 
     companion object {
+        private val TAG = "AlarmDialogFragment"
+
         private var minute = 0
         private var second = 0
         private var listener: ((Boolean) -> Unit)? = null
+
+        private var minuteStr = ""
+        private var secondStr = ""
 
         fun newInstance(listener: (Boolean) -> Unit): AlarmDialogFragment {
             Companion.listener = listener
@@ -46,7 +52,12 @@ class AlarmDialogFragment : BaseDialogFragment(), View.OnClickListener {
 
         minuteNumberPicker.setOnValueChangedListener(object : NumberPicker.OnValueChangeListener {
             override fun onValueChange(p0: NumberPicker?, p1: Int, p2: Int) {
-                minuteTextView.text = p2.toString() + " phút"
+                if (p2 <= 1)
+                    minuteStr = p2.toString() + " " + activity.resources.getString(R.string.minute)
+                else
+                    minuteStr = p2.toString() + " " + activity.resources.getString(R.string.minutes)
+
+                minuteTextView.text = minuteStr
             }
 
         })
@@ -54,7 +65,12 @@ class AlarmDialogFragment : BaseDialogFragment(), View.OnClickListener {
 
         secondNumberPicker.setOnValueChangedListener(object : NumberPicker.OnValueChangeListener {
             override fun onValueChange(p0: NumberPicker?, p1: Int, p2: Int) {
-                secondTextView.text = p2.toString() + " giây"
+                if (p2 <= 1)
+                    secondStr = p2.toString() + " " + activity.resources.getString(R.string.second)
+                else
+                    secondStr = p2.toString() + " " + activity.resources.getString(R.string.seconds)
+
+                secondTextView.text = secondStr
             }
 
         })
@@ -65,8 +81,22 @@ class AlarmDialogFragment : BaseDialogFragment(), View.OnClickListener {
             R.id.setAlarmButton -> {
                 minute = minuteNumberPicker.value
                 second = secondNumberPicker.value
+
+                if (second <= 1)
+                    secondStr = second.toString() + " " + activity.resources.getString(R.string.second)
+                else
+                    secondStr = second.toString() + " " + activity.resources.getString(R.string.seconds)
+
+                if (minute <= 1)
+                    minuteStr = minute.toString() + " " + activity.resources.getString(R.string.minute)
+                else
+                    minuteStr = minute.toString() + " " + activity.resources.getString(R.string.minutes)
+
+
                 PreferencesUtils.setAlarm(minute.toString() + ";;" + second.toString())
-                Toast.makeText(App.instance, "Tắt nhạc sau ${minute} phút ${second} giây", Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(App.instance, activity.resources.getString(R.string.alarm_toast, minuteStr, secondStr),
+                        Toast.LENGTH_SHORT).show()
                 listener!!(true)
                 dismiss()
             }
@@ -74,7 +104,7 @@ class AlarmDialogFragment : BaseDialogFragment(), View.OnClickListener {
             R.id.cancelAlarmButton -> {
                 PreferencesUtils.setAlarm("0;;0")
                 listener!!(false)
-                Toast.makeText(App.instance, "Đã huỷ hẹn giờ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(App.instance, activity.resources.getString(R.string.turn_off_alarm), Toast.LENGTH_SHORT).show()
                 dismiss()
             }
         }

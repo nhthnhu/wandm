@@ -497,7 +497,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             } else {
                 PreferencesUtils.setAlarm("0;;0")
                 setAlarmButton.setColorResource(R.color.color_white)
-                Toast.makeText(this, "Đã huỷ hẹn giờ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.turn_off_alarm), Toast.LENGTH_SHORT).show()
             }
         }
     }

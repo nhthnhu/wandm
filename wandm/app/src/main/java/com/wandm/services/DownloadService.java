@@ -28,7 +28,7 @@ public class DownloadService extends IntentService {
     public static final String URL_PATH = "url path";
     public static final String NOTIFICATION = "notification";
     public static final String RESULT = "result";
-    public static final String TAG = "Download";
+    public static final String TAG = "DownloadService";
     private NotificationManager notificationManager;
     private Notification.Builder builder;
     private String fileName;

@@ -242,11 +242,11 @@ class SearchDialogFragment : BaseDialogFragment(), View.OnClickListener {
                     listSong = data
                     val adapter = SearchAdapter(data) { song, position, state ->
                         when (state) {
-                            "Dowload" -> {
+                            SearchAdapter.ACTION_DOWNLOAD -> {
                                 Log.d(TAG, state)
                             }
 
-                            "Play" -> {
+                            SearchAdapter.ACTION_PLAY -> {
                                 CurrentPlaylistManager.mListSongs = listSong!!
                                 CurrentPlaylistManager.mPosition = position
                                 MusicPlayer.bind(null)

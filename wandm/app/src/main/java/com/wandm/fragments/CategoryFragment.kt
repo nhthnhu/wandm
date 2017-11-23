@@ -21,7 +21,7 @@ class CategoryFragment : BaseFragment() {
         val pagerItems = FragmentPagerItems(this.context)
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.songs),
                 SongsFragment::class.java))
-        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.favorite),
+        pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.favorites),
                 FavoritesFragment::class.java))
         pagerItems.add(FragmentPagerItem.of(resources.getString(R.string.artists),
                 ArtistsFragment::class.java))

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="songs">Bài hát</string>
-    <string name="favorite">Yêu thích</string>
+    <string name="song">Bài hát</string>
+    <string name="favorites">Yêu thích</string>
     <string name="artists">Ca sĩ</string>
     <string name="albums">Albums</string>
+    <string name="album">Album</string>
     <string name="folders">Thư mục</string>
     <string name="download">Tải xuống</string>
     <string name="downloading">Đang tải</string>
@@ -11,4 +13,28 @@
     <string name="download_completed">Đã tải xong</string>
 
     <string name="request_read_storage_permission">W&amp;M cần quyền đọc bộ nhớ của thiết bị để hiển thị danh sách nhạc.</string>
+
+    <string name="turn_off_alarm">Đã huỷ hẹn giờ</string>
+    <string name="minute">Phút</string>
+    <string name="minutes">Phút</string>
+    <string name="second">Giây</string>
+    <string name="seconds">Giây</string>
+    <string name="alarm_toast">Tắt nhạc sau %1$s %2$s</string>
+
+    <string name="error_audio">Lỗi ghi âm.</string>
+    <string name="error_client">Xin lỗi, tôi không nghe rõ bạn nói!</string>
+    <string name="error_insufficient_permissions">Không thể kết nối tới Microphone.</string>
+    <string name="error_network">Vui lòng kiểm tra lại kết nối mạng!</string>
+    <string name="error_network_timeout">Network timeout.</string>
+    <string name="error_no_match">Xin lỗi, tôi không nghe rõ!</string>
+    <string name="error_recognizer_busy">Dịch vụ ghi âm đang bận, vui lòng thử lại!</string>
+    <string name="error_server">Vui lòng kiểm tra lại kết nối mạng!</string>
+    <string name="error_speech_timeout">Sao bạn không nói gì cả?</string>
+    <string name="error_default">Vui lòng thử lại!</string>
+
+    <string name="menu_show_as_entry_default">Mặc định</string>
+    <string name="select_storage">Chọn nơi lưu trữ</string>
+
+    <string name="ok">Ok</string>
+
 </resources>

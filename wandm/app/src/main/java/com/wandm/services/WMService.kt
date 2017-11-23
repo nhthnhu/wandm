@@ -146,11 +146,6 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
         when (p0) {
             AudioManager.AUDIOFOCUS_GAIN -> {
                 Log.d(TAG, "AUDIOFOCUS_GAIN")
-                if (!mBinder.isPlaying) {
-                    mBinder.resume()
-                }
-
-                mBinder.setVolume(1.0f, 1.0f)
             }
 
             AudioManager.AUDIOFOCUS_LOSS -> {

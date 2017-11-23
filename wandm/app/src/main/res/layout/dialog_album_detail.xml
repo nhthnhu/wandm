@@ -9,18 +9,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/albumsRecyclerView"
+        <LinearLayout
+            android:id="@+id/albumLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:fadeScrollbars="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:padding="8dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/albumImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/artistNameTextView"
+                style="@style/WMTextStyleDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/numbersongsTextView"
+                style="@style/WMTextStyleDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/songsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/albumsRecyclerView"
+            android:layout_below="@+id/albumLayout"
             android:layout_marginTop="12dp"
             android:fadeScrollbars="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -29,7 +56,7 @@
             android:id="@+id/songsFastScroller"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@id/albumsRecyclerView"
+            android:layout_below="@id/albumLayout"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
             android:layout_alignParentEnd="true"

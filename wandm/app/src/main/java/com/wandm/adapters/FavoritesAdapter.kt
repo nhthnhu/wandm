@@ -82,6 +82,7 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
     private fun removeSong(position: Int): Boolean {
         val isSuccessfull = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
                 removeSong(listSongs[position])!!
+
         if (isSuccessfull) {
             listSongs.remove(listSongs[position])
             this.notifyDataSetChanged()

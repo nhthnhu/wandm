@@ -2,13 +2,38 @@
 <resources>
     <string name="songs">Songs</string>
     <string name="song">Song</string>
-    <string name="favorite">Favorites</string>
+    <string name="favorites">Favorites</string>
     <string name="artists">Artists</string>
     <string name="albums">Albums</string>
+    <string name="album">Album</string>
     <string name="folders">Folders</string>
     <string name="download">Download</string>
     <string name="downloading">Downloading</string>
     <string name="download_failed">Download failed</string>
     <string name="download_completed">Download compeleted</string>
-    <string name="request_read_storage_permission">W&amp;M will need to read external storage to display songs on your device.</string>
+
+    <string name="request_read_storage_permission">We amp\u0026 Music will need to read external storage to display songs on your device.</string>
+
+    <string name="turn_off_alarm">Turn off alarm</string>
+    <string name="minute">Minute</string>
+    <string name="minutes">Minutes</string>
+    <string name="second">Second</string>
+    <string name="seconds">Seconds</string>
+    <string name="alarm_toast">Turn off music after %1$s %2$s</string>
+
+    <string name="error_audio">Record failed</string>
+    <string name="error_client">Sorry, I can not hear clearly</string>
+    <string name="error_insufficient_permissions">Can not connect to the Microphone</string>
+    <string name="error_network">Please check the Internet</string>
+    <string name="error_network_timeout">Network timeout.</string>
+    <string name="error_no_match">Sorry, I can not hear clearly</string>
+    <string name="error_recognizer_busy">Recognizer is busy, please try again!</string>
+    <string name="error_server">Please check the Internet</string>
+    <string name="error_speech_timeout">Why do not you say anything?</string>
+    <string name="error_default">Please try again</string>
+
+    <string name="menu_show_as_entry_default">Default</string>
+    <string name="select_storage">Select storage</string>
+
+    <string name="ok">OK</string>
 </resources>

@@ -22,7 +22,10 @@ class StorageSelectDialog(context: Context) : DialogInterface.OnClickListener {
         mDialog = AlertDialog.Builder(context)
                 .setItems(names, this)
                 .setNegativeButton(android.R.string.cancel, null)
-                .setNeutralButton(R.string.menu_show_as_entry_default) { _, _ -> mDirSelectListener!!.onDirSelected(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)) }
+                .setNeutralButton(R.string.menu_show_as_entry_default) { _, _ ->
+                    mDirSelectListener!!.onDirSelected(Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC))
+                }
                 .setCancelable(true)
                 .setTitle(R.string.select_storage)
                 .create()

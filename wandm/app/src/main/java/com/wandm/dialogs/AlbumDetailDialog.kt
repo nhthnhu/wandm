@@ -2,42 +2,40 @@ package com.wandm.dialogs
 
 import android.app.DialogFragment
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.activities.NowPlayingActivity
-import com.wandm.adapters.ArtistAlbumAdapter
 import com.wandm.adapters.SongsAdapter
+import com.wandm.loaders.AlbumLoader
 import com.wandm.loaders.AlbumSongLoader
-import com.wandm.loaders.ArtistAlbumLoader
-import com.wandm.loaders.ArtistSongLoader
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.DividerItemDecoration
-import kotlinx.android.synthetic.main.dialog_artist_detail.*
+import kotlinx.android.synthetic.main.dialog_album_detail.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class ArtistDetailDialog : BaseDialogFragment() {
-    private var artistId = 0L
-    private val TAG = "ArtistDetailDialog"
+class AlbumDetailDialog : BaseDialogFragment() {
+    private var albumId = 0L
+    private val TAG = "AlbumDetailDialog"
 
     companion object {
-        private val ARG_ARTIST_ID = "arg_artist_id"
+        private val ARG_ALBUM_ID = "arg_album_id"
 
         private val ACTION_LOADING = "action_loading"
-        private val ACTION_ARTIST_DETAIL = "action_artist_detail"
+        private val ACTION_ALBUM_DETAIL = "action_album_detail"
 
-        fun newInstance(artistId: Long): ArtistDetailDialog {
+        fun newInstance(albumId: Long): AlbumDetailDialog {
             val bundle = Bundle()
-            bundle.putLong(ARG_ARTIST_ID, artistId)
+            bundle.putLong(ARG_ALBUM_ID, albumId)
 
-            val fragment = ArtistDetailDialog()
+            val fragment = AlbumDetailDialog()
             fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.EtsyBlurDialogTheme)
             fragment.arguments = bundle
             return fragment
@@ -45,16 +43,15 @@ class ArtistDetailDialog : BaseDialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.dialog_artist_detail, container, false)
+        return inflater?.inflate(R.layout.dialog_album_detail, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         songsRecyclerView.layoutManager = LinearLayoutManager(activity)
-        albumsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         songsFastScroller.setRecyclerView(songsRecyclerView)
 
-        loadArtistDetail()
+        loadAlbumDetail()
     }
 
     private fun showView(action: String) {
@@ -64,23 +61,22 @@ class ArtistDetailDialog : BaseDialogFragment() {
                 songsFastScroller.visibility = View.VISIBLE
             }
 
-            ACTION_ARTIST_DETAIL -> {
+            ACTION_ALBUM_DETAIL -> {
                 songsFastScroller.visibility = View.VISIBLE
                 songsProgressBar.visibility = View.GONE
             }
         }
     }
 
-    private fun getArtistId(): Long = arguments.getLong(ARG_ARTIST_ID, 0)
+    private fun getAlbumId(): Long = arguments.getLong(ARG_ALBUM_ID, 0)
 
-    private fun loadArtistDetail() {
-        artistId = getArtistId()
+    private fun loadAlbumDetail() {
+        albumId = getAlbumId()
         showView(ACTION_LOADING)
 
         if (activity != null) {
             doAsync {
-                val artistAlbums = ArtistAlbumLoader.getAlbumsForArtist(activity, artistId)
-                val songs = ArtistSongLoader.getSongsForArtist(activity, artistId)
+                val songs = AlbumSongLoader.getSongsForAlbum(activity, albumId)
 
                 val songsAdapter = SongsAdapter(songs, false) { song, position, action ->
                     when (action) {
@@ -95,12 +91,32 @@ class ArtistDetailDialog : BaseDialogFragment() {
                     }
                 }
 
-                val albumsAdapter = ArtistAlbumAdapter(artistAlbums)
-
                 uiThread {
-                    showView(ACTION_ARTIST_DETAIL)
+                    val album = AlbumLoader.getAlbum(activity, albumId)
+                    val numberSong = album.songCount
+                    var song = ""
+                    if (numberSong <= 1)
+                        song = resources.getString(R.string.song)
+                    else
+                        song = resources.getString(R.string.songs)
+
+                    artistNameTextView.text = album.artistName
+                    numbersongsTextView.text = album.songCount.toString() + " " + song
+                    
+                    Picasso.with(activity)
+                            .load(Utils.getAlbumArtUri(album.id).toString())
+                            .into(albumImageView, object : Callback {
+                                override fun onSuccess() {
+
+                                }
+
+                                override fun onError() {
+                                    albumImageView.background = activity.getDrawable(R.drawable.ic_action_headset_dark)
+                                }
+                            })
+
+                    showView(ACTION_ALBUM_DETAIL)
                     songsRecyclerView.adapter = songsAdapter
-                    albumsRecyclerView.adapter = albumsAdapter
                     setItemDecoration()
                 }
             }
@@ -110,4 +126,6 @@ class ArtistDetailDialog : BaseDialogFragment() {
     private fun setItemDecoration() {
         songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
     }
+
+
 }

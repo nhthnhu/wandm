@@ -63,9 +63,5 @@ class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerVie
 
             itemView.numbersongsTextView.text = album.songCount.toString() + " " + string
         }
-
-        fun getAlbumId(): Long? {
-            return mAlbum?.id
-        }
     }
 }

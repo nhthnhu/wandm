@@ -14,6 +14,11 @@ import kotlinx.android.synthetic.main.item_online_song.view.*
 class SearchAdapter(private val listSongs: ArrayList<Song>,
                     val listener: (Song, Int, String) -> Unit) : RecyclerView.Adapter<SearchAdapter.SearchHolder>(), BubbleTextGetter {
 
+    companion object {
+        val ACTION_PLAY = "action_play"
+        val ACTION_DOWNLOAD = "action_download"
+    }
+
     override fun getTextToShowInBubble(pos: Int): String {
         return listSongs[pos].title[0].toString()
     }
@@ -31,11 +36,11 @@ class SearchAdapter(private val listSongs: ArrayList<Song>,
         holder?.bind(listSongs[position])
 
         holder?.itemView?.titleItemSongTextView?.setOnClickListener {
-            listener(listSongs.get(position), position, "Play")
+            listener(listSongs.get(position), position, ACTION_PLAY)
         }
 
         holder?.itemView?.downloadtButton?.setOnClickListener {
-            listener(listSongs.get(position), position, "Download")
+            listener(listSongs.get(position), position, ACTION_DOWNLOAD)
         }
     }
 

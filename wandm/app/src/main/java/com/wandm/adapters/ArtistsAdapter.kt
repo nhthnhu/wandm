@@ -14,7 +14,9 @@ import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_artist.view.*
 
-class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>(), BubbleTextGetter {
+class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>(),
+        BubbleTextGetter {
+
     override fun getTextToShowInBubble(pos: Int) = mListArtists[pos].name[0].toString()
 
     private var onItemClickListener: ((artist: Artist, position: Int) -> Unit)? = null
@@ -46,14 +48,18 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
             val songString: String
 
             if (albumCount <= 1)
-                albumString = albumCount.toString() + " album"
+                albumString = albumCount.toString() + " " +
+                        itemView.context.resources.getString(R.string.album)
             else
-                albumString = albumCount.toString() + " albums"
+                albumString = albumCount.toString() + " " +
+                        itemView.context.resources.getString(R.string.albums)
 
             if (songCount <= 1)
-                songString = songCount.toString() + " song"
+                songString = songCount.toString() + " " +
+                        itemView.context.resources.getString(R.string.song)
             else
-                songString = songCount.toString() + " songs"
+                songString = songCount.toString() + " " +
+                        itemView.context.resources.getString(R.string.songs)
 
             itemView.albumSongsSount.text = albumString + " | " + songString
 
@@ -75,9 +81,5 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
                 onItemClickListener?.invoke(artist, pos)
             }
         }
-    }
-
-    fun loadImage(){
-
     }
 }

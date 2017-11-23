@@ -9,28 +9,37 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.models.Album
+import com.wandm.models.Artist
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_album.view.*
 
 
-class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>(), BubbleTextGetter {
+class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>(),
+        BubbleTextGetter {
+
+    override fun getTextToShowInBubble(pos: Int) = mListAlbums[pos].title[0].toString()
+
+    private var onItemClickListener: ((album: Album, position: Int) -> Unit)? = null
+
+    fun setOnItemClickListener(onItemClickListener: ((album: Album, position: Int) -> Unit)?) {
+        this.onItemClickListener = onItemClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): AlbumsHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_album, parent, false)
         return AlbumsHolder(view)
     }
 
     override fun onBindViewHolder(holder: AlbumsHolder, position: Int) {
-        holder.bind(mListAlbums[position])
+        holder.bind(mListAlbums[position], position)
     }
 
     override fun getItemCount() = mListAlbums.size
 
-    override fun getTextToShowInBubble(pos: Int) = mListAlbums[pos].title[0].toString()
-
     inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
-        fun bind(album: Album) {
+        fun bind(album: Album, pos: Int) {
             var string = ""
             if (album.songCount <= 1)
                 string = itemView.context.getString(R.string.song)
@@ -52,6 +61,10 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
                             itemView.albumImage.background = itemView.context.getDrawable(R.drawable.ic_action_headset_dark)
                         }
                     })
+
+            itemView.setOnClickListener {
+                onItemClickListener?.invoke(album, pos)
+            }
         }
     }
 
