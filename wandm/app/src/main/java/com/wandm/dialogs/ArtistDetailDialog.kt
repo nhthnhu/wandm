@@ -90,6 +90,7 @@ class ArtistDetailDialog() : BaseDialogFragment() {
     override fun onPause() {
         super.onPause()
         handler.removeCallbacks(runable)
+        albumsRecyclerView.stopScroll()
     }
 
     private fun showView(action: String) {
