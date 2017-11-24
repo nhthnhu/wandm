@@ -41,7 +41,7 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     }
 
 
-    fun init(dataSource: String) {
+    fun init(dataSource: String?) {
         mPlayer = MediaPlayer()
 
         mPlayer.setOnCompletionListener(this)
@@ -106,19 +106,19 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     fun next() {
         val song = CurrentPlaylistManager.next()
         stop()
-        init(song.data)
+        init(song?.data)
     }
 
     fun pre() {
         val song = CurrentPlaylistManager.previous()
         stop()
-        init(song.data)
+        init(song?.data)
     }
 
     fun playNew() {
         val song = CurrentPlaylistManager.currentSong
         stop()
-        init(song.data)
+        init(song?.data)
     }
 
     fun duration(): Int {

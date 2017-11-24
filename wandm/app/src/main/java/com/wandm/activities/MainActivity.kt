@@ -7,11 +7,15 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SlidingPaneLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.adapters.MenuAdapter
+import com.wandm.data.CurrentPlaylistManager
 import com.wandm.fragments.CategoryFragment
 import com.wandm.fragments.QuickControlFragment
 import com.wandm.fragments.SongsFragment
@@ -23,10 +27,13 @@ import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.item_artist_album.view.*
 import kotlinx.android.synthetic.main.sliding_pane_main.*
 
 
 class MainActivity : BaseActivity() {
+
+    private val TAG = "MainActivity"
 
     companion object {
         lateinit var instance: MainActivity
@@ -124,6 +131,26 @@ class MainActivity : BaseActivity() {
         slidingPane.setPanelSlideListener(panelListener)
         slidingPane.parallaxDistance = 100
         slidingPane.sliderFadeColor = ContextCompat.getColor(this, android.R.color.transparent)
+
+        val song = CurrentPlaylistManager.currentSong
+        if (song != null) {
+            Picasso.with(this)
+                    .load(Utils.getAlbumArtUri(song.albumId).toString())
+                    .into(albumImageView, object : Callback {
+                        override fun onSuccess() {
+
+                        }
+
+                        override fun onError() {
+                            albumImageView.background = getDrawable(R.drawable.ic_music)
+                        }
+                    })
+
+            songTitleTextView.text = song.title
+        } else {
+            albumImageView.background = getDrawable(R.drawable.ic_music)
+            songTitleTextView.text = resources.getString(R.string.app_name)
+        }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = MenuAdapter()

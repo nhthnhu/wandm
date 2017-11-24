@@ -10,18 +10,16 @@
 
     <net.steamcrafted.materialiconlib.MaterialIconView
         android:id="@+id/menuImageView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="?android:attr/selectableItemBackground" />
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/contentMenuTextView"
         style="@style/WMTextStyleDark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_weight="1"
-        android:background="?android:attr/selectableItemBackground"
         android:padding="4dp"
         android:textSize="18sp" />
 

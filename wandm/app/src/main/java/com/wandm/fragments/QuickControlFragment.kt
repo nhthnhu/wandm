@@ -27,8 +27,8 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
         when (event.message) {
             MusicEvent.PREPARED_ACTION -> {
                 controlFragment.visibility = View.VISIBLE
-                titleSongTextView.text = CurrentPlaylistManager.currentSong.title
-                artistSongTextView.text = CurrentPlaylistManager.currentSong.artistName
+                titleSongTextView.text = CurrentPlaylistManager.currentSong?.title
+                artistSongTextView.text = CurrentPlaylistManager.currentSong?.artistName
                 setAlbumArt()
             }
 
@@ -76,8 +76,8 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
 
         if (MusicPlayer.isServiceBound) {
             controlFragment.visibility = View.VISIBLE
-            titleSongTextView.text = CurrentPlaylistManager.currentSong.title
-            artistSongTextView.text = CurrentPlaylistManager.currentSong.artistName
+            titleSongTextView.text = CurrentPlaylistManager.currentSong?.title
+            artistSongTextView.text = CurrentPlaylistManager.currentSong?.artistName
             playPauseButton.isPlayed = MusicPlayer.isPlaying()
             playPauseButton.startAnimation()
             setAlbumArt()
@@ -120,10 +120,10 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
     private fun setAlbumArt() {
         var uri = ""
 
-        if (CurrentPlaylistManager.currentSong.albumId == -1.toLong())
-            uri = CurrentPlaylistManager.currentSong.albumArt
+        if (CurrentPlaylistManager.currentSong?.albumId == -1.toLong())
+            uri = CurrentPlaylistManager.currentSong!!.albumArt
         else
-            uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong.albumId).toString()
+            uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong!!.albumId).toString()
 
         Picasso.with(context)
                 .load(uri)

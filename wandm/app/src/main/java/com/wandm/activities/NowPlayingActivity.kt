@@ -82,8 +82,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
         when (event.message) {
             MusicEvent.PREPARED_ACTION -> {
-                titleSongTextView.text = CurrentPlaylistManager.currentSong.title
-                artistSongTextView.text = CurrentPlaylistManager.currentSong.artistName
+                titleSongTextView.text = CurrentPlaylistManager.currentSong?.title
+                artistSongTextView.text = CurrentPlaylistManager.currentSong?.artistName
                 preparedSeekBar()
                 albumImage.start()
                 setFavorite(true)
@@ -155,8 +155,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         playlistButton.setOnClickListener(this)
         setAlarmButton.setOnClickListener(this)
 
-        artistSongTextView.text = CurrentPlaylistManager.currentSong.artistName
-        titleSongTextView.text = CurrentPlaylistManager.currentSong.title
+        artistSongTextView.text = CurrentPlaylistManager.currentSong?.artistName
+        titleSongTextView.text = CurrentPlaylistManager.currentSong?.title
         artistSongTextView.isSelected = true
         titleSongTextView.isSelected = true
 
@@ -346,7 +346,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 val fragmentManager = supportFragmentManager
                 val dialogFragment = PlaylistDialogFragment.newInstance { title ->
                     SongsBaseHandler.getInstance(App.instance, title)?.
-                            addSong(CurrentPlaylistManager.currentSong)
+                            addSong(CurrentPlaylistManager.currentSong!!)
                 }
                 dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
             }
@@ -423,7 +423,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
     private fun setFavorite(init: Boolean) {
         val song = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
-                getSong(CurrentPlaylistManager.currentSong.data)
+                getSong(CurrentPlaylistManager.currentSong!!.data)
         isFavorite = song != null
 
         if (init) {
@@ -440,13 +440,13 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
                 favoriteButton.setColorResource(R.color.color_white)
                 SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
-                        removeSong(CurrentPlaylistManager.currentSong)
+                        removeSong(CurrentPlaylistManager.currentSong!!)
             } else {
                 isFavorite = true
                 favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
                 favoriteButton.setColorResource(R.color.color_red)
                 SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
-                        addSong(CurrentPlaylistManager.currentSong)
+                        addSong(CurrentPlaylistManager.currentSong!!)
             }
         }
     }
@@ -454,10 +454,10 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     private fun setAlbumArt() {
         val uri: String
 
-        if (CurrentPlaylistManager.currentSong.albumId == (-1).toLong()) {
-            uri = CurrentPlaylistManager.currentSong.albumArt
+        if (CurrentPlaylistManager.currentSong?.albumId == (-1).toLong()) {
+            uri = CurrentPlaylistManager.currentSong!!.albumArt
         } else
-            uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong.albumId).toString()
+            uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong!!.albumId).toString()
 
         doAsync {
             albumImage.setCoverURL(uri)
@@ -466,7 +466,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
     private fun setDownload(init: Boolean) {
         if (init) {
-            if (CurrentPlaylistManager.currentSong.albumId != -1.toLong()) {
+            if (CurrentPlaylistManager.currentSong?.albumId != -1.toLong()) {
                 downloadButton.setColorResource(R.color.color_primary_dark)
                 downloadButton.isEnabled = false
                 isDownloaded = true
@@ -477,8 +477,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             }
         } else {
             val intent = Intent(this, DownloadService::class.java)
-            intent.putExtra(DownloadService.FILE_NAME, CurrentPlaylistManager.currentSong.title)
-            intent.putExtra(DownloadService.URL_PATH, CurrentPlaylistManager.currentSong.data)
+            intent.putExtra(DownloadService.FILE_NAME, CurrentPlaylistManager.currentSong?.title)
+            intent.putExtra(DownloadService.URL_PATH, CurrentPlaylistManager.currentSong?.data)
             startService(intent)
         }
     }

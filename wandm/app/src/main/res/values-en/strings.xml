@@ -7,6 +7,7 @@
     <string name="albums">Albums</string>
     <string name="album">Album</string>
     <string name="folders">Folders</string>
+    <string name="settings">Settings</string>
     <string name="download">Download</string>
     <string name="downloading">Downloading</string>
     <string name="download_failed">Download failed</string>

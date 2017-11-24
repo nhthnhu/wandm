@@ -17,9 +17,9 @@ object CurrentPlaylistManager {
             currentSong = listSongs[value]
         }
 
-    var currentSong = Song()
+    var currentSong: Song? = null
 
-    fun next(): Song {
+    fun next(): Song? {
         if (PreferencesUtils.getRepeatMode() == 2) {
             position = position
         } else if (PreferencesUtils.getShuffleMode()) {
@@ -33,11 +33,11 @@ object CurrentPlaylistManager {
         }
 
         currentSong = listSongs[position]
-        Log.d(TAG, currentSong.data)
+        Log.d(TAG, currentSong?.data)
         return currentSong
     }
 
-    fun previous(): Song {
+    fun previous(): Song? {
         if (PreferencesUtils.getRepeatMode() == 2) {
             position = position
         } else if (PreferencesUtils.getShuffleMode()) {
@@ -51,7 +51,7 @@ object CurrentPlaylistManager {
         }
 
         currentSong = listSongs[position]
-        Log.d(TAG, currentSong.data)
+        Log.d(TAG, currentSong?.data)
         return currentSong
     }
 

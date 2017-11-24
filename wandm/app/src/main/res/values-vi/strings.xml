@@ -7,6 +7,7 @@
     <string name="albums">Albums</string>
     <string name="album">Album</string>
     <string name="folders">Thư mục</string>
+    <string name="settings">Cài đặt</string>
     <string name="download">Tải xuống</string>
     <string name="downloading">Đang tải</string>
     <string name="download_failed">Tải thất bại</string>
@@ -38,4 +39,6 @@
     <string name="ok">Ok</string>
     <string name="offline_searching">Tìm kiếm offline</string>
     <string name="online_searching">Tìm kiếm online</string>
+
+    <string name="count">%1$s | %2$s</string>
 </resources>
