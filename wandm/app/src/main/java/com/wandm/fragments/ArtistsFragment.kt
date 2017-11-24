@@ -37,8 +37,10 @@ class ArtistsFragment : BaseFragment() {
                     setItemDecoration()
                     artistsRecyclerView.adapter.notifyDataSetChanged()
 
-                    if (artists.size > 0)
+                    if (artists.size > 0){
                         ArtistLoader.getAllArtists(App.instance) as ArrayList<Artist>
+                        artistsFastScroller.visibility = View.VISIBLE
+                    }
 
                     artistsProgressBar.visibility = View.GONE
                     adapter.setOnItemClickListener { artist, _ ->
