@@ -68,7 +68,8 @@ class ArtistDetailDialog() : BaseDialogFragment() {
                 count--
 
 
-            albumsRecyclerView.scrollToPosition(count)
+            if (albumsRecyclerView != null)
+                albumsRecyclerView.scrollToPosition(count)
             handler.postDelayed(this, speedScroll.toLong())
         }
     }
@@ -89,8 +90,8 @@ class ArtistDetailDialog() : BaseDialogFragment() {
 
     override fun onPause() {
         super.onPause()
-        handler.removeCallbacks(runable)
         albumsRecyclerView.stopScroll()
+        handler.removeCallbacks(runable)
     }
 
     private fun showView(action: String) {
