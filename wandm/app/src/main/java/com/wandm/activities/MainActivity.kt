@@ -7,6 +7,8 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SlidingPaneLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Html
+import android.view.ContextThemeWrapper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,6 +29,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_category.*
 import kotlinx.android.synthetic.main.sliding_pane_main.*
+import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
+import org.jetbrains.anko.textColor
 
 
 class MainActivity : BaseActivity() {
@@ -39,6 +43,7 @@ class MainActivity : BaseActivity() {
 
     private var isSetup = false
     private var itemPagerPosition = 0
+    private var colorResId = R.color.color_dark_theme
 
     // Listening events of SlidingPaneLayout
     private val panelListener = object : SlidingPaneLayout.PanelSlideListener {
@@ -95,6 +100,13 @@ class MainActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
+
+        val itemSearch = menu?.findItem(R.id.search_item_menu)
+
+        if (PreferencesUtils.getLightTheme())
+            itemSearch?.setIcon(R.drawable.ic_action_search_light)
+        else
+            itemSearch?.setIcon(R.drawable.ic_action_search_dark)
         return true
     }
 
@@ -122,6 +134,11 @@ class MainActivity : BaseActivity() {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(true)
+
+            if (PreferencesUtils.getLightTheme())
+                actionBar.setTitle(Html.fromHtml("<font color='#333232'>We & Music</font>"))
+            else
+                actionBar.setTitle(Html.fromHtml("<font color='#ece8e8'>We & Music</font>"))
         }
     }
 
@@ -201,8 +218,14 @@ class MainActivity : BaseActivity() {
         val isLightTheme = PreferencesUtils.getLightTheme()
         Utils.applyLightTheme(this, isLightTheme)
 
-        if (isLightTheme){
-
+        colorResId = R.color.color_dark_theme
+        if (isLightTheme) {
+            colorResId = R.color.color_light_theme
         }
+
+        settingsButton.setColor(resources.getColor(colorResId))
+        settingsTextView.textColor = resources.getColor(colorResId)
+        songTitleTextView.textColor = resources.getColor(colorResId)
+
     }
 }

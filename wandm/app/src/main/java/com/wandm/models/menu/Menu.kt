@@ -4,7 +4,7 @@ import com.wandm.App
 import com.wandm.R
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 
-data class Menu(val icon: MaterialDrawableBuilder.IconValue, val content: String, val color: Int) {
+data class Menu(val icon: MaterialDrawableBuilder.IconValue, val content: String) {
     companion object {
         val SONGS = App.instance.resources.getString(R.string.songs)
         val FAVORITES = App.instance.resources.getString(R.string.favorites)

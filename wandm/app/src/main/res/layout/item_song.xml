@@ -52,6 +52,5 @@
         android:layout_marginStart="4dp"
         android:scaleType="center"
         app:materialIcon="playlist_plus"
-        app:materialIconColor="#fff"
         app:materialIconSize="25dp" />
 </LinearLayout>

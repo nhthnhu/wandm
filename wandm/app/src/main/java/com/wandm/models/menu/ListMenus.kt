@@ -13,20 +13,15 @@ class ListMenus private constructor() {
     }
 
     init {
-        val songs = Menu(MaterialDrawableBuilder.IconValue.MUSIC_NOTE, Menu.SONGS,
-                R.color.color_white)
+        val songs = Menu(MaterialDrawableBuilder.IconValue.MUSIC_NOTE, Menu.SONGS)
 
-        val favorite = Menu(MaterialDrawableBuilder.IconValue.HEART, Menu.FAVORITES,
-                R.color.color_red)
+        val favorite = Menu(MaterialDrawableBuilder.IconValue.HEART, Menu.FAVORITES)
 
-        val artists = Menu(MaterialDrawableBuilder.IconValue.ACCOUNT, Menu.ARTISTS,
-                R.color.color_white)
+        val artists = Menu(MaterialDrawableBuilder.IconValue.ACCOUNT, Menu.ARTISTS)
 
-        val albums = Menu(MaterialDrawableBuilder.IconValue.ALBUM, Menu.ALBUMS,
-                R.color.color_white)
+        val albums = Menu(MaterialDrawableBuilder.IconValue.ALBUM, Menu.ALBUMS)
 
-        val folders = Menu(MaterialDrawableBuilder.IconValue.FOLDER, Menu.FOLDERS,
-                R.color.color_white)
+        val folders = Menu(MaterialDrawableBuilder.IconValue.FOLDER, Menu.FOLDERS)
 
         mList.add(songs)
         mList.add(favorite)

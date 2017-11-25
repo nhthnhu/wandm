@@ -8,6 +8,7 @@ import com.wandm.R
 import com.wandm.models.Artist
 import com.wandm.models.menu.ListMenus
 import com.wandm.models.menu.Menu
+import com.wandm.utils.PreferencesUtils
 import kotlinx.android.synthetic.main.item_menu.view.*
 
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
@@ -33,8 +34,21 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
     inner class MenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(data: Menu, position: Int) {
             itemView.menuImageView.setIcon(data.icon)
-            itemView.menuImageView.setColorResource(data.color)
             itemView.contentMenuTextView.text = data.content
+
+            var color = itemView?.context?.resources?.
+                    getColor(R.color.color_dark_theme)
+
+            if (PreferencesUtils.getLightTheme()) {
+                color = itemView?.context?.resources?.
+                        getColor(R.color.color_light_theme)!!
+            }
+
+            if (data.content.equals(Menu.FAVORITES))
+                color = itemView?.context?.resources?.
+                        getColor(R.color.color_red)
+
+            itemView.menuImageView.setColor(color!!)
 
             itemView?.setOnClickListener {
                 onItemClickListener?.invoke(position)
