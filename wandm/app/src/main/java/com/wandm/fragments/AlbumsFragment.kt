@@ -8,7 +8,6 @@ import com.wandm.R
 import com.wandm.activities.MainActivity
 import com.wandm.adapters.AlbumsAdapter
 import com.wandm.dialogs.AlbumDetailDialog
-import com.wandm.dialogs.ArtistDetailDialog
 import com.wandm.loaders.AlbumLoader
 import com.wandm.models.Album
 import com.wandm.utils.PreferencesUtils
@@ -19,15 +18,12 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class AlbumsFragment : BaseFragment() {
-    override fun getLayoutResId(): Int {
-        return R.layout.fragment_albums
-    }
+    override fun getLayoutResId() = R.layout.fragment_albums
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
         PreferencesUtils.setAlbumSortOrder(SortOrder.AlbumSortOrder.ALBUM_A_Z)
         albumsRecyclerView.layoutManager = LinearLayoutManager(activity)
         albumsFastScroller.setRecyclerView(albumsRecyclerView)
-
 
 
         if (activity != null) {

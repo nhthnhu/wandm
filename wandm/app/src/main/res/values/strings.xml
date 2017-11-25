@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">We \u0026 Music</string>
+
+    <string name="playlist_last_added">Last Added</string>
+    <string name="playlist_recently_played">Recently Played</string>
+    <string name="playlist_top_tracks">My Top Tracks</string>
 </resources>

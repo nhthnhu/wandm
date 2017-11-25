@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,16 +15,15 @@ import com.wandm.adapters.SongsAdapter
 import com.wandm.loaders.ArtistAlbumLoader
 import com.wandm.loaders.ArtistSongLoader
 import com.wandm.services.MusicPlayer
+import com.wandm.views.CustomLayoutManager
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_artist_detail.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class ArtistDetailDialog() : BaseDialogFragment() {
+class ArtistDetailDialog() : BaseDialog() {
     private var artistId = 0L
-    private val TAG = "ArtistDetailDialog"
-
-    private val speedScroll = 7000
+    private val speedScroll = 4000
     private val handler = Handler()
     private var count = 0
 
@@ -36,6 +34,7 @@ class ArtistDetailDialog() : BaseDialogFragment() {
     private var albumsAdapter: ArtistAlbumAdapter? = null
 
     companion object {
+        private val TAG = "ArtistDetailDialog"
         private val ARG_ARTIST_ID = "arg_artist_id"
         private val ACTION_LOADING = "action_loading"
         private val ACTION_ARTIST_DETAIL = "action_artist_detail"
@@ -51,7 +50,7 @@ class ArtistDetailDialog() : BaseDialogFragment() {
         }
     }
 
-    private val runable = object : Runnable {
+    private val runnable = object : Runnable {
         override fun run() {
 
             if (count == 0) {
@@ -69,7 +68,7 @@ class ArtistDetailDialog() : BaseDialogFragment() {
 
 
             if (albumsRecyclerView != null)
-                albumsRecyclerView.scrollToPosition(count)
+                albumsRecyclerView.smoothScrollToPosition(count)
             handler.postDelayed(this, speedScroll.toLong())
         }
     }
@@ -81,7 +80,7 @@ class ArtistDetailDialog() : BaseDialogFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         songsRecyclerView.layoutManager = LinearLayoutManager(activity)
-        albumsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        albumsRecyclerView.layoutManager = CustomLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
         songsFastScroller.setRecyclerView(songsRecyclerView)
 
@@ -91,7 +90,7 @@ class ArtistDetailDialog() : BaseDialogFragment() {
     override fun onPause() {
         super.onPause()
         albumsRecyclerView.stopScroll()
-        handler.removeCallbacks(runable)
+        handler.removeCallbacks(runnable)
     }
 
     private fun showView(action: String) {
@@ -126,19 +125,24 @@ class ArtistDetailDialog() : BaseDialogFragment() {
                             MusicPlayer.bind(null)
 
                             val intent = Intent(activity, NowPlayingActivity::class.java)
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             activity.startActivity(intent)
                         }
                     }
                 }
 
                 albumsAdapter = ArtistAlbumAdapter(artistAlbums)
+                albumsAdapter?.setOnItemClickListener { album, i ->
+                    val albumDetailDialog = AlbumDetailDialog.newInstance(album.id)
+                    albumDetailDialog.show(fragmentManager, AlbumDetailDialog::class.java.name)
+                    dismiss()
+                }
 
                 uiThread {
                     showView(ACTION_ARTIST_DETAIL)
                     songsRecyclerView.adapter = songsAdapter
                     albumsRecyclerView.adapter = albumsAdapter
-                    albumsRecyclerView.postDelayed(runable, speedScroll.toLong())
+                    albumsRecyclerView.postDelayed(runnable, speedScroll.toLong())
                     setItemDecoration()
                 }
             }

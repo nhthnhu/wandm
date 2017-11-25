@@ -1,6 +1,5 @@
 package com.wandm.fragments
 
-import android.app.DialogFragment
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -12,8 +11,7 @@ import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.SongsAdapter
 import com.wandm.data.SearchDataHelper
 import com.wandm.database.SongsBaseHandler
-import com.wandm.dialogs.ArtistDetailDialog
-import com.wandm.dialogs.PlaylistDialogFragment
+import com.wandm.dialogs.PlaylistDialog
 import com.wandm.loaders.SongLoader
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
@@ -29,8 +27,7 @@ class SongsFragment : BaseFragment() {
 
     companion object {
         fun newInstance(): SongsFragment {
-            val fragment = SongsFragment()
-            return fragment
+            return SongsFragment()
         }
     }
 
@@ -52,10 +49,10 @@ class SongsFragment : BaseFragment() {
                     when (action) {
                         SongsAdapter.ACTION_ADD_PLAYLIST -> {
                             val fragmentManager = MainActivity.instance.supportFragmentManager
-                            val dialogFragment = PlaylistDialogFragment.newInstance { title ->
+                            val dialogFragment = PlaylistDialog.newInstance { title ->
                                 SongsBaseHandler.getInstance(App.instance, title)?.addSong(song)
                             }
-                            dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+                            dialogFragment.show(fragmentManager, "PlaylistDialog")
                         }
 
                         SongsAdapter.ACTION_PLAY -> {

@@ -22,6 +22,9 @@ import kotlinx.android.synthetic.main.item_favorite_song.view.*
 class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<FavoritesAdapter.FavoriteHolder>(), BubbleTextGetter {
 
     override fun getTextToShowInBubble(pos: Int): String {
+        if (listSongs.size == 0)
+            return ""
+
         return listSongs[pos].title[0].toString()
     }
 
