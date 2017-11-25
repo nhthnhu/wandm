@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.item_folder.view.*
 
 
 @Suppress("INACCESSIBLE_TYPE")
-class FoldersAdapter(private val musicFolders: List<MusicFolder>) : RecyclerView.Adapter<FoldersAdapter.ItemHolder>(), BubbleTextGetter {
+class FoldersAdapter(var musicFolders: List<MusicFolder>) : RecyclerView.Adapter<FoldersAdapter.ItemHolder>(), BubbleTextGetter {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): FoldersAdapter.ItemHolder {
         val view = LayoutInflater.from(viewGroup.context)

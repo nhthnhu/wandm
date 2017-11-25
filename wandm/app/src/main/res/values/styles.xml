@@ -39,11 +39,20 @@
     <style name="LightTheme" parent="Theme.AppCompat.Light">
         <item name="android:textColor">@color/color_light_theme</item>
         <item name="colorControlNormal">@color/color_light_theme</item>
+        <item name="android:switchTextAppearance">@style/SwitchTextAppearanceLight</item>
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat">
         <item name="android:textColor">@color/color_dark_theme</item>
         <item name="colorControlNormal">@color/color_dark_theme</item>
+        <item name="android:switchTextAppearance">@style/SwitchTextAppearanceDark</item>
     </style>
 
+    <style name="SwitchTextAppearanceLight" parent="@android:style/TextAppearance.Holo.Medium">
+        <item name="android:textColor">@color/color_light_theme</item>
+    </style>
+
+    <style name="SwitchTextAppearanceDark" parent="@android:style/TextAppearance.Holo.Medium">
+        <item name="android:textColor">@color/color_dark_theme</item>
+    </style>
 </resources>

@@ -1,19 +1,21 @@
 package com.wandm.activities
 
-import android.app.ActionBar
-import android.content.Context
+import android.app.WallpaperManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceActivity
-import android.preference.SwitchPreference
 import android.support.v7.app.AppCompatDelegate
+import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.Toolbar
+import android.view.WindowManager
+import com.ms_square.etsyblur.BlurringView
+import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.PreferencesUtils.PREFS_THEME
 import com.wandm.utils.Utils
-import kotlinx.android.synthetic.main.app_bar_layout.*
+import kotlinx.android.synthetic.main.activity_settings.*
 
 
 class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -21,18 +23,21 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
     companion object {
         private val TAG = "SettingsActivity"
 
-        private var mDelegate: AppCompatDelegate? = null
+        private var delegate: AppCompatDelegate? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        getDelegate()?.installViewFactory();
-        getDelegate()?.onCreate(savedInstanceState);
+        getDelegate()?.installViewFactory()
+        getDelegate()?.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.app_bar_layout)
+        setContentView(R.layout.activity_settings)
         setSupportActionBar(toolbar)
         addPreferencesFromResource(R.xml.preferences)
-        setupUI()
+        setupWindows()
+        blurringView.blurConfig(AppConfig.getBlurViewConfig())
+        setBlurBackground(background, blurringView)
+        setupViews()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -81,6 +86,8 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
                     findPreference(PREFS_THEME).summary = resources.getString(R.string.dark_theme)
                     Utils.applyLightTheme(this, false)
                 }
+
+                recreate()
             }
         }
     }
@@ -91,10 +98,10 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
     }
 
     private fun getDelegate(): AppCompatDelegate? {
-        if (mDelegate == null) {
-            mDelegate = AppCompatDelegate.create(this, null)
+        if (delegate == null) {
+            delegate = AppCompatDelegate.create(this, null)
         }
-        return mDelegate
+        return delegate
     }
 
     override fun onBackPressed() {
@@ -103,11 +110,30 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
         startActivity(intent)
     }
 
-    private fun setupUI() {
+    private fun setupViews() {
         val isLightTheme = PreferencesUtils.getLightTheme()
         if (isLightTheme)
             findPreference(PREFS_THEME).summary = resources.getString(R.string.light_theme)
         else
             findPreference(PREFS_THEME).summary = resources.getString(R.string.dark_theme)
+    }
+
+
+    /**
+     * Set blur background for this Activity
+     *
+     * @param imageView
+     * @param blurringView
+     */
+    protected fun setBlurBackground(imageView: AppCompatImageView, blurringView: BlurringView) {
+        val wallpaperManager = WallpaperManager.getInstance(this)
+        val wallpaperDrawable = wallpaperManager.drawable
+        imageView.background = wallpaperDrawable
+        blurringView.blurredView(imageView)
+    }
+
+    private fun setupWindows() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 }

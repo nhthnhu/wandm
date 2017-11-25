@@ -2,6 +2,7 @@ package com.wandm.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.wandm.R
 import com.wandm.adapters.FoldersAdapter
@@ -11,7 +12,11 @@ import kotlinx.android.synthetic.main.fragment_folders.*
 
 class FoldersFragment : BaseFragment() {
 
-    private var foldersAdapter: FoldersAdapter? = null
+    companion object {
+        private val TAG = "FoldersFragment"
+    }
+
+    private var foldersAdapter: FoldersAdapter = FoldersAdapter(ArrayList())
 
     override fun getLayoutResId() = R.layout.fragment_folders
 
@@ -29,21 +34,25 @@ class FoldersFragment : BaseFragment() {
     }
 
     private fun loadFolders() {
-        foldersAdapter = FoldersAdapter(ArrayList())
         foldersProgressBar.visibility = View.VISIBLE
         foldersRecyclerView.visibility = View.GONE
         foldersFastScroller.visibility = View.GONE
 
         MusicFoldersLoader.getMusicFolders(activity,
                 MusicFoldersLoader.externalStorage) { mediaFolders ->
+            if (activity == null)
+                return@getMusicFolders
+
             if (mediaFolders != null) {
-                foldersAdapter = FoldersAdapter(mediaFolders)
+                foldersAdapter.musicFolders = mediaFolders
                 foldersRecyclerView.adapter = foldersAdapter
                 foldersRecyclerView.visibility = View.VISIBLE
                 foldersFastScroller.visibility = View.VISIBLE
             }
 
             foldersProgressBar.visibility = View.GONE
+
+            Log.d(TAG, "Folder loading completed")
         }
     }
 }
