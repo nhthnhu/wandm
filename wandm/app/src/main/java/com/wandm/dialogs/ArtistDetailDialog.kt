@@ -23,7 +23,7 @@ import org.jetbrains.anko.uiThread
 
 class ArtistDetailDialog() : BaseDialog() {
     private var artistId = 0L
-    private val speedScroll = 4000
+    private val speedScroll = 3000
     private val handler = Handler()
     private var count = 0
 
@@ -132,16 +132,12 @@ class ArtistDetailDialog() : BaseDialog() {
                 }
 
                 albumsAdapter = ArtistAlbumAdapter(artistAlbums)
-                albumsAdapter?.setOnItemClickListener { album, i ->
-                    val albumDetailDialog = AlbumDetailDialog.newInstance(album.id)
-                    albumDetailDialog.show(fragmentManager, AlbumDetailDialog::class.java.name)
-                    dismiss()
-                }
 
                 uiThread {
                     showView(ACTION_ARTIST_DETAIL)
                     songsRecyclerView.adapter = songsAdapter
                     albumsRecyclerView.adapter = albumsAdapter
+                    albumsRecyclerView.isClickable = false
                     albumsRecyclerView.postDelayed(runnable, speedScroll.toLong())
                     setItemDecoration()
                 }

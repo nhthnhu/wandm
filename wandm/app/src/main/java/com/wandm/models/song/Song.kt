@@ -13,6 +13,7 @@ class Song : Serializable {
     var trackNumber: Int = -1
     var data: String = ""
     var albumArt: String = ""
+    var downloadEnable: Boolean = false
 
 
     constructor() {
@@ -26,12 +27,14 @@ class Song : Serializable {
         this.trackNumber = -1
         this.data = ""
         this.albumArt = ""
+        this.downloadEnable = false
     }
 
     constructor(_title: String, _url: String, _albumArt: String) {
         this.data = _url
         this.albumArt = _albumArt
         this.title = _title
+        this.downloadEnable = true
     }
 
     constructor(_id: Long, _albumId: Long, _artistId: Long, _title: String, _artistName: String,
@@ -45,6 +48,7 @@ class Song : Serializable {
         this.duration = _duration
         this.trackNumber = _trackNumber
         this.data = _data
+        this.downloadEnable = false
     }
 
 }

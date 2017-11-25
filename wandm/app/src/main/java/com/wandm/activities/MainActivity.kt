@@ -86,6 +86,7 @@ class MainActivity : BaseActivity() {
         setupToolbar()
         Speech.init(this)
         addFragment(QuickControlFragment(), R.id.quick_control_container, "QuickControlFragment")
+
     }
 
     override fun onResume() {
@@ -95,6 +96,11 @@ class MainActivity : BaseActivity() {
         if (Utils.isMarshmallow())
             checkPermissionReadStorage()
         else setupUI()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        PreferencesUtils.setCurrentCategory(CategoryFragment.instance?.listViewPagers?.currentItem!!)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

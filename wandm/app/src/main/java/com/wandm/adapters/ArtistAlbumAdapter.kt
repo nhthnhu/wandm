@@ -15,10 +15,6 @@ import kotlinx.android.synthetic.main.item_artist_album.view.*
 
 class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerView.Adapter<ArtistAlbumAdapter.AlbumHolder>() {
 
-    private var onItemClickListener: ((Album, Int) -> Unit)? = null
-    fun setOnItemClickListener(onItemClickListener: ((Album, Int) -> Unit)) {
-        this.onItemClickListener = onItemClickListener
-    }
 
     override fun onBindViewHolder(holder: AlbumHolder?, position: Int) {
         holder?.bind(listAlbums[position], position)
@@ -56,9 +52,6 @@ class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerVie
             itemView.detailAlbumTextView.text = itemView?.resources?.
                     getQuantityString(R.plurals.song_count, album.songCount, album.songCount)
 
-            itemView.setOnClickListener {
-                onItemClickListener?.invoke(album, position)
-            }
         }
     }
 }
