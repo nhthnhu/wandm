@@ -21,6 +21,7 @@
     <string name="second">Second</string>
     <string name="seconds">Seconds</string>
     <string name="alarm_toast">Turn off music after %1$s %2$s</string>
+
     <style name="cancel_alarm">Canceled alarm setting</style>
 
     <string name="speech">Speech</string>
@@ -47,4 +48,8 @@
     <string name="theme">Theme</string>
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
+
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="added_to_favorites">Added to favorites</string>
 </resources>

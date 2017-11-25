@@ -47,4 +47,8 @@
     <string name="theme">Theme</string>
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
+
+    <string name="add_to_favorites">Thêm vào yêu thích</string>
+    <string name="add_to_playlist">Thêm vào playlist</string>
+    <string name="added_to_favorites">Đã thêm vào yêu thích</string>
 </resources>

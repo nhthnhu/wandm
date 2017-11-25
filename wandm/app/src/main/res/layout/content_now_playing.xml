@@ -99,7 +99,7 @@
                     app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
-                    android:id="@+id/playlistButton"
+                    android:id="@+id/songMenuButton"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"

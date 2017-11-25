@@ -161,7 +161,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         repeatButton.setOnClickListener(this)
         favoriteButton.setOnClickListener(this)
         downloadButton.setOnClickListener(this)
-        playlistButton.setOnClickListener(this)
+        songMenuButton.setOnClickListener(this)
         setAlarmButton.setOnClickListener(this)
 
         artistSongTextView.text = CurrentPlaylistManager.currentSong?.artistName
@@ -222,16 +222,16 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         songRecyclerView.adapter = SongsAdapter(CurrentPlaylistManager.listSongs, false) { song, position, action ->
             when (action) {
                 SongsAdapter.ACTION_ADD_PLAYLIST -> {
-                    val fragmentManager = supportFragmentManager
-                    val dialogFragment = PlaylistDialog.newInstance { title ->
-                        SongsBaseHandler.getInstance(App.instance, title)?.addSong(song)
-                    }
-                    dialogFragment.show(fragmentManager, "PlaylistDialog")
+                    Toast.makeText(this, "Add to playlist", Toast.LENGTH_SHORT).show()
                 }
 
                 SongsAdapter.ACTION_PLAY -> {
                     MusicPlayer.bind(null)
                     songSlidingPane.closePane()
+                }
+
+                SongsAdapter.ACTION_ADD_FAVORITES -> {
+                    Toast.makeText(this, "Add to favorites", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -351,7 +351,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 setDownload(false)
             }
 
-            R.id.playlistButton -> {
+            R.id.songMenuButton -> {
                 val fragmentManager = supportFragmentManager
                 val dialogFragment = PlaylistDialog.newInstance { title ->
                     SongsBaseHandler.getInstance(App.instance, title)?.
@@ -542,7 +542,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         shuffleButton.setColor(resources.getColor(colorResId))
         favoriteButton.setColor(resources.getColor(colorResId))
         downloadButton.setColor(resources.getColor(colorResId))
-        playlistButton.setColor(resources.getColor(colorResId))
+        songMenuButton.setColor(resources.getColor(colorResId))
         setAlarmButton.setColor(resources.getColor(colorResId))
 
     }

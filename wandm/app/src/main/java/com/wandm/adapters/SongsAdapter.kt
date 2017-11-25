@@ -1,14 +1,21 @@
 package com.wandm.adapters
 
+import android.content.Context
 import android.graphics.BitmapFactory
+import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
+import com.wandm.data.CurrentPlaylistManager.position
+import com.wandm.database.FavoritesTable
+import com.wandm.database.SongsBaseHandler
 import com.wandm.models.song.Song
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
@@ -17,11 +24,12 @@ import kotlinx.android.synthetic.main.item_song.view.*
 
 
 class SongsAdapter(var listSongs: ArrayList<Song>,
-                   private val isAddFavorite: Boolean,
+                   private val isShowMenu: Boolean,
                    private val listener: (Song, Int, String) -> Unit) : RecyclerView.Adapter<SongsAdapter.SongHolder>(), BubbleTextGetter {
 
     companion object {
         val ACTION_PLAY = "action_play"
+        val ACTION_ADD_FAVORITES = "action_add_favorites"
         val ACTION_ADD_PLAYLIST = "action_add_playlist"
     }
 
@@ -45,8 +53,8 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
             listener(listSongs[position], position, ACTION_PLAY)
         }
 
-        holder?.songItemView?.playlistButton?.setOnClickListener {
-            listener(listSongs[position], position, ACTION_ADD_PLAYLIST)
+        holder?.songItemView?.songMenuButton?.setOnClickListener {
+            setupPopupMenu(holder.songItemView.context, holder.songItemView.songMenuButton, position)
         }
     }
 
@@ -59,10 +67,10 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
             if (PreferencesUtils.getLightTheme())
                 colorResId = R.color.color_light_theme
 
-            itemView.playlistButton.setColor(itemView?.context?.resources?.getColor(colorResId)!!)
+            itemView.songMenuButton.setColor(itemView?.context?.resources?.getColor(colorResId)!!)
 
-            if (!isAddFavorite)
-                itemView.playlistButton.visibility = View.GONE
+            if (!isShowMenu)
+                itemView.songMenuButton.visibility = View.GONE
 
             Picasso.with(itemView.context)
                     .load(Utils.getAlbumArtUri(song.albumId).toString())
@@ -95,4 +103,26 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
 
     }
 
+    private fun setupPopupMenu(context: Context, view: View, pos: Int) {
+        val popup = PopupMenu(context, view)
+        val inflater = popup.menuInflater
+        inflater.inflate(R.menu.menu_song, popup.menu)
+        popup.setOnMenuItemClickListener { handelMenuItemClick(context, it, pos) }
+        popup.show()
+    }
+
+    private fun handelMenuItemClick(context: Context, it: MenuItem?, pos: Int): Boolean {
+        when (it?.itemId) {
+            R.id.addFavoritesItemMenu -> {
+                listener(listSongs[pos], pos, ACTION_ADD_FAVORITES)
+                SongsBaseHandler.getInstance(context, FavoritesTable.TABLE_NAME)?.addSong(listSongs[pos])
+                Toast.makeText(context, context.getString(R.string.added_to_favorites), Toast.LENGTH_SHORT).show()
+            }
+
+            R.id.addPlaylistItemMenu -> {
+                listener(listSongs[position], position, ACTION_ADD_PLAYLIST)
+            }
+        }
+        return true
+    }
 }
