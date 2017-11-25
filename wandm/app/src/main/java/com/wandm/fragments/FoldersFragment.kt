@@ -26,7 +26,6 @@ class FoldersFragment : BaseFragment() {
     }
 
     private fun setupViews() {
-        retainInstance = true
         foldersRecyclerView.layoutManager = LinearLayoutManager(activity)
         foldersRecyclerView.addItemDecoration(DividerItemDecoration(activity,
                 DividerItemDecoration.VERTICAL_LIST))
@@ -38,21 +37,23 @@ class FoldersFragment : BaseFragment() {
         foldersRecyclerView.visibility = View.GONE
         foldersFastScroller.visibility = View.GONE
 
-        MusicFoldersLoader.getMusicFolders(activity,
-                MusicFoldersLoader.externalStorage) { mediaFolders ->
-            if (activity == null)
-                return@getMusicFolders
+        if (activity != null) {
+            MusicFoldersLoader.getMusicFolders(activity,
+                    MusicFoldersLoader.externalStorage) { mediaFolders ->
 
-            if (mediaFolders != null) {
-                foldersAdapter.musicFolders = mediaFolders
-                foldersRecyclerView.adapter = foldersAdapter
-                foldersRecyclerView.visibility = View.VISIBLE
-                foldersFastScroller.visibility = View.VISIBLE
+                try {
+                    if (mediaFolders != null) {
+                        foldersAdapter.musicFolders = mediaFolders
+                        foldersRecyclerView.adapter = foldersAdapter
+                        foldersRecyclerView.visibility = View.VISIBLE
+                        foldersFastScroller.visibility = View.VISIBLE
+                    }
+                    foldersProgressBar.visibility = View.GONE
+                } catch (e: Exception) {
+                    Log.e(TAG, e.message)
+                }
+                Log.d(TAG, "Folders loading completed")
             }
-
-            foldersProgressBar.visibility = View.GONE
-
-            Log.d(TAG, "Folder loading completed")
         }
     }
 }
