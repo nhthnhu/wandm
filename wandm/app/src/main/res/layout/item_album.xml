@@ -35,7 +35,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/albumName"
-                style="@style/WMTextStyleDark"
+                style="@style/WMTextStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -44,7 +44,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/numbersongs"
-                style="@style/WMTextStyleDark"
+                style="@style/WMTextStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

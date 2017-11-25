@@ -17,12 +17,13 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/titleItemSongTextView"
-        style="@style/WMTextStyleDark"
+        style="@style/WMTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ellipsize="marquee"
         android:gravity="start"
+        android:paddingStart="15dp"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true" />
 

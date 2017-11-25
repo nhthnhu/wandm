@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:persistent="false">
+
+
+    <SwitchPreference
+        android:id="@+id/preference_theme"
+        android:defaultValue="false"
+        android:key="key_preference_theme"
+        android:title="@string/theme" />
+</PreferenceScreen>

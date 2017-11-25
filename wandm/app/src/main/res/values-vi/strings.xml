@@ -22,6 +22,7 @@
     <string name="seconds">Giây</string>
     <string name="alarm_toast">Tắt nhạc sau %1$s %2$s</string>
 
+    <string name="speech">Speech</string>
     <string name="error_audio">Lỗi ghi âm.</string>
     <string name="error_client">Xin lỗi, tôi không nghe rõ bạn nói!</string>
     <string name="error_insufficient_permissions">Không thể kết nối tới Microphone.</string>
@@ -41,4 +42,8 @@
     <string name="online_searching">Tìm kiếm online</string>
 
     <string name="count">%1$s | %2$s</string>
+
+    <string name="theme">Theme</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
 </resources>

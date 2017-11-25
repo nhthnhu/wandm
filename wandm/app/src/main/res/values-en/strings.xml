@@ -22,6 +22,7 @@
     <string name="seconds">Seconds</string>
     <string name="alarm_toast">Turn off music after %1$s %2$s</string>
 
+    <string name="speech">Speech</string>
     <string name="error_audio">Record failed</string>
     <string name="error_client">Sorry, I can not hear clearly</string>
     <string name="error_insufficient_permissions">Can not connect to the Microphone</string>
@@ -41,4 +42,8 @@
     <string name="online_searching">Online searching</string>
 
     <string name="count">%1$s | %2$s</string>
+
+    <string name="theme">Theme</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
 </resources>

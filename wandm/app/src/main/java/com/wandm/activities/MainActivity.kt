@@ -7,27 +7,25 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SlidingPaneLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.adapters.MenuAdapter
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.fragments.CategoryFragment
 import com.wandm.fragments.QuickControlFragment
-import com.wandm.fragments.SongsFragment
-import com.wandm.models.menu.ListMenus
 import com.wandm.permissions.PermissionCallback
 import com.wandm.permissions.PermissionHelper
 import com.wandm.speech.Speech
+import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_category.*
-import kotlinx.android.synthetic.main.item_artist_album.view.*
 import kotlinx.android.synthetic.main.sliding_pane_main.*
 
 
@@ -73,6 +71,11 @@ class MainActivity : BaseActivity() {
 
     override fun getLayoutResId() = R.layout.activity_main
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        blurringView.blurConfig(AppConfig.getBlurViewConfig())
+    }
+
     override fun initView(savedInstanceState: Bundle?) {
         instance = this
         setupToolbar()
@@ -82,6 +85,7 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        setTheme()
         setBlurBackground(background, blurringView)
         if (Utils.isMarshmallow())
             checkPermissionReadStorage()
@@ -160,6 +164,11 @@ class MainActivity : BaseActivity() {
             slidingPane.closePane()
         }
 
+        settingButton.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
 
 
         addFragment(CategoryFragment(), R.id.fragment_container, CategoryFragment::class.java.name)
@@ -185,6 +194,15 @@ class MainActivity : BaseActivity() {
                         permission,
                         permissionReadStorageCallback)
             }
+        }
+    }
+
+    private fun setTheme() {
+        val isLightTheme = PreferencesUtils.getLightTheme()
+        Utils.applyLightTheme(this, isLightTheme)
+
+        if (isLightTheme){
+
         }
     }
 }

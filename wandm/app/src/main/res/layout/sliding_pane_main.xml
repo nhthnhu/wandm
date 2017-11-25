@@ -18,15 +18,16 @@
             android:id="@+id/currentSongLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:shape="ring"
                 android:background="@color/transparent"
+                android:shape="ring"
                 android:thicknessRatio="1.9"
                 app:cardCornerRadius="75dp">
 
@@ -41,14 +42,14 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/songTitleTextView"
-                style="@style/WMTextStyleDark"
+                style="@style/WMTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:ellipsize="marquee"
                 android:gravity="center"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:padding="4dp"
-                android:layout_marginTop="4dp"
                 android:singleLine="true"
                 android:textSize="16sp" />
 
@@ -58,29 +59,28 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
+            android:id="@+id/settingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="64dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="4dp">
 
             <net.steamcrafted.materialiconlib.MaterialIconView
-                android:id="@+id/settingImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 app:materialIcon="settings"
                 app:materialIconColor="#fff" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/contentMenuTextView"
-                style="@style/WMTextStyleDark"
+                style="@style/WMTextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

@@ -23,6 +23,8 @@ object PreferencesUtils {
     private val ARTIST_IMAGE = "artist_image"
     private val ARTIST_IMAGE_MOBILE = "artist_image_mobile"
 
+    val PREFS_THEME = "key_preference_theme"
+
     val ALARM_SET = "alarm_set"
 
     val mPreferences = PreferenceManager.getDefaultSharedPreferences(App.instance)
@@ -143,5 +145,10 @@ object PreferencesUtils {
     fun getAlarm(): String {
         return mPreferences.getString(ALARM_SET, "")
     }
+
+    fun getLightTheme(): Boolean {
+        return mPreferences.getBoolean(PREFS_THEME, false)
+    }
+
 }
 

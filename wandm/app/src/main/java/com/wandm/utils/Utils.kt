@@ -10,11 +10,13 @@ import android.net.Uri
 import android.os.Build
 import android.graphics.BitmapFactory
 import android.R.attr.src
+import android.app.Activity
 import android.content.Context
 import android.graphics.Matrix
 import com.wandm.models.Album
 import java.io.IOException
 import android.provider.MediaStore
+import android.view.ContextThemeWrapper
 import com.wandm.R
 import org.jetbrains.anko.matchParent
 
@@ -60,4 +62,11 @@ object Utils {
         return bitmap
     }
 
+    fun applyLightTheme(activity: Activity, isLight: Boolean) {
+        if (isLight) {
+            activity.setTheme(R.style.LightTheme)
+        } else {
+            activity.setTheme(R.style.DarkTheme)
+        }
+    }
 }

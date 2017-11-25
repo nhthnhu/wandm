@@ -29,6 +29,11 @@
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/settings"
+            android:parentActivityName=".activities.MainActivity" />
+
         <service android:name=".services.WMService" />
         <service android:name=".services.DownloadService" />
 

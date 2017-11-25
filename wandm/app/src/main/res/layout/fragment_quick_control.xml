@@ -39,7 +39,7 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/titleSongTextView"
-            style="@style/WMTextStyleDark"
+            style="@style/WMTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
@@ -50,7 +50,7 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/artistSongTextView"
-            style="@style/WMTextStyleDark"
+            style="@style/WMTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
