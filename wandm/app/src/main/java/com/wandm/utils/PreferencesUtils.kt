@@ -25,6 +25,8 @@ object PreferencesUtils {
 
     val PREFS_THEME = "key_preference_theme"
 
+    private val CURRENT_CATEGORY_POSITION = "current_category_position"
+
     val ALARM_SET = "alarm_set"
 
     val mPreferences = PreferenceManager.getDefaultSharedPreferences(App.instance)
@@ -148,6 +150,16 @@ object PreferencesUtils {
 
     fun getLightTheme(): Boolean {
         return mPreferences.getBoolean(PREFS_THEME, false)
+    }
+
+    fun setCurrentCategory(value: Int) {
+        val editor = mPreferences.edit()
+        editor.putInt(CURRENT_CATEGORY_POSITION, value)
+        editor.apply()
+    }
+
+    fun getCurrentCategory(): Int {
+        return mPreferences.getInt(CURRENT_CATEGORY_POSITION, 0)
     }
 
 }

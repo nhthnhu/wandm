@@ -50,6 +50,7 @@ class CategoryFragment : BaseFragment() {
             colorResId = R.color.color_light_theme
 
         listTabs.setSelectedIndicatorColors(activity.resources.getColor(colorResId))
+        listViewPagers.currentItem = PreferencesUtils.getCurrentCategory()
     }
 
 }
