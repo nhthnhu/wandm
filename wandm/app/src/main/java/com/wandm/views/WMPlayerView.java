@@ -379,14 +379,13 @@ public class WMPlayerView extends View {
         try {
             mBitmapCover = Picasso.with(getContext())
                     .load(imageUrl).get();
-            createShader();
-            postInvalidate();
         } catch (IOException e) {
             mBitmapCover = Utils.INSTANCE.ConvertDrawableToBitmap(
                     getResources().getDrawable(R.drawable.ic_music));
-            createShader();
-            postInvalidate();
         }
+
+        createShader();
+        postInvalidate();
     }
 
     /**

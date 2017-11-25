@@ -10,9 +10,13 @@ import android.widget.Toast
 import com.wandm.App
 import com.wandm.R
 import com.wandm.utils.PreferencesUtils
+import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.dialog_timer.*
+import org.jetbrains.anko.textColor
 
 class AlarmDialog : BaseDialog(), View.OnClickListener {
+
+    private var colorResId = R.color.color_dark_theme
 
     companion object {
         private val TAG = "AlarmDialog"
@@ -38,6 +42,8 @@ class AlarmDialog : BaseDialog(), View.OnClickListener {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupTheme()
 
         setAlarmButton.setOnClickListener(this)
         cancelAlarmButton.setOnClickListener(this)
@@ -107,6 +113,24 @@ class AlarmDialog : BaseDialog(), View.OnClickListener {
                 dismiss()
             }
         }
+    }
+
+    private fun setupTheme() {
+        val isLightTheme = PreferencesUtils.getLightTheme()
+        Utils.applyLightTheme(activity, isLightTheme)
+
+        if (isLightTheme) {
+            colorResId = R.color.color_light_theme
+        }
+
+        minuteTextView.textColor = resources.getColor(colorResId)
+        secondTextView.textColor = resources.getColor(colorResId)
+
+        minuteNumberPicker.setBackgroundColor(resources.getColor(colorResId))
+        secondNumberPicker.setBackgroundColor(resources.getColor(colorResId))
+
+        cancelAlarmButton.setColor(resources.getColor(colorResId))
+        setAlarmButton.setColor(resources.getColor(colorResId))
     }
 
 }
