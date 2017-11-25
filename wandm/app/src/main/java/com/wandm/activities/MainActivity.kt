@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SlidingPaneLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Html
-import android.view.ContextThemeWrapper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,15 +28,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_category.*
 import kotlinx.android.synthetic.main.sliding_pane_main.*
-import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 import org.jetbrains.anko.textColor
 
 
 class MainActivity : BaseActivity() {
 
-    private val TAG = "MainActivity"
-
     companion object {
+        private val TAG = "MainActivity"
         lateinit var instance: MainActivity
     }
 

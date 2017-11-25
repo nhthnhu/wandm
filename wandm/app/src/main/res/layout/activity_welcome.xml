@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_welcome"
+    tools:context="com.wandm.activities.WelcomeActivity">
+
+    <LinearLayout
+        android:id="@+id/welcomeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:ignore="UselessParent">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome"
+            android:textSize="32sp" />
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/ic_music" />
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="32sp" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -17,17 +17,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+
+        <activity android:name=".activities.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activities.MainActivity" />
+
         <activity
             android:name=".activities.NowPlayingActivity"
-            android:parentActivityName=".activities.MainActivity"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".activities.MainActivity" />
 
         <activity
             android:name=".activities.SettingsActivity"
@@ -35,9 +38,11 @@
             android:parentActivityName=".activities.MainActivity" />
 
         <service android:name=".services.WMService" />
+
         <service android:name=".services.DownloadService" />
 
         <activity android:name=".activities.SearchActivity" />
+
     </application>
 
 </manifest>
