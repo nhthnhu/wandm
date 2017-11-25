@@ -15,17 +15,17 @@ import com.wandm.models.playlist.ListPlaylist
 import kotlinx.android.synthetic.main.dialog_playlist.*
 import org.greenrobot.eventbus.EventBus
 
-class PlaylistDialogFragment : BaseDialogFragment() {
+class PlaylistDialog : BaseDialog() {
 
-    private val TAG = "PlaylistDialogFragment"
+    private val TAG = "PlaylistDialog"
     private var tableName = ""
 
     companion object {
         private var listener: ((String) -> Unit)? = null
 
-        fun newInstance(listener: (String) -> Unit): PlaylistDialogFragment {
+        fun newInstance(listener: (String) -> Unit): PlaylistDialog {
             Companion.listener = listener
-            val fragment = PlaylistDialogFragment()
+            val fragment = PlaylistDialog()
             fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.EtsyBlurDialogTheme)
             return fragment
         }
@@ -69,8 +69,8 @@ class PlaylistDialogFragment : BaseDialogFragment() {
     }
 
     private fun removeFragment() {
-        var fragment = fragmentManager.findFragmentByTag("PlaylistDialogFragment")
-        fragment = fragment as PlaylistDialogFragment
+        var fragment = fragmentManager.findFragmentByTag("PlaylistDialog")
+        fragment = fragment as PlaylistDialog
         fragment.dismiss()
     }
 

@@ -11,7 +11,7 @@
     <string name="download">Download</string>
     <string name="downloading">Downloading</string>
     <string name="download_failed">Download failed</string>
-    <string name="download_completed">Download compeleted</string>
+    <string name="download_completed">Download completed</string>
 
     <string name="request_read_storage_permission">We amp\u0026 Music will need to read external storage to display songs on your device.</string>
 
@@ -21,6 +21,7 @@
     <string name="second">Second</string>
     <string name="seconds">Seconds</string>
     <string name="alarm_toast">Turn off music after %1$s %2$s</string>
+    <style name="cancel_alarm">Canceled alarm setting</style>
 
     <string name="speech">Speech</string>
     <string name="error_audio">Record failed</string>

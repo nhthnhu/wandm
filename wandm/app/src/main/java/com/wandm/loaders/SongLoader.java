@@ -12,14 +12,17 @@ import android.text.TextUtils;
 import com.wandm.models.song.Song;
 import com.wandm.utils.PreferencesUtils;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SongLoader {
     private static final String TAG = "SongLoader";
     private static final long[] sEmptyList = new long[0];
 
-    public static ArrayList<Song> getSongsForCursor(Cursor cursor) {
+    private static ArrayList<Song> getSongsForCursor(Cursor cursor) {
         ArrayList arrayList = new ArrayList();
         if ((cursor != null) && (cursor.moveToFirst()))
             do {
@@ -41,7 +44,7 @@ public class SongLoader {
         return arrayList;
     }
 
-    public static Song getSongForCursor(Cursor cursor) {
+    private static Song getSongForCursor(Cursor cursor) {
         Song song = new Song();
         if ((cursor != null) && (cursor.moveToFirst())) {
             long id = cursor.getLong(0);
@@ -61,7 +64,7 @@ public class SongLoader {
         return song;
     }
 
-    public static final long[] getSongListForCursor(Cursor cursor) {
+    private static long[] getSongListForCursor(Cursor cursor) {
         if (cursor == null) {
             return sEmptyList;
         }
@@ -79,11 +82,10 @@ public class SongLoader {
             cursor.moveToNext();
         }
         cursor.close();
-        cursor = null;
         return list;
     }
 
-    public static Song getSongFromPath(String songPath, Context context) {
+    private static Song getSongFromPath(String songPath, Context context) {
         ContentResolver cr = context.getContentResolver();
 
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
@@ -103,6 +105,24 @@ public class SongLoader {
 
     public static ArrayList<Song> getAllSongs(Context context) {
         return getSongsForCursor(makeSongCursor(context, null, null));
+    }
+
+    public static ArrayList<Song> getSongs(File file, Context context) {
+        ArrayList<Song> songs = new ArrayList<>();
+        List<File> files = MusicFoldersLoader.getMediaFiles(file, false);
+        for (File songFile : files) {
+            Song song = getSongFromPath(songFile.getPath(), context);
+            song.setData(songFile.getPath());
+            if (song.getTitle().equals("")) {
+                song = SongLoader.getSongFromFile(songFile.getPath());
+                if (song.getTitle().equals("")) break;
+            }
+
+            songs.add(song);
+        }
+
+        Collections.sort(songs, new SongNameComparator());
+        return songs;
     }
 
     public static long[] getSongListInFolder(Context context, String path) {
@@ -140,19 +160,36 @@ public class SongLoader {
 
     }
 
-    public static Song songFromFile(String filePath) {
-        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-        mmr.setDataSource(filePath);
-        return new Song(
-                -1,
-                -1,
-                -1,
-                mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE),
-                mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST),
-                mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM),
-                Integer.parseInt(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)),
-                0, ""
-        );
+    private static Song getSongFromFile(String filePath) {
+        try {
+            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+            mmr.setDataSource(filePath);
+
+            String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+            if (title == null)
+                title = "";
+
+            String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+            if (artist == null)
+                artist = "";
+
+            String albumName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+            if (albumName == null)
+                albumName = "";
+
+            int duration = Integer.parseInt(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+
+            return new Song(-1, -1, -1, title, artist, albumName, duration, 0, filePath);
+
+        } catch (Exception e) {
+            return new Song();
+        }
     }
 
+    private static class SongNameComparator implements Comparator<Song> {
+        @Override
+        public int compare(Song s1, Song s2) {
+            return s1.getTitle().compareTo(s2.getTitle());
+        }
+    }
 }

@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.dialog_album_detail.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class AlbumDetailDialog : BaseDialogFragment() {
+class AlbumDetailDialog : BaseDialog() {
     private var albumId = 0L
     private val TAG = "AlbumDetailDialog"
 
@@ -126,6 +126,5 @@ class AlbumDetailDialog : BaseDialogFragment() {
     private fun setItemDecoration() {
         songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
     }
-
 
 }

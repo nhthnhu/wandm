@@ -21,6 +21,7 @@
     <string name="second">Giây</string>
     <string name="seconds">Giây</string>
     <string name="alarm_toast">Tắt nhạc sau %1$s %2$s</string>
+    <style name="cancel_alarm">Đã huỷ hẹn giờ</style>
 
     <string name="speech">Speech</string>
     <string name="error_audio">Lỗi ghi âm.</string>

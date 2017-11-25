@@ -18,7 +18,10 @@ import kotlinx.android.synthetic.main.item_album.view.*
 class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>(),
         BubbleTextGetter {
 
-    override fun getTextToShowInBubble(pos: Int) = mListAlbums[pos].title[0].toString()
+    override fun getTextToShowInBubble(pos: Int): String {
+        if (mListAlbums.size == 0) return ""
+        return mListAlbums[pos].title[0].toString()
+    }
 
     private var onItemClickListener: ((album: Album, position: Int) -> Unit)? = null
 

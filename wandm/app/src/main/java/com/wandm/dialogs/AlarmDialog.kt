@@ -2,7 +2,6 @@ package com.wandm.dialogs
 
 import android.app.DialogFragment
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,10 @@ import com.wandm.R
 import com.wandm.utils.PreferencesUtils
 import kotlinx.android.synthetic.main.dialog_timer.*
 
-class AlarmDialogFragment : BaseDialogFragment(), View.OnClickListener {
+class AlarmDialog : BaseDialog(), View.OnClickListener {
 
     companion object {
-        private val TAG = "AlarmDialogFragment"
+        private val TAG = "AlarmDialog"
 
         private var minute = 0
         private var second = 0
@@ -25,9 +24,9 @@ class AlarmDialogFragment : BaseDialogFragment(), View.OnClickListener {
         private var minuteStr = ""
         private var secondStr = ""
 
-        fun newInstance(listener: (Boolean) -> Unit): AlarmDialogFragment {
+        fun newInstance(listener: (Boolean) -> Unit): AlarmDialog {
             Companion.listener = listener
-            val fragment = AlarmDialogFragment()
+            val fragment = AlarmDialog()
             fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.EtsyBlurDialogTheme)
             return fragment
         }

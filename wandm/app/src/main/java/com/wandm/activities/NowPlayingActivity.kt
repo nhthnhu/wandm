@@ -16,8 +16,8 @@ import com.wandm.adapters.SongsAdapter
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
 import com.wandm.database.SongsBaseHandler
-import com.wandm.dialogs.AlarmDialogFragment
-import com.wandm.dialogs.PlaylistDialogFragment
+import com.wandm.dialogs.AlarmDialog
+import com.wandm.dialogs.PlaylistDialog
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.DownloadService
@@ -214,10 +214,10 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             when (action) {
                 SongsAdapter.ACTION_ADD_PLAYLIST -> {
                     val fragmentManager = supportFragmentManager
-                    val dialogFragment = PlaylistDialogFragment.newInstance { title ->
+                    val dialogFragment = PlaylistDialog.newInstance { title ->
                         SongsBaseHandler.getInstance(App.instance, title)?.addSong(song)
                     }
-                    dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+                    dialogFragment.show(fragmentManager, "PlaylistDialog")
                 }
 
                 SongsAdapter.ACTION_PLAY -> {
@@ -344,11 +344,11 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
             R.id.playlistButton -> {
                 val fragmentManager = supportFragmentManager
-                val dialogFragment = PlaylistDialogFragment.newInstance { title ->
+                val dialogFragment = PlaylistDialog.newInstance { title ->
                     SongsBaseHandler.getInstance(App.instance, title)?.
                             addSong(CurrentPlaylistManager.currentSong!!)
                 }
-                dialogFragment.show(fragmentManager, "PlaylistDialogFragment")
+                dialogFragment.show(fragmentManager, "PlaylistDialog")
             }
 
             R.id.setAlarmButton -> {
@@ -493,13 +493,13 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         } else {
             if (timeStr.equals("0;;0")) {
                 val fragmentManager = supportFragmentManager
-                val dialogFragment = AlarmDialogFragment.newInstance { isSetTimer ->
+                val dialogFragment = AlarmDialog.newInstance { isSetTimer ->
                     if (isSetTimer)
                         setAlarmButton.setColorResource(R.color.color_primary_dark)
                     else
                         setAlarmButton.setColorResource(R.color.color_white)
                 }
-                dialogFragment.show(fragmentManager, "AlarmDialogFragment")
+                dialogFragment.show(fragmentManager, "AlarmDialog")
             } else {
                 PreferencesUtils.setAlarm("0;;0")
                 setAlarmButton.setColorResource(R.color.color_white)

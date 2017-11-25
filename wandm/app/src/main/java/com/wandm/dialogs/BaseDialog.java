@@ -8,7 +8,7 @@ import com.ms_square.etsyblur.BlurDialogFragment;
 import com.wandm.SmartAsyncPolicyHolder;
 
 
-public abstract class BaseDialogFragment extends BlurDialogFragment {
+public abstract class BaseDialog extends BlurDialogFragment {
 
     @NonNull
     protected BlurConfig blurConfig() {

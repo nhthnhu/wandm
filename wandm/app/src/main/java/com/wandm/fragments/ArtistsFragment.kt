@@ -18,9 +18,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class ArtistsFragment : BaseFragment() {
-    override fun getLayoutResId(): Int {
-        return R.layout.fragment_artists
-    }
+    override fun getLayoutResId() = R.layout.fragment_artists
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
         PreferencesUtils.setArtistAlbumSortOrder(SortOrder.ArtistAlbumSortOrder.ALBUM_A_Z)

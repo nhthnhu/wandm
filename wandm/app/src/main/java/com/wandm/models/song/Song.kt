@@ -1,6 +1,8 @@
 package com.wandm.models.song
 
-class Song {
+import java.io.Serializable
+
+class Song : Serializable {
     var albumId: Long = -1
     var albumName: String = ""
     var artistId: Long = 0

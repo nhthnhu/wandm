@@ -125,6 +125,11 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
         else
             uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong!!.albumId).toString()
 
+        if (uri.isEmpty()) {
+            albumImageView.background = context.getDrawable(R.drawable.ic_action_music)
+            return
+        }
+
         Picasso.with(context)
                 .load(uri)
                 .into(albumImageView, object : Callback {
