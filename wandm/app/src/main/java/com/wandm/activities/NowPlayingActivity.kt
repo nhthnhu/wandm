@@ -3,7 +3,6 @@ package com.wandm.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
@@ -27,7 +26,6 @@ import com.wandm.services.DownloadService
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_now_playing.*
 import kotlinx.android.synthetic.main.content_now_playing.*
 import kotlinx.android.synthetic.main.sliding_pane_songs.*
@@ -38,10 +36,6 @@ import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.textColor
 import java.util.concurrent.TimeUnit
-import com.wandm.R.id.toolbar
-import android.graphics.drawable.Drawable
-import com.wandm.R.id.arrow_bottom_left
-import org.jetbrains.anko.act
 
 
 class NowPlayingActivity : BaseActivity(), View.OnClickListener {
@@ -481,7 +475,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
     private fun setDownload(init: Boolean) {
         if (init) {
-            if (CurrentPlaylistManager.currentSong?.albumId != -1.toLong()) {
+            if (!CurrentPlaylistManager.currentSong?.downloadEnable!!) {
                 downloadButton.setColor(resources.getColor(colorResIdPressed))
                 downloadButton.isEnabled = false
                 isDownloaded = true
