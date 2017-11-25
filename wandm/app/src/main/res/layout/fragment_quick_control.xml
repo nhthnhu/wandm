@@ -68,7 +68,6 @@
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:scaleType="center"
         app:materialIcon="skip_previous"
-        app:materialIconColor="#fff"
         app:materialIconSize="35dp" />
 
     <FrameLayout
@@ -96,7 +95,6 @@
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:scaleType="center"
         app:materialIcon="skip_next"
-        app:materialIconColor="#fff"
         app:materialIconSize="35dp" />
 </LinearLayout>
 

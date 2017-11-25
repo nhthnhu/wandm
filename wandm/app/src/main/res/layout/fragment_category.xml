@@ -13,7 +13,6 @@
         android:paddingBottom="4dp"
         app:stl_customTabTextLayoutId="@layout/custom_tab"
         app:stl_customTabTextViewId="@id/custom_text"
-        app:stl_defaultTabTextColor="@color/color_white"
         app:stl_indicatorColor="@color/color_grey"
         app:stl_indicatorInterpolation="linear"
         app:stl_indicatorThickness="3dp"

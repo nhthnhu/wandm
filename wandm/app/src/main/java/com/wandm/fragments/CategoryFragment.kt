@@ -6,7 +6,9 @@ import android.support.v4.view.ViewPager
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
+import com.wandm.App
 import com.wandm.R
+import com.wandm.utils.PreferencesUtils
 import kotlinx.android.synthetic.main.fragment_category.*
 
 class CategoryFragment : BaseFragment() {
@@ -42,6 +44,12 @@ class CategoryFragment : BaseFragment() {
         val fragmentAdapter = FragmentPagerItemAdapter(fragmentManager, pagerItems)
         listViewPagers.adapter = fragmentAdapter
         listTabs.setViewPager(listViewPagers)
+
+        var colorResId = R.color.color_dark_theme
+        if (PreferencesUtils.getLightTheme())
+            colorResId = R.color.color_light_theme
+
+        listTabs.setSelectedIndicatorColors(activity.resources.getColor(colorResId))
     }
 
 }

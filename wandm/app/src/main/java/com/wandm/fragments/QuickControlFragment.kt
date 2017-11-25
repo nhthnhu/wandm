@@ -11,15 +11,18 @@ import com.wandm.data.CurrentPlaylistManager
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.MusicPlayer
+import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.fragment_quick_control.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.jetbrains.anko.textColor
 
 class QuickControlFragment : BaseFragment(), View.OnClickListener {
 
     private val TAG = "QuickControlFragment"
+    private var colorResId = R.color.color_dark_theme
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
@@ -64,6 +67,8 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
         EventBus.getDefault().register(this)
+
+        setTheme()
 
         nextButton.setOnClickListener(this)
         preButton.setOnClickListener(this)
@@ -136,6 +141,22 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
                         albumImageView.background = context.getDrawable(R.drawable.ic_action_music)
                     }
                 })
+    }
+
+    private fun setTheme() {
+        val isLightTheme = PreferencesUtils.getLightTheme()
+        Utils.applyLightTheme(activity, isLightTheme)
+
+        colorResId = R.color.color_dark_theme
+        if (isLightTheme) {
+            colorResId = R.color.color_light_theme
+        }
+
+        titleSongTextView.textColor = activity.resources.getColor(colorResId)
+        artistSongTextView.textColor = activity.resources.getColor(colorResId)
+        preButton.setColor(activity.resources.getColor(colorResId))
+        nextButton.setColor(activity.resources.getColor(colorResId))
+        playPauseButton.setColor(activity.resources.getColor(colorResId))
     }
 
 }

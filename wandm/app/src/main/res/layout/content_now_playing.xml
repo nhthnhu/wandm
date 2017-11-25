@@ -13,7 +13,7 @@
         <FrameLayout
             android:id="@+id/headerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1">
 
 
@@ -86,7 +86,6 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:scaleType="center"
                     app:materialIcon="heart_outline"
-                    app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
@@ -97,7 +96,6 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:scaleType="center"
                     app:materialIcon="download"
-                    app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
@@ -108,7 +106,6 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:scaleType="center"
                     app:materialIcon="playlist_plus"
-                    app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
@@ -119,7 +116,6 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:scaleType="center"
                     app:materialIcon="alarm"
-                    app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
 
 
@@ -176,7 +172,6 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:scaleType="center"
                     app:materialIcon="shuffle"
-                    app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
@@ -187,7 +182,6 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:scaleType="center"
                     app:materialIcon="skip_previous"
-                    app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
 
                 <FrameLayout
@@ -216,7 +210,6 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:scaleType="center"
                     app:materialIcon="skip_next"
-                    app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
@@ -227,7 +220,6 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:scaleType="center"
                     app:materialIcon="repeat"
-                    app:materialIconColor="#fff"
                     app:materialIconSize="35dp" />
 
             </LinearLayout>

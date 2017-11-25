@@ -16,7 +16,7 @@ object AppConfig {
         if (isLightTheme)
             return BlurConfig.Builder()
                     .radius(22)
-                    .overlayColor(Color.argb(70, 225, 225, 225))  // semi-transparent white color
+                    .overlayColor(Color.argb(80, 225, 225, 225))  // semi-transparent white color
                     .asyncPolicy(SmartAsyncPolicyHolder.INSTANCE.smartAsyncPolicy())
                     .debug(true)
                     .build()

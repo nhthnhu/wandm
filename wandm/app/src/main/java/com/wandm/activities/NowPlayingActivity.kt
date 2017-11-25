@@ -2,6 +2,8 @@ package com.wandm.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
@@ -11,6 +13,7 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import com.wandm.App
+import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.adapters.SongsAdapter
 import com.wandm.data.CurrentPlaylistManager
@@ -24,6 +27,7 @@ import com.wandm.services.DownloadService
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_now_playing.*
 import kotlinx.android.synthetic.main.content_now_playing.*
 import kotlinx.android.synthetic.main.sliding_pane_songs.*
@@ -32,7 +36,13 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.textColor
 import java.util.concurrent.TimeUnit
+import com.wandm.R.id.toolbar
+import android.graphics.drawable.Drawable
+import com.wandm.R.id.arrow_bottom_left
+import org.jetbrains.anko.act
+
 
 class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
@@ -52,6 +62,9 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     private var repeatMode = 0
     private var isFavorite = false
     private var isDownloaded = false
+
+    private var colorResId = R.color.color_dark_theme
+    private var colorResIdPressed = R.color.color_light_theme
 
     companion object {
         lateinit var instance: NowPlayingActivity
@@ -134,6 +147,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     override fun initView(savedInstanceState: Bundle?) {
         instance = this
         setupToolbar()
+        songBlurringView.blurConfig(AppConfig.getBlurViewConfig())
+        setTheme()
 
         EventBus.getDefault().register(this)
 
@@ -195,6 +210,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
      * Used to setup toolbar
      */
     private fun setupToolbar() {
+        toolbarNowPlaying.popupTheme = R.style.Base_Theme_AppCompat_Light
         setSupportActionBar(toolbarNowPlaying)
         val actionBar = supportActionBar
         if (actionBar != null) {
@@ -364,15 +380,15 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             when (repeatMode) {
                 0 -> {
                     repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
-                    repeatButton.setColorResource(R.color.color_white)
+                    repeatButton.setColorResource(colorResId)
                 }
                 1 -> {
                     repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
-                    repeatButton.setColorResource(R.color.color_primary_dark)
+                    repeatButton.setColorResource(colorResIdPressed)
                 }
                 else -> {
                     repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
-                    repeatButton.setColorResource(R.color.color_primary_dark)
+                    repeatButton.setColorResource(colorResIdPressed)
                 }
             }
 
@@ -380,19 +396,19 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             when (repeatMode) {
                 0 -> {
                     repeatMode++
-                    repeatButton.setColorResource(R.color.color_primary_dark)
+                    repeatButton.setColorResource(colorResIdPressed)
                     PreferencesUtils.setRepeatMode(repeatMode)
                 }
                 1 -> {
                     repeatMode++
                     repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
-                    repeatButton.setColorResource(R.color.color_primary_dark)
+                    repeatButton.setColorResource(colorResIdPressed)
                     PreferencesUtils.setRepeatMode(repeatMode)
                 }
                 else -> {
                     repeatMode = 0
                     repeatButton.setIcon(MaterialDrawableBuilder.IconValue.REPEAT)
-                    repeatButton.setColorResource(R.color.color_white)
+                    repeatButton.setColorResource(colorResId)
                     PreferencesUtils.setRepeatMode(repeatMode)
                 }
             }
@@ -404,18 +420,18 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
         if (init) {
             if (isShuffle)
-                shuffleButton.setColorResource(R.color.color_primary_dark)
+                shuffleButton.setColorResource(colorResIdPressed)
             else
-                shuffleButton.setColorResource(R.color.color_white)
+                shuffleButton.setColorResource(colorResId)
         } else {
 
             if (isShuffle) {
                 isShuffle = false
-                shuffleButton.setColorResource(R.color.color_white)
+                shuffleButton.setColorResource(colorResId)
                 PreferencesUtils.setShuffleMode(isShuffle)
             } else {
                 isShuffle = true
-                shuffleButton.setColorResource(R.color.color_primary_dark)
+                shuffleButton.setColorResource(colorResIdPressed)
                 PreferencesUtils.setShuffleMode(isShuffle)
             }
         }
@@ -432,13 +448,13 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 favoriteButton.setColorResource(R.color.color_red)
             } else {
                 favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
-                favoriteButton.setColorResource(R.color.color_white)
+                favoriteButton.setColorResource(colorResId)
             }
         } else {
             if (isFavorite) {
                 isFavorite = false
                 favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
-                favoriteButton.setColorResource(R.color.color_white)
+                favoriteButton.setColorResource(colorResId)
                 SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
                         removeSong(CurrentPlaylistManager.currentSong!!)
             } else {
@@ -467,11 +483,11 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     private fun setDownload(init: Boolean) {
         if (init) {
             if (CurrentPlaylistManager.currentSong?.albumId != -1.toLong()) {
-                downloadButton.setColorResource(R.color.color_primary_dark)
+                downloadButton.setColor(resources.getColor(colorResIdPressed))
                 downloadButton.isEnabled = false
                 isDownloaded = true
             } else {
-                downloadButton.setColorResource(R.color.color_white)
+                downloadButton.setColor(resources.getColor(colorResId))
                 downloadButton.isEnabled = true
                 isDownloaded = false
             }
@@ -487,26 +503,55 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         val timeStr = PreferencesUtils.getAlarm()
         if (init) {
             if (timeStr.equals("0;;0")) {
-                setAlarmButton.setColorResource(R.color.color_white)
+                setAlarmButton.setColorResource(colorResId)
             } else
-                setAlarmButton.setColorResource(R.color.color_primary_dark)
+                setAlarmButton.setColorResource(colorResIdPressed)
         } else {
             if (timeStr.equals("0;;0")) {
                 val fragmentManager = supportFragmentManager
                 val dialogFragment = AlarmDialogFragment.newInstance { isSetTimer ->
                     if (isSetTimer)
-                        setAlarmButton.setColorResource(R.color.color_primary_dark)
+                        setAlarmButton.setColorResource(colorResIdPressed)
                     else
-                        setAlarmButton.setColorResource(R.color.color_white)
+                        setAlarmButton.setColorResource(colorResId)
                 }
                 dialogFragment.show(fragmentManager, "AlarmDialogFragment")
             } else {
                 PreferencesUtils.setAlarm("0;;0")
-                setAlarmButton.setColorResource(R.color.color_white)
+                setAlarmButton.setColorResource(colorResId)
                 Toast.makeText(this, resources.getString(R.string.turn_off_alarm), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+    private fun setTheme() {
+        val isLightTheme = PreferencesUtils.getLightTheme()
+        Utils.applyLightTheme(this, isLightTheme)
+
+        if (isLightTheme) {
+            colorResId = R.color.color_light_theme
+            colorResIdPressed = R.color.pressed_color
+        }
+
+        titleSongTextView.textColor = resources.getColor(colorResId)
+        artistSongTextView.textColor = resources.getColor(colorResId)
+        songElapsedTime.textColor = resources.getColor(colorResId)
+        songDuration.textColor = resources.getColor(colorResId)
+        songProgress.getProgressDrawable().setColorFilter(resources.getColor(colorResId)
+                , PorterDuff.Mode.SRC_IN)
+        songProgress.getThumb().setColorFilter(resources.getColor(colorResId)
+                , PorterDuff.Mode.SRC_IN)
+
+        playpauseButton.setColor(resources.getColor(colorResId))
+        preButton.setColor(resources.getColor(colorResId))
+        nextButton.setColor(resources.getColor(colorResId))
+        repeatButton.setColor(resources.getColor(colorResId))
+        shuffleButton.setColor(resources.getColor(colorResId))
+        favoriteButton.setColor(resources.getColor(colorResId))
+        downloadButton.setColor(resources.getColor(colorResId))
+        playlistButton.setColor(resources.getColor(colorResId))
+        setAlarmButton.setColor(resources.getColor(colorResId))
+
+    }
 
 }

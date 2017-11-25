@@ -36,21 +36,19 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
             itemView.menuImageView.setIcon(data.icon)
             itemView.contentMenuTextView.text = data.content
 
-            var color = itemView?.context?.resources?.
-                    getColor(R.color.color_dark_theme)
+            var colorResId = R.color.color_dark_theme
 
             if (PreferencesUtils.getLightTheme()) {
-                color = itemView?.context?.resources?.
-                        getColor(R.color.color_light_theme)!!
+                colorResId = R.color.color_light_theme
             }
 
             if (data.content.equals(Menu.FAVORITES))
-                color = itemView?.context?.resources?.
-                        getColor(R.color.color_red)
+                colorResId = R.color.color_red
 
-            itemView.menuImageView.setColor(color!!)
+            itemView.menuImageView.setColor(itemView?.context?.resources?.
+                    getColor(colorResId)!!)
 
-            itemView?.setOnClickListener {
+            itemView.setOnClickListener {
                 onItemClickListener?.invoke(position)
             }
         }

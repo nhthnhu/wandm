@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.models.song.Song
+import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
@@ -52,6 +53,12 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
         var songItemView: View = itemView
 
         fun bind(song: Song) {
+            var colorResId = R.color.color_dark_theme
+            if (PreferencesUtils.getLightTheme())
+                colorResId = R.color.color_light_theme
+
+            itemView.playlistButton.setColor(itemView?.context?.resources?.getColor(colorResId)!!)
+
             if (!isAddFavorite)
                 itemView.playlistButton.visibility = View.GONE
 
@@ -72,6 +79,7 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
 
             itemView.titleItemSongTextView.isSelected = true
             itemView.artistItemSongTextView.isSelected = true
+
         }
 
     }
