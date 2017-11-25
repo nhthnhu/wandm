@@ -25,6 +25,49 @@
         android:layout_marginTop="64dp"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/speechView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textListening"
+                    style="@style/WMTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="72dp"
+                    android:gravity="end"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textMessage"
+                    style="@style/WMTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="72dp"
+                    android:layout_marginStart="16dp"
+                    android:gravity="start"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+            </FrameLayout>
+
+            <com.wandm.views.WMWaveformView
+                android:id="@+id/waveformView"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </LinearLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
