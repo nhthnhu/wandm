@@ -2,24 +2,35 @@ package com.wandm.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.wandm.AppConfig
 import com.wandm.R
+import com.wandm.utils.PreferencesUtils
 import kotlinx.android.synthetic.main.activity_welcome.*
+import org.jetbrains.anko.textColor
 
-class WelcomeActivity : AppCompatActivity() {
-    companion object {
-        private var instance: WelcomeActivity? = null
-    }
+class WelcomeActivity : BaseActivity() {
+    override fun getLayoutResId() = R.layout.activity_welcome
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_welcome)
-        setupWindows()
+        blurringView.blurConfig(AppConfig.getBlurViewConfig())
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
         instance = this
+        setBlurBackground(background, blurringView)
+        val isLightTheme = PreferencesUtils.getLightTheme()
+        var colorResId = R.color.color_dark_theme
+        if (isLightTheme) {
+            colorResId = R.color.color_light_theme
+        }
+
+        labelWelcome.textColor = resources.getColor(colorResId)
+        labelAppName.textColor = resources.getColor(colorResId)
+
         val animation = AnimationUtils.loadAnimation(this, R.anim.anim_fade_in)
         animation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(p0: Animation?) {
@@ -42,8 +53,7 @@ class WelcomeActivity : AppCompatActivity() {
         welcomeView.animation.start()
     }
 
-    private fun setupWindows() {
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    companion object {
+        private var instance: WelcomeActivity? = null
     }
 }

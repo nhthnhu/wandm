@@ -1,5 +1,6 @@
 package com.wandm.adapters
 
+import android.graphics.BitmapFactory
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_song.view.*
+
 
 class SongsAdapter(var listSongs: ArrayList<Song>,
                    private val isAddFavorite: Boolean,
@@ -70,7 +72,16 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
                         }
 
                         override fun onError() {
-                            itemView.albumArt.background = itemView.context.getDrawable(R.drawable.ic_action_music)
+                            val art = song.art
+                            if (art == null) {
+                                itemView.albumArt.background = itemView.context.getDrawable(R.drawable.ic_action_music)
+                                return
+                            }
+
+                            val songImage = BitmapFactory.decodeByteArray(art, 0, art.size)
+                            if (songImage != null)
+                                itemView.albumArt.setImageBitmap(songImage)
+                            else itemView.albumArt.background = itemView.context.getDrawable(R.drawable.ic_action_music)
                         }
                     })
 

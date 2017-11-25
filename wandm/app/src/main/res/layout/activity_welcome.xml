@@ -3,8 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_welcome"
     tools:context="com.wandm.activities.WelcomeActivity">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <com.ms_square.etsyblur.BlurringView
+        android:id="@+id/blurringView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/welcomeView"
@@ -12,10 +22,11 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
-        tools:ignore="UselessParent">
+        android:visibility="gone">
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/labelWelcome"
+            style="@style/WMTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/welcome"
@@ -29,6 +40,8 @@
 
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/labelAppName"
+            style="@style/WMTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"

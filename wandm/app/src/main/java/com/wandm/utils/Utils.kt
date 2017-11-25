@@ -1,5 +1,6 @@
 package com.wandm.utils
 
+import android.app.Activity
 import android.content.ContentUris
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -8,17 +9,7 @@ import android.graphics.drawable.Drawable
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
-import android.graphics.BitmapFactory
-import android.R.attr.src
-import android.app.Activity
-import android.content.Context
-import android.graphics.Matrix
-import com.wandm.models.Album
-import java.io.IOException
-import android.provider.MediaStore
-import android.view.ContextThemeWrapper
 import com.wandm.R
-import org.jetbrains.anko.matchParent
 
 
 object Utils {
@@ -44,7 +35,7 @@ object Utils {
      * @param drawable is drawable to convert
      * @return bitmap was converted
      */
-    fun ConvertDrawableToBitmap(drawable: Drawable): Bitmap {
+    fun convertDrawableToBitmap(drawable: Drawable): Bitmap {
         if (drawable is BitmapDrawable) {
             return drawable.bitmap
         }

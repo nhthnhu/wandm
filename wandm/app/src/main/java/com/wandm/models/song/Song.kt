@@ -14,6 +14,7 @@ class Song : Serializable {
     var data: String = ""
     var albumArt: String = ""
     var downloadEnable: Boolean = false
+    var art: ByteArray? = null
 
 
     constructor() {

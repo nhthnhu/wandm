@@ -179,7 +179,11 @@ public class SongLoader {
 
             int duration = Integer.parseInt(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
 
-            return new Song(-1, -1, -1, title, artist, albumName, duration, 0, filePath);
+            byte[] art = mmr.getEmbeddedPicture();
+
+            Song song = new Song(-1, -1, -1, title, artist, albumName, duration, 0, filePath);
+            song.setArt(art);
+            return song;
 
         } catch (Exception e) {
             return new Song();

@@ -41,14 +41,16 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
         holder?.bind(listSongs[position])
 
         holder?.songItemView?.setOnClickListener {
+            val context = holder.songItemView.context
+
             CurrentPlaylistManager.listSongs = listSongs
             CurrentPlaylistManager.position = position
             MusicPlayer.bind(null)
 
 
-            val intent = Intent(App.instance, NowPlayingActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            App.instance.startActivity(intent)
+            val intent = Intent(context, NowPlayingActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            context.startActivity(intent)
         }
 
         holder?.songItemView?.setOnLongClickListener {

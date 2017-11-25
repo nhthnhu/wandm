@@ -29,6 +29,7 @@
                 android:background="@color/transparent"
                 android:shape="ring"
                 android:thicknessRatio="1.9"
+                app:cardBackgroundColor="@color/transparent"
                 app:cardCornerRadius="75dp">
 
                 <android.support.v7.widget.AppCompatImageView
