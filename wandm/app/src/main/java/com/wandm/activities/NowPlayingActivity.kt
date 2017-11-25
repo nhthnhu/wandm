@@ -210,7 +210,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
      * Used to setup toolbar
      */
     private fun setupToolbar() {
-        toolbarNowPlaying.popupTheme = R.style.Base_Theme_AppCompat_Light
         setSupportActionBar(toolbarNowPlaying)
         val actionBar = supportActionBar
         if (actionBar != null) {
