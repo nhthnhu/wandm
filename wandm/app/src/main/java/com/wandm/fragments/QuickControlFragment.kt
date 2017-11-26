@@ -23,6 +23,7 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
 
     private val TAG = "QuickControlFragment"
     private var colorResId = R.color.color_dark_theme
+    private var textSize = 18
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
@@ -150,7 +151,8 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
 
     private fun setTheme() {
         val isLightTheme = PreferencesUtils.getLightTheme()
-        Utils.applyLightTheme(activity, isLightTheme)
+        Utils.applyLightTheme(activity)
+        textSize = Utils.getTextSize()
 
         colorResId = R.color.color_dark_theme
         if (isLightTheme) {
@@ -159,6 +161,10 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
 
         titleSongTextView.textColor = activity.resources.getColor(colorResId)
         artistSongTextView.textColor = activity.resources.getColor(colorResId)
+
+        titleSongTextView.textSize = (textSize - 2).toFloat()
+        artistSongTextView.textSize = (textSize - 2).toFloat()
+
         preButton.setColor(activity.resources.getColor(colorResId))
         nextButton.setColor(activity.resources.getColor(colorResId))
         playPauseButton.setColor(activity.resources.getColor(colorResId))

@@ -9,7 +9,9 @@ import com.wandm.R
 import com.wandm.dialogs.SongFolderDetailDialog
 import com.wandm.models.MusicFolder
 import com.wandm.utils.PreferencesUtils
+import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
+import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_folder.view.*
 
 
@@ -46,7 +48,7 @@ class FoldersAdapter(var musicFolders: List<MusicFolder>) : RecyclerView.Adapter
 
     inner class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(musicFolder: MusicFolder) {
-
+            setupSize(itemView)
             val context = itemView.context
 
             if (PreferencesUtils.getLightTheme()) {
@@ -70,6 +72,12 @@ class FoldersAdapter(var musicFolders: List<MusicFolder>) : RecyclerView.Adapter
                 songFolderDetailDialog.show(fragmentManager, SongFolderDetailDialog::class.java.name)
             }
         }
+    }
+
+    private fun setupSize(itemView: View) {
+        val textSize = Utils.getTextSize()
+        itemView.folderName.textSize = textSize.toFloat()
+        itemView.folderPath.textSize = (textSize - 2).toFloat()
     }
 
 }

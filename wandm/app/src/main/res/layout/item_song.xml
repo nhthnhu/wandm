@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="start"
-        android:paddingStart="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="15dp">
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/titleItemSongTextView"
@@ -30,7 +30,8 @@
             android:ellipsize="marquee"
             android:gravity="start"
             android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textSize="18sp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/artistItemSongTextView"

@@ -53,11 +53,46 @@ object Utils {
         return bitmap
     }
 
-    fun applyLightTheme(activity: Activity, isLight: Boolean) {
-        if (isLight) {
-            activity.setTheme(R.style.LightTheme)
-        } else {
-            activity.setTheme(R.style.DarkTheme)
+    fun applyLightTheme(activity: Activity) {
+        when (getTheme()) {
+            PreferencesUtils.LIGHT_THEME_SMALL -> activity.setTheme(R.style.LightThemeSmall)
+            PreferencesUtils.LIGHT_THEME_MEDIUM -> activity.setTheme(R.style.LightThemeMedium)
+            PreferencesUtils.LIGHT_THEME_LARGE -> activity.setTheme(R.style.LightThemeLarge)
+            PreferencesUtils.DARK_THEME_SMALL -> activity.setTheme(R.style.DarkThemeSmall)
+            PreferencesUtils.DARK_THEME_MEDIUM -> activity.setTheme(R.style.DarkThemeMedium)
+            PreferencesUtils.DARK_THEME_LARGE -> activity.setTheme(R.style.DarkThemeLarge)
+
         }
+    }
+
+    fun getTheme(): String {
+        val textSize = getTextSize()
+        val isLightTheme = PreferencesUtils.getLightTheme()
+
+        if (isLightTheme) {
+            when (textSize) {
+                14 -> return PreferencesUtils.LIGHT_THEME_SMALL
+                18 -> return PreferencesUtils.LIGHT_THEME_MEDIUM
+                22 -> return PreferencesUtils.LIGHT_THEME_LARGE
+            }
+        } else {
+            when (textSize) {
+                14 -> return PreferencesUtils.DARK_THEME_SMALL
+                18 -> return PreferencesUtils.DARK_THEME_MEDIUM
+                22 -> return PreferencesUtils.DARK_THEME_LARGE
+            }
+        }
+
+        return PreferencesUtils.DARK_THEME_MEDIUM
+    }
+
+    fun getTextSize(): Int {
+        if (PreferencesUtils.getSmallText())
+            return 14
+
+        if (PreferencesUtils.getMediumText())
+            return 18
+
+        return 22
     }
 }

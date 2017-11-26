@@ -48,8 +48,15 @@
     <string name="theme">Theme</string>
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
+    <string name="general_setting">General</string>
+    <string name="text_size">Text size</string>
+    <string name="small_text">Small</string>
+    <string name="medium_text">Medium</string>
+    <string name="large_text">Large</string>
 
     <string name="add_to_favorites">Add to favorites</string>
     <string name="add_to_playlist">Add to playlist</string>
     <string name="added_to_favorites">Added to favorites</string>
+
+
 </resources>

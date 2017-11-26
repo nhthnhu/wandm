@@ -8,11 +8,17 @@ import android.preference.PreferenceActivity
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.Toolbar
+import android.text.BoringLayout
+import android.util.Log
 import android.view.WindowManager
 import com.ms_square.etsyblur.BlurringView
 import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.utils.PreferencesUtils
+import com.wandm.utils.PreferencesUtils.PREFS_LARGE_TEXT
+import com.wandm.utils.PreferencesUtils.PREFS_MEDIUM_TEXT
+import com.wandm.utils.PreferencesUtils.PREFS_SMALL_TEXT
+
 import com.wandm.utils.PreferencesUtils.PREFS_THEME
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -32,7 +38,7 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_settings)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbarSettings)
         addPreferencesFromResource(R.xml.preferences)
         setupWindows()
         blurringView.blurConfig(AppConfig.getBlurViewConfig())
@@ -78,15 +84,36 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
         when (p1) {
-            PreferencesUtils.PREFS_THEME -> {
+            PREFS_THEME -> {
                 if (PreferencesUtils.getLightTheme()) {
                     findPreference(PREFS_THEME).summary = resources.getString(R.string.light_theme)
-                    Utils.applyLightTheme(this, true)
+                    Utils.applyLightTheme(this)
                 } else {
                     findPreference(PREFS_THEME).summary = resources.getString(R.string.dark_theme)
-                    Utils.applyLightTheme(this, false)
+                    Utils.applyLightTheme(this)
                 }
 
+                recreate()
+            }
+
+            PREFS_SMALL_TEXT -> {
+                val enable = !PreferencesUtils.getSmallText()
+                findPreference(PREFS_MEDIUM_TEXT).isEnabled = enable
+                findPreference(PREFS_LARGE_TEXT).isEnabled = enable
+                recreate()
+            }
+
+            PREFS_MEDIUM_TEXT -> {
+                val enable = !PreferencesUtils.getMediumText()
+                findPreference(PREFS_SMALL_TEXT).isEnabled = enable
+                findPreference(PREFS_LARGE_TEXT).isEnabled = enable
+                recreate()
+            }
+
+            PREFS_LARGE_TEXT -> {
+                val enable = !PreferencesUtils.getLargeText()
+                findPreference(PREFS_MEDIUM_TEXT).isEnabled = enable
+                findPreference(PREFS_SMALL_TEXT).isEnabled = enable
                 recreate()
             }
         }
@@ -116,6 +143,26 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
             findPreference(PREFS_THEME).summary = resources.getString(R.string.light_theme)
         else
             findPreference(PREFS_THEME).summary = resources.getString(R.string.dark_theme)
+
+        when (Utils.getTextSize()) {
+            14 -> {
+                val enable = !PreferencesUtils.getSmallText()
+                findPreference(PREFS_MEDIUM_TEXT).isEnabled = enable
+                findPreference(PREFS_LARGE_TEXT).isEnabled = enable
+            }
+
+            18 -> {
+                val enable = !PreferencesUtils.getMediumText()
+                findPreference(PREFS_SMALL_TEXT).isEnabled = enable
+                findPreference(PREFS_LARGE_TEXT).isEnabled = enable
+            }
+
+            22 -> {
+                val enable = !PreferencesUtils.getLargeText()
+                findPreference(PREFS_MEDIUM_TEXT).isEnabled = enable
+                findPreference(PREFS_SMALL_TEXT).isEnabled = enable
+            }
+        }
     }
 
 

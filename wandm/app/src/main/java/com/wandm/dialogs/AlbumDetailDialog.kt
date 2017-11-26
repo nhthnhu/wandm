@@ -18,6 +18,8 @@ import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_album_detail.*
+import kotlinx.android.synthetic.main.dialog_album_detail.view.*
+import kotlinx.android.synthetic.main.item_album.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -50,6 +52,8 @@ class AlbumDetailDialog : BaseDialog() {
         super.onViewCreated(view, savedInstanceState)
         songsRecyclerView.layoutManager = LinearLayoutManager(activity)
         songsFastScroller.setRecyclerView(songsRecyclerView)
+
+        setupSize()
 
         loadAlbumDetail()
     }
@@ -125,6 +129,12 @@ class AlbumDetailDialog : BaseDialog() {
 
     private fun setItemDecoration() {
         songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
+    }
+
+    private fun setupSize() {
+        val textSize = Utils.getTextSize()
+        albumNameTextView.textSize = textSize.toFloat()
+        detailAlbumTextView.textSize = (textSize - 4).toFloat()
     }
 
 }

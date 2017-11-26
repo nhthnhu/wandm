@@ -23,9 +23,10 @@
         android:layout_weight="1"
         android:ellipsize="marquee"
         android:gravity="start"
-        android:paddingStart="15dp"
         android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true" />
+        android:paddingStart="15dp"
+        android:singleLine="true"
+        android:textSize="18sp" />
 
     <net.steamcrafted.materialiconlib.MaterialIconView
         android:id="@+id/downloadtButton"

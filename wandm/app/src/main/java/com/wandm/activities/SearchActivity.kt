@@ -26,7 +26,9 @@ import com.wandm.speech.GoogleVoiceTypingDisabledException
 import com.wandm.speech.Speech
 import com.wandm.speech.SpeechDelegate
 import com.wandm.speech.SpeechRecognitionNotAvailable
+import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.item_album.view.*
 import org.jetbrains.anko.doAsync
 import java.util.*
 import kotlin.collections.ArrayList
@@ -57,6 +59,7 @@ class SearchActivity : BaseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         setupViews()
+        setupSize()
         setupSearchBar()
         setupSpeech()
     }
@@ -354,5 +357,13 @@ class SearchActivity : BaseActivity() {
         val intent = Intent(instance, NowPlayingActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
+    }
+
+    private fun setupSize() {
+        val textSize = Utils.getTextSize()
+        textMessage.textSize = textSize.toFloat()
+        textListening.textSize = textSize.toFloat()
+        labelSearchOffline.textSize = textSize.toFloat()
+        labelSearchOnline.textSize = textSize.toFloat()
     }
 }

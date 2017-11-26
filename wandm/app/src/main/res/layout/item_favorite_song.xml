@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:gravity="start"
+            android:textSize="18sp"
             android:marqueeRepeatLimit="marquee_forever"
             android:singleLine="true" />
 

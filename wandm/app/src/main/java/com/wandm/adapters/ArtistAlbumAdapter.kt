@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.models.Album
 import com.wandm.utils.Utils
+import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_artist_album.view.*
 
 
@@ -33,6 +34,7 @@ class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerVie
 
         @SuppressLint("SetTextI18n")
         fun bind(album: Album, position: Int) {
+            setupSize(itemView)
             mAlbum = album
 
             Picasso.with(itemView.context)
@@ -53,5 +55,11 @@ class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerVie
                     getQuantityString(R.plurals.song_count, album.songCount, album.songCount)
 
         }
+    }
+
+    private fun setupSize(itemView: View) {
+        val textSize = Utils.getTextSize()
+        itemView.albumNameTextView.textSize = textSize.toFloat()
+        itemView.detailAlbumTextView.textSize = (textSize - 4).toFloat()
     }
 }

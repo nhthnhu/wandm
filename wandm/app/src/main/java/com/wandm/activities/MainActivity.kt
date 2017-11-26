@@ -41,6 +41,7 @@ class MainActivity : BaseActivity() {
     private var isSetup = false
     private var itemPagerPosition = 0
     private var colorResId = R.color.color_dark_theme
+    private var textSize = 18
 
     // Listening events of SlidingPaneLayout
     private val panelListener = object : SlidingPaneLayout.PanelSlideListener {
@@ -128,7 +129,7 @@ class MainActivity : BaseActivity() {
      * Used to setup toolbar
      */
     private fun setupToolbar() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbarSettings)
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(true)
@@ -214,7 +215,9 @@ class MainActivity : BaseActivity() {
 
     private fun setTheme() {
         val isLightTheme = PreferencesUtils.getLightTheme()
-        Utils.applyLightTheme(this, isLightTheme)
+        textSize = Utils.getTextSize()
+
+        Utils.applyLightTheme(this)
 
         colorResId = R.color.color_dark_theme
         if (isLightTheme) {
@@ -223,7 +226,9 @@ class MainActivity : BaseActivity() {
 
         settingsButton.setColor(resources.getColor(colorResId))
         settingsTextView.textColor = resources.getColor(colorResId)
+        settingsTextView.textSize = textSize.toFloat()
         songTitleTextView.textColor = resources.getColor(colorResId)
+        songTitleTextView.textSize = (textSize - 2).toFloat()
 
     }
 }

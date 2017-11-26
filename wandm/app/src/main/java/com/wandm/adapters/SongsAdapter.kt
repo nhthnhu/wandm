@@ -20,6 +20,7 @@ import com.wandm.models.song.Song
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
+import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 
 
@@ -63,6 +64,7 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
         var songItemView: View = itemView
 
         fun bind(song: Song) {
+            setupSize(itemView)
             var colorResId = R.color.color_dark_theme
             if (PreferencesUtils.getLightTheme())
                 colorResId = R.color.color_light_theme
@@ -124,5 +126,11 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
             }
         }
         return true
+    }
+
+    private fun setupSize(itemView: View) {
+        val textSize = Utils.getTextSize()
+        itemView.titleItemSongTextView.textSize = textSize.toFloat()
+        itemView.artistItemSongTextView.textSize = (textSize - 4).toFloat()
     }
 }

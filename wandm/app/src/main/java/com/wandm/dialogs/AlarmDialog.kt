@@ -17,6 +17,7 @@ import org.jetbrains.anko.textColor
 class AlarmDialog : BaseDialog(), View.OnClickListener {
 
     private var colorResId = R.color.color_dark_theme
+    private var textSize = 18
 
     companion object {
         private val TAG = "AlarmDialog"
@@ -117,14 +118,18 @@ class AlarmDialog : BaseDialog(), View.OnClickListener {
 
     private fun setupTheme() {
         val isLightTheme = PreferencesUtils.getLightTheme()
-        Utils.applyLightTheme(activity, isLightTheme)
+        Utils.applyLightTheme(activity)
 
+        textSize = Utils.getTextSize()
         if (isLightTheme) {
             colorResId = R.color.color_light_theme
         }
 
         minuteTextView.textColor = resources.getColor(colorResId)
         secondTextView.textColor = resources.getColor(colorResId)
+
+        minuteTextView.textSize = (textSize + 6).toFloat()
+        secondTextView.textSize = (textSize + 6).toFloat()
 
         minuteNumberPicker.setBackgroundColor(resources.getColor(colorResId))
         secondNumberPicker.setBackgroundColor(resources.getColor(colorResId))

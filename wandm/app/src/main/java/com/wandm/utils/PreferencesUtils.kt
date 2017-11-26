@@ -24,6 +24,16 @@ object PreferencesUtils {
     private val ARTIST_IMAGE_MOBILE = "artist_image_mobile"
 
     val PREFS_THEME = "key_preference_theme"
+    val PREFS_SMALL_TEXT = "key_preference_small_text"
+    val PREFS_MEDIUM_TEXT = "key_preference_medium_text"
+    val PREFS_LARGE_TEXT = "key_preference_large_text"
+
+    val LIGHT_THEME_SMALL = "light_theme_small"
+    val LIGHT_THEME_MEDIUM = "light_theme_medium"
+    val LIGHT_THEME_LARGE = "light_theme_large"
+    val DARK_THEME_SMALL = "dark_theme_small"
+    val DARK_THEME_MEDIUM = "dark_theme_medium"
+    val DARK_THEME_LARGE = "dark_theme_large"
 
     private val CURRENT_CATEGORY_POSITION = "current_category_position"
 
@@ -160,6 +170,18 @@ object PreferencesUtils {
 
     fun getCurrentCategory(): Int {
         return mPreferences.getInt(CURRENT_CATEGORY_POSITION, 0)
+    }
+
+    fun getSmallText(): Boolean {
+        return mPreferences.getBoolean(PREFS_SMALL_TEXT, false)
+    }
+
+    fun getMediumText(): Boolean {
+        return mPreferences.getBoolean(PREFS_MEDIUM_TEXT, false)
+    }
+
+    fun getLargeText(): Boolean {
+        return mPreferences.getBoolean(PREFS_LARGE_TEXT, false)
     }
 
 }

@@ -59,6 +59,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
     private var colorResId = R.color.color_dark_theme
     private var colorResIdPressed = R.color.color_light_theme
+    private var textSize = 18
 
     companion object {
         lateinit var instance: NowPlayingActivity
@@ -519,7 +520,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
     private fun setTheme() {
         val isLightTheme = PreferencesUtils.getLightTheme()
-        Utils.applyLightTheme(this, isLightTheme)
+        Utils.applyLightTheme(this)
+        textSize = Utils.getTextSize()
 
         if (isLightTheme) {
             colorResId = R.color.color_light_theme
@@ -527,9 +529,13 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         }
 
         titleSongTextView.textColor = resources.getColor(colorResId)
+        titleSongTextView.textSize = textSize.toFloat()
         artistSongTextView.textColor = resources.getColor(colorResId)
+        artistSongTextView.textSize = (textSize - 2).toFloat()
         songElapsedTime.textColor = resources.getColor(colorResId)
+        songElapsedTime.textSize = (textSize - 2).toFloat()
         songDuration.textColor = resources.getColor(colorResId)
+        songDuration.textSize = (textSize - 2).toFloat()
         songProgress.getProgressDrawable().setColorFilter(resources.getColor(colorResId)
                 , PorterDuff.Mode.SRC_IN)
         songProgress.getThumb().setColorFilter(resources.getColor(colorResId)

@@ -15,9 +15,11 @@ import com.wandm.adapters.SongsAdapter
 import com.wandm.loaders.ArtistAlbumLoader
 import com.wandm.loaders.ArtistSongLoader
 import com.wandm.services.MusicPlayer
+import com.wandm.utils.Utils
 import com.wandm.views.CustomLayoutManager
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_artist_detail.*
+import kotlinx.android.synthetic.main.item_album.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -148,5 +150,4 @@ class ArtistDetailDialog() : BaseDialog() {
     private fun setItemDecoration() {
         songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
     }
-
 }

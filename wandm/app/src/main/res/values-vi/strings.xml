@@ -47,6 +47,11 @@
     <string name="theme">Theme</string>
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
+    <string name="general_setting">Cài đặt chung</string>
+    <string name="text_size">Cỡ chữ</string>
+    <string name="small_text">Nhỏ</string>
+    <string name="medium_text">Vừa</string>
+    <string name="large_text">Lớn</string>
 
     <string name="add_to_favorites">Thêm vào yêu thích</string>
     <string name="add_to_playlist">Thêm vào playlist</string>

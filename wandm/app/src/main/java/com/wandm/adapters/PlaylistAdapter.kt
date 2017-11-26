@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wandm.R
+import com.wandm.utils.Utils
+import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_playlist.view.*
 
 class PlaylistAdapter(val listPlaylists: ArrayList<String>,
@@ -32,7 +34,13 @@ class PlaylistAdapter(val listPlaylists: ArrayList<String>,
 
     inner class PlaylistHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(name: String) {
+            setupSize(itemView)
             itemView.playlistTextView.text = name
         }
+    }
+
+    private fun setupSize(itemView: View) {
+        val textSize = Utils.getTextSize()
+        itemView.playlistTextView.textSize = textSize.toFloat()
     }
 }

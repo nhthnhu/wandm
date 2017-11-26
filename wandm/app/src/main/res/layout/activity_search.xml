@@ -94,7 +94,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/offline_searching"
                     android:textColor="@color/color_white"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/resultsOfflineView"
@@ -131,7 +131,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/online_searching"
                     android:textColor="@color/color_white"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/resultsOnlineView"

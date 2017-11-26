@@ -9,6 +9,8 @@ import com.wandm.models.Artist
 import com.wandm.models.menu.ListMenus
 import com.wandm.models.menu.Menu
 import com.wandm.utils.PreferencesUtils
+import com.wandm.utils.Utils
+import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_menu.view.*
 
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
@@ -33,6 +35,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
 
     inner class MenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(data: Menu, position: Int) {
+            setupSize(itemView)
             itemView.menuImageView.setIcon(data.icon)
             itemView.contentMenuTextView.text = data.content
 
@@ -52,6 +55,11 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
                 onItemClickListener?.invoke(position)
             }
         }
+    }
+
+    private fun setupSize(itemView: View) {
+        val textSize = Utils.getTextSize()
+        itemView.contentMenuTextView.textSize = textSize.toFloat()
     }
 
 }

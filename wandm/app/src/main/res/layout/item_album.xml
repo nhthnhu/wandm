@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/numbersongs"
@@ -50,7 +50,7 @@
                 android:ellipsize="end"
                 android:paddingTop="3dp"
                 android:singleLine="true"
-                android:textSize="13sp" />
+                android:textSize="14sp" />
 
 
         </LinearLayout>

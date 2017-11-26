@@ -12,6 +12,7 @@ import com.wandm.loaders.ArtistAlbumLoader
 import com.wandm.models.Artist
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
+import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_artist.view.*
 
 class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>(),
@@ -40,6 +41,7 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
     inner class ArtistsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(artist: Artist, pos: Int) {
+            setupSize(itemView)
             itemView.artistName.text = artist.name
 
             val albumString = itemView?.resources?.getQuantityString(R.plurals.album_count,
@@ -67,5 +69,11 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
                 onItemClickListener?.invoke(artist, pos)
             }
         }
+    }
+
+    private fun setupSize(itemView: View) {
+        val textSize = Utils.getTextSize()
+        itemView.artistName.textSize = textSize.toFloat()
+        itemView.albumSongsSount.textSize = (textSize - 4).toFloat()
     }
 }

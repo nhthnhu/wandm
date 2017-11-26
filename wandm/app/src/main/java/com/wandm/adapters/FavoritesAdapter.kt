@@ -17,6 +17,7 @@ import com.wandm.models.song.Song
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
+import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_favorite_song.view.*
 
 class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<FavoritesAdapter.FavoriteHolder>(), BubbleTextGetter {
@@ -63,11 +64,11 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
     }
 
 
-    class FavoriteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class FavoriteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var songItemView: View = itemView
 
         fun bind(song: Song) {
-
+            setupSize(itemView)
             ImageLoader.getInstance().displayImage(
                     Utils.getAlbumArtUri(song.albumId).toString(),
                     itemView.albumArt, DisplayImageOptions.Builder().cacheInMemory(true).
@@ -93,6 +94,12 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
             return true
         }
         return false
+    }
+
+    private fun setupSize(itemView: View) {
+        val textSize = Utils.getTextSize()
+        itemView.titleItemSongTextView.textSize = textSize.toFloat()
+        itemView.artistItemSongTextView.textSize = (textSize - 4).toFloat()
     }
 
 }

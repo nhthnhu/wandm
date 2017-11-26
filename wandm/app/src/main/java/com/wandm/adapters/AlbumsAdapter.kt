@@ -47,6 +47,8 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
     inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(album: Album, pos: Int) {
+            setupSize(itemView)
+
             val countStr = itemView?.context?.resources?.
                     getQuantityString(R.plurals.song_count, album.songCount, album.songCount)
 
@@ -71,6 +73,12 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
                 onItemClickListener?.invoke(album, pos)
             }
         }
+    }
+
+    private fun setupSize(itemView: View) {
+        val textSize = Utils.getTextSize()
+        itemView.albumName.textSize = textSize.toFloat()
+        itemView.numbersongs.textSize = (textSize - 2).toFloat()
     }
 
 }
