@@ -95,11 +95,6 @@ class MainActivity : BaseActivity() {
         else setupUI()
     }
 
-    override fun onStop() {
-        super.onStop()
-        PreferencesUtils.setCurrentCategory(CategoryFragment.instance?.listViewPagers?.currentItem!!)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)

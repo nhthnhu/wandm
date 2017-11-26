@@ -29,8 +29,6 @@ import com.wandm.utils.PreferencesUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import com.wandm.activities.MainActivity
-import android.content.Intent
 
 
 class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -302,7 +300,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
     }
 
     private fun getNotification(playbackStatus: PlaybackStatus) {
-        var notificationAction = R.drawable.ic_action_pause_dark
+        val notificationAction: Int
 
         if (playbackStatus == PlaybackStatus.PLAYING) {
             notificationAction = R.drawable.ic_action_pause_dark

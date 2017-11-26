@@ -1,12 +1,9 @@
 package com.wandm.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.view.ViewPager
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
-import com.wandm.App
 import com.wandm.R
 import com.wandm.utils.PreferencesUtils
 import kotlinx.android.synthetic.main.fragment_category.*
@@ -53,4 +50,11 @@ class CategoryFragment : BaseFragment() {
         listViewPagers.currentItem = PreferencesUtils.getCurrentCategory()
     }
 
+    override fun onStop() {
+        super.onStop()
+        val currentItem = listViewPagers?.currentItem
+        if (currentItem != null)
+            PreferencesUtils.setCurrentCategory(currentItem)
+        else PreferencesUtils.setCurrentCategory(0)
+    }
 }
