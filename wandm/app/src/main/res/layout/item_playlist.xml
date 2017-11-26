@@ -10,6 +10,10 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/playlistTextView"
         style="@style/WMTextStyle"
+        android:ellipsize="marquee"
+        android:gravity="start"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />

@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="12dp"
     android:background="?android:attr/selectableItemBackground"
-    android:padding="8dp"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    android:padding="8dp">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/albumImageView"
@@ -20,7 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:ellipsize="marquee"
         android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:textSize="18sp" />
 
     <android.support.v7.widget.AppCompatTextView
@@ -28,7 +31,10 @@
         style="@style/WMTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ellipsize="marquee"
         android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:textSize="14sp" />
 
 </LinearLayout>

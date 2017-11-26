@@ -36,6 +36,7 @@ class PlaylistAdapter(val listPlaylists: ArrayList<String>,
         fun bind(name: String) {
             setupSize(itemView)
             itemView.playlistTextView.text = name
+            itemView.playlistTextView.isSelected = true
         }
     }
 

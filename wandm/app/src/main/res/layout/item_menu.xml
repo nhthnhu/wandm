@@ -20,6 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:gravity="start"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:padding="4dp"
         android:textSize="18sp" />
 

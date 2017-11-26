@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@+id/artistImage"
-            android:layout_toStartOf="@+id/currentlyPlayingIndicator"
             android:orientation="vertical"
             android:paddingStart="15dp"
             android:paddingTop="5dp">
@@ -39,8 +38,9 @@
                 style="@style/WMTextStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:gravity="start"
+                android:marqueeRepeatLimit="marquee_forever"
                 android:textSize="18sp" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -48,7 +48,9 @@
                 style="@style/WMTextStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
+                android:ellipsize="marquee"
+                android:gravity="start"
+                android:marqueeRepeatLimit="marquee_forever"
                 android:paddingTop="3dp"
                 android:singleLine="true"
                 android:textSize="14sp" />

@@ -69,6 +69,9 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
                         }
                     })
 
+            itemView.albumName.isSelected = true
+            itemView.numbersongs.isSelected = true
+
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(album, pos)
             }

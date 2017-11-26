@@ -54,6 +54,9 @@ class ArtistAlbumAdapter(private val listAlbums: ArrayList<Album>) : RecyclerVie
             itemView.detailAlbumTextView.text = itemView?.resources?.
                     getQuantityString(R.plurals.song_count, album.songCount, album.songCount)
 
+            itemView.albumNameTextView.isSelected = true
+            itemView.detailAlbumTextView.isSelected = true
+
         }
     }
 
