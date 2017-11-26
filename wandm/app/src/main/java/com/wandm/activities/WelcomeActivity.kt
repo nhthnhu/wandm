@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.utils.PreferencesUtils
+import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_welcome.*
 import org.jetbrains.anko.textColor
 
@@ -16,7 +16,7 @@ class WelcomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        blurringView.blurConfig(AppConfig.getBlurViewConfig())
+        blurringView.blurConfig(Utils.getBlurViewConfig())
     }
 
     override fun initView(savedInstanceState: Bundle?) {

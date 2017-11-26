@@ -1,6 +1,6 @@
 package com.wandm.speech;
 
-import com.wandm.AppConfig;
+import com.wandm.utils.Utils;
 
 /**
  * Android Speech library logger.
@@ -29,7 +29,7 @@ public class Logger {
         void info(String tag, String message);
     }
 
-    private LogLevel mLogLevel = AppConfig.INSTANCE.getDEBUG() ? LogLevel.DEBUG : LogLevel.OFF;
+    private LogLevel mLogLevel = Utils.INSTANCE.getDEBUG() ? LogLevel.DEBUG : LogLevel.OFF;
 
     private LoggerDelegate mDelegate = new DefaultLoggerDelegate();
 

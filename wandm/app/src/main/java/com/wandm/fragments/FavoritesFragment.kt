@@ -2,26 +2,17 @@ package com.wandm.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import com.wandm.App
 import com.wandm.R
 import com.wandm.adapters.FavoritesAdapter
-import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
-import com.wandm.database.SongsBaseHandler
-import com.wandm.database.SongsBaseHelper
-import com.wandm.events.MessageEvent
-import com.wandm.events.MusicEvent
+import com.wandm.database.MusicDBHandler
 import com.wandm.models.song.Song
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
 import com.wandm.views.DividerItemDecoration
-import kotlinx.android.synthetic.main.content_now_playing.*
 import kotlinx.android.synthetic.main.fragment_songs.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -40,9 +31,9 @@ class FavoritesFragment : BaseFragment() {
         songsRecyclerView.layoutManager = LinearLayoutManager(activity)
         songsFastScroller.setRecyclerView(songsRecyclerView)
 
-        SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)
-                ?.setAddSongEvent(object : SongsBaseHandler.AddSongEvent {
-                    override fun onAddSong() {
+        MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)
+                ?.setInsertEvent(object : MusicDBHandler.InsertEvent {
+                    override fun onInsert(tableName: String) {
                         updateList()
                     }
                 })
@@ -58,7 +49,7 @@ class FavoritesFragment : BaseFragment() {
 
     private fun updateList() {
         doAsync {
-            mList = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.getList()
+            mList = MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.getFavorites()
             if (mList != null) {
                 mAdapter = FavoritesAdapter(mList!!)
                 uiThread {

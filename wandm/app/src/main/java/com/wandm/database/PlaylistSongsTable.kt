@@ -1,7 +1,7 @@
 package com.wandm.database
 
-object FavoritesTable {
-    val TABLE_NAME = "Favorites"
+object PlaylistSongsTable {
+    val TABLE_NAME = "SongsPlayList"
 
     object Cols {
         val ALBUM_ID = "albumId"
@@ -13,5 +13,6 @@ object FavoritesTable {
         val TITLE = "title"
         val TRACK_NUMBER = "trackNumber"
         val DATA = "data"
+        val PLAYLIST_ID = "playlist_id"
     }
 }

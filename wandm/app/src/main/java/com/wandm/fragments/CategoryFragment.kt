@@ -1,13 +1,11 @@
 package com.wandm.fragments
 
 import android.os.Bundle
-import com.arlib.floatingsearchview.util.Util
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import com.wandm.R
 import com.wandm.utils.PreferencesUtils
-import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.fragment_category.*
 
 class CategoryFragment : BaseFragment() {
@@ -33,12 +31,15 @@ class CategoryFragment : BaseFragment() {
                 SongsFragment::class.java))
         pagerItems?.add(FragmentPagerItem.of(resources.getString(R.string.favorites),
                 FavoritesFragment::class.java))
+        pagerItems?.add(FragmentPagerItem.of(resources.getString(R.string.playlists),
+                PlaylistsFragment::class.java))
         pagerItems?.add(FragmentPagerItem.of(resources.getString(R.string.artists),
                 ArtistsFragment::class.java))
         pagerItems?.add(FragmentPagerItem.of(resources.getString(R.string.albums),
                 AlbumsFragment::class.java))
         pagerItems?.add(FragmentPagerItem.of(resources.getString(R.string.folders),
                 FoldersFragment::class.java))
+
 
         val fragmentAdapter = FragmentPagerItemAdapter(fragmentManager, pagerItems)
         listViewPagers.adapter = fragmentAdapter

@@ -1,17 +1,23 @@
 package com.wandm.adapters
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wandm.R
-import com.wandm.utils.Utils
-import kotlinx.android.synthetic.main.item_album.view.*
+import com.wandm.models.playlist.Playlist
+import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_playlist.view.*
 
-class PlaylistAdapter(val listPlaylists: ArrayList<String>,
-                      val listener: (String) -> Unit) : RecyclerView.Adapter<PlaylistAdapter.PlaylistHolder>() {
+class PlaylistAdapter(var listPlaylists: ArrayList<Playlist>,
+                      val listener: (Playlist, Int) -> Unit) : RecyclerView.Adapter<PlaylistAdapter.PlaylistHolder>(), BubbleTextGetter {
+    override fun getTextToShowInBubble(pos: Int): String {
+        if (listPlaylists.size > 0) {
+            return listPlaylists[pos].name[0].toString()
+        }
+
+        return ""
+    }
 
     private val TAG = "PlaylistAdapter"
 
@@ -23,7 +29,7 @@ class PlaylistAdapter(val listPlaylists: ArrayList<String>,
     override fun onBindViewHolder(holder: PlaylistHolder?, position: Int) {
         holder?.bind(listPlaylists.get(position))
         holder?.itemView?.setOnClickListener {
-            listener(listPlaylists.get(position))
+            listener(listPlaylists.get(position), position)
         }
     }
 
@@ -32,15 +38,11 @@ class PlaylistAdapter(val listPlaylists: ArrayList<String>,
     }
 
 
-    inner class PlaylistHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(name: String) {
-            setupSize(itemView)
-            itemView.playlistTextView.text = name
+    class PlaylistHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(playlist: Playlist) {
+            itemView.playlistNameView.text = playlist.name
+            itemView.playlistSongCount.text = itemView?.context?.resources?.
+                    getQuantityString(R.plurals.song_count, playlist.songCount, playlist.songCount)
         }
-    }
-
-    private fun setupSize(itemView: View) {
-        val textSize = Utils.getTextSize()
-        itemView.playlistTextView.textSize = textSize.toFloat()
     }
 }

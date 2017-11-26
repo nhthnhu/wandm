@@ -15,12 +15,11 @@ import com.wandm.R
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.data.CurrentPlaylistManager.position
 import com.wandm.database.FavoritesTable
-import com.wandm.database.SongsBaseHandler
+import com.wandm.database.MusicDBHandler
 import com.wandm.models.song.Song
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
-import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 
 
@@ -34,7 +33,13 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
         val ACTION_ADD_PLAYLIST = "action_add_playlist"
     }
 
-    override fun getTextToShowInBubble(pos: Int) = listSongs[pos].title[0].toString()
+    override fun getTextToShowInBubble(pos: Int): String {
+        if (listSongs.size > 0) {
+            return listSongs[pos].title[0].toString()
+        }
+
+        return ""
+    }
 
     override fun getItemCount(): Int {
         return listSongs.size
@@ -117,7 +122,7 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
         when (it?.itemId) {
             R.id.addFavoritesItemMenu -> {
                 listener(listSongs[pos], pos, ACTION_ADD_FAVORITES)
-                SongsBaseHandler.getInstance(context, FavoritesTable.TABLE_NAME)?.addSong(listSongs[pos])
+                MusicDBHandler.getInstance(context, FavoritesTable.TABLE_NAME)?.insert(listSongs[pos])
                 Toast.makeText(context, context.getString(R.string.added_to_favorites), Toast.LENGTH_SHORT).show()
             }
 

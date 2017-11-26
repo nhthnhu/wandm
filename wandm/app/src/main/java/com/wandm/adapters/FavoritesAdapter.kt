@@ -12,12 +12,11 @@ import com.wandm.R
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
-import com.wandm.database.SongsBaseHandler
+import com.wandm.database.MusicDBHandler
 import com.wandm.models.song.Song
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
-import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_favorite_song.view.*
 
 class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<FavoritesAdapter.FavoriteHolder>(), BubbleTextGetter {
@@ -85,8 +84,8 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
     }
 
     private fun removeSong(position: Int): Boolean {
-        val isSuccessfull = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
-                removeSong(listSongs[position])!!
+        val isSuccessfull = MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
+                remove(listSongs[position])!!
 
         if (isSuccessfull) {
             listSongs.remove(listSongs[position])

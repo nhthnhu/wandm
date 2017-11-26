@@ -7,16 +7,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.wandm.App
 import com.wandm.R
-import com.wandm.activities.MainActivity
 import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.SongsAdapter
-import com.wandm.database.SongsBaseHandler
 import com.wandm.models.MusicFolder
 import com.wandm.services.MusicPlayer
 import com.wandm.views.DividerItemDecoration
-import kotlinx.android.synthetic.main.fragment_songs.*
+import kotlinx.android.synthetic.main.dialog_song_folder_detail.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -42,7 +39,7 @@ class SongFolderDetailDialog : BaseDialog() {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         musicFolder = arguments.getSerializable(ARG_FILE) as MusicFolder
-        val view = inflater?.inflate(R.layout.fragment_songs, container, false)
+        val view = inflater?.inflate(R.layout.dialog_song_folder_detail, container, false)
         return view
     }
 
@@ -72,11 +69,7 @@ class SongFolderDetailDialog : BaseDialog() {
             songsAdapter = SongsAdapter(songs, true) { song, position, action ->
                 when (action) {
                     SongsAdapter.ACTION_ADD_PLAYLIST -> {
-                        val fragmentManager = MainActivity.instance.supportFragmentManager
-                        val dialogFragment = PlaylistDialog.newInstance { title ->
-                            SongsBaseHandler.getInstance(App.instance, title)?.addSong(song)
-                        }
-                        dialogFragment.show(fragmentManager, "PlaylistDialog")
+
                     }
 
                     SongsAdapter.ACTION_PLAY -> {

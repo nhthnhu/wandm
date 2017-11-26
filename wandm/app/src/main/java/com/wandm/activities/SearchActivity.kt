@@ -13,7 +13,7 @@ import com.wandm.R
 import com.wandm.adapters.OnlineSongsAdapter
 import com.wandm.adapters.SongsAdapter
 import com.wandm.data.CurrentPlaylistManager
-import com.wandm.data.SearchDataHelper
+import com.wandm.data.SearchHelper
 import com.wandm.loaders.SongLoader
 import com.wandm.models.RequestListener
 import com.wandm.models.SongSearchSuggestion
@@ -28,7 +28,6 @@ import com.wandm.speech.SpeechDelegate
 import com.wandm.speech.SpeechRecognitionNotAvailable
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.item_album.view.*
 import org.jetbrains.anko.doAsync
 import java.util.*
 import kotlin.collections.ArrayList
@@ -88,6 +87,12 @@ class SearchActivity : BaseActivity() {
 
         resultsOfflineView.adapter = songsAdapter
         resultsOnlineView.adapter = onlineSongsAdapter
+
+        waveformView.setOnClickListener {
+            if (Speech.getInstance().isListening) {
+                Speech.getInstance().stopListening()
+            }
+        }
     }
 
     private fun setupSearchBar() {
@@ -96,11 +101,11 @@ class SearchActivity : BaseActivity() {
                 searchBar.clearSuggestions()
             } else {
                 searchBar.showProgress()
-                SearchDataHelper.findSuggestions(this,
+                SearchHelper.findSuggestions(this,
                         newQuery,
                         5,
                         FIND_SUGGESTION_SIMULATED_DELAY,
-                        object : SearchDataHelper.OnFindSuggestionsListener {
+                        object : SearchHelper.OnFindSuggestionsListener {
 
                             override fun onResults(results: List<SongSearchSuggestion>) {
                                 searchBar.swapSuggestions(results)
@@ -116,7 +121,7 @@ class SearchActivity : BaseActivity() {
             override fun onSuggestionClicked(searchSuggestion: SearchSuggestion) {
                 Log.d(TAG, "onSuggestionClicked()")
 
-                SearchDataHelper.addHistory(searchSuggestion.body)
+                SearchHelper.addHistory(searchSuggestion.body)
                 searchBar.clearSearchFocus()
 
                 searchOffline(searchSuggestion.body)
@@ -126,7 +131,7 @@ class SearchActivity : BaseActivity() {
             override fun onSearchAction(query: String) {
                 Log.d(TAG, "onSearchAction()")
 
-                SearchDataHelper.addHistory(query)
+                SearchHelper.addHistory(query)
 
                 searchOffline(query)
                 searchOnline(query)
@@ -137,7 +142,7 @@ class SearchActivity : BaseActivity() {
             override fun onFocus() {
                 Log.d(TAG, "onFocus()")
 
-                searchBar.swapSuggestions(SearchDataHelper.getHistorySuggestions())
+                searchBar.swapSuggestions(SearchHelper.getHistorySuggestions())
             }
 
             override fun onFocusCleared() {

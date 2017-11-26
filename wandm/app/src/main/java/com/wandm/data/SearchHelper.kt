@@ -6,7 +6,7 @@ import com.wandm.models.SongSearchSuggestion
 import com.wandm.models.song.Song
 import java.util.*
 
-object SearchDataHelper {
+object SearchHelper {
 
     private var songSuggestions = ArrayList<SongSearchSuggestion>()
     private var historySuggestions = ArrayList<SongSearchSuggestion>()

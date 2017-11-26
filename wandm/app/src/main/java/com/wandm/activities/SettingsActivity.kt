@@ -8,17 +8,13 @@ import android.preference.PreferenceActivity
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.Toolbar
-import android.text.BoringLayout
-import android.util.Log
 import android.view.WindowManager
 import com.ms_square.etsyblur.BlurringView
-import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.PreferencesUtils.PREFS_LARGE_TEXT
 import com.wandm.utils.PreferencesUtils.PREFS_MEDIUM_TEXT
 import com.wandm.utils.PreferencesUtils.PREFS_SMALL_TEXT
-
 import com.wandm.utils.PreferencesUtils.PREFS_THEME
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -41,7 +37,7 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
         setSupportActionBar(toolbarSettings)
         addPreferencesFromResource(R.xml.preferences)
         setupWindows()
-        blurringView.blurConfig(AppConfig.getBlurViewConfig())
+        blurringView.blurConfig(Utils.getBlurViewConfig())
         setBlurBackground(background, blurringView)
         setupViews()
     }

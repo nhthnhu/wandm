@@ -13,7 +13,6 @@ import android.view.MenuItem
 import android.view.View
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.adapters.MenuAdapter
 import com.wandm.data.CurrentPlaylistManager
@@ -76,7 +75,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        blurringView.blurConfig(AppConfig.getBlurViewConfig())
+        blurringView.blurConfig(Utils.getBlurViewConfig())
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -84,7 +83,6 @@ class MainActivity : BaseActivity() {
         setupToolbar()
         Speech.init(this)
         addFragment(QuickControlFragment(), R.id.quick_control_container, "QuickControlFragment")
-
     }
 
     override fun onResume() {

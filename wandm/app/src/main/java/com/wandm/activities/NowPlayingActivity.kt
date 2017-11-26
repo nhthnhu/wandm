@@ -12,14 +12,12 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import com.wandm.App
-import com.wandm.AppConfig
 import com.wandm.R
 import com.wandm.adapters.SongsAdapter
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
-import com.wandm.database.SongsBaseHandler
+import com.wandm.database.MusicDBHandler
 import com.wandm.dialogs.AlarmDialog
-import com.wandm.dialogs.PlaylistDialog
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.DownloadService
@@ -142,7 +140,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     override fun initView(savedInstanceState: Bundle?) {
         instance = this
         setupToolbar()
-        songBlurringView.blurConfig(AppConfig.getBlurViewConfig())
+        songBlurringView.blurConfig(Utils.getBlurViewConfig())
         setTheme()
 
         EventBus.getDefault().register(this)
@@ -353,12 +351,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             }
 
             R.id.songMenuButton -> {
-                val fragmentManager = supportFragmentManager
-                val dialogFragment = PlaylistDialog.newInstance { title ->
-                    SongsBaseHandler.getInstance(App.instance, title)?.
-                            addSong(CurrentPlaylistManager.currentSong!!)
-                }
-                dialogFragment.show(fragmentManager, "PlaylistDialog")
+
             }
 
             R.id.setAlarmButton -> {
@@ -432,8 +425,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setFavorite(init: Boolean) {
-        val song = SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
-                getSong(CurrentPlaylistManager.currentSong!!.data)
+        val song = MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
+                getFavoriteSong(CurrentPlaylistManager.currentSong!!.data)
         isFavorite = song != null
 
         if (init) {
@@ -449,14 +442,14 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 isFavorite = false
                 favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART_OUTLINE)
                 favoriteButton.setColorResource(colorResId)
-                SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
-                        removeSong(CurrentPlaylistManager.currentSong!!)
+                MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
+                        remove(CurrentPlaylistManager.currentSong!!)
             } else {
                 isFavorite = true
                 favoriteButton.setIcon(MaterialDrawableBuilder.IconValue.HEART)
                 favoriteButton.setColorResource(R.color.color_red)
-                SongsBaseHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
-                        addSong(CurrentPlaylistManager.currentSong!!)
+                MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.
+                        insert(CurrentPlaylistManager.currentSong!!)
             }
         }
     }
