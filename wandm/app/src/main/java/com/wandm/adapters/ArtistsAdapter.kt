@@ -65,6 +65,9 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
                         }
                     })
 
+            itemView.artistName.isSelected = true
+            itemView.albumSongsSount.isSelected = true
+
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(artist, pos)
             }

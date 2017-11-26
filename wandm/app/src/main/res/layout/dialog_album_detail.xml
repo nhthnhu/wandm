@@ -30,6 +30,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
                 android:gravity="center"
                 android:textSize="18sp" />
 
@@ -38,6 +41,9 @@
                 style="@style/WMTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
                 android:gravity="center"
                 android:textSize="14sp" />
 
