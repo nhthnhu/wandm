@@ -163,7 +163,7 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
         artistSongTextView.textColor = activity.resources.getColor(colorResId)
 
         titleSongTextView.textSize = (textSize - 2).toFloat()
-        artistSongTextView.textSize = (textSize - 2).toFloat()
+        artistSongTextView.textSize = (textSize - 4).toFloat()
 
         preButton.setColor(activity.resources.getColor(colorResId))
         nextButton.setColor(activity.resources.getColor(colorResId))

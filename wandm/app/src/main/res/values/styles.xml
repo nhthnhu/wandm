@@ -11,6 +11,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="WMTextStyle">
+        <item name="android:textSize">20sp</item>
         <item name="android:shadowDx">2</item>
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">2</item>
@@ -45,60 +46,6 @@
 
     <style name="DarkTheme" parent="Theme.AppCompat">
         <item name="android:textColor">@color/color_dark_theme</item>
-        <item name="colorControlNormal">@color/color_dark_theme</item>
-        <item name="android:switchTextAppearance">@style/SwitchTextAppearanceDark</item>
-        <item name="colorAccent">@color/color_dark_theme</item>
-        <item name="colorPrimaryDark">@color/color_dark_theme</item>
-    </style>
-
-    <style name="LightThemeSmall" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">@color/color_light_theme</item>
-        <item name="android:textSize">14sp</item>
-        <item name="colorControlNormal">@color/color_light_theme</item>
-        <item name="android:switchTextAppearance">@style/SwitchTextAppearanceLight</item>
-        <item name="colorAccent">@color/color_light_theme</item>
-        <item name="colorPrimaryDark">@color/color_light_theme</item>
-    </style>
-
-    <style name="LightThemeMedium" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">@color/color_light_theme</item>
-        <item name="android:textSize">18sp</item>
-        <item name="colorControlNormal">@color/color_light_theme</item>
-        <item name="android:switchTextAppearance">@style/SwitchTextAppearanceLight</item>
-        <item name="colorAccent">@color/color_light_theme</item>
-        <item name="colorPrimaryDark">@color/color_light_theme</item>
-    </style>
-
-    <style name="LightThemeLarge" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">@color/color_light_theme</item>
-        <item name="android:textSize">22sp</item>
-        <item name="colorControlNormal">@color/color_light_theme</item>
-        <item name="android:switchTextAppearance">@style/SwitchTextAppearanceLight</item>
-        <item name="colorAccent">@color/color_light_theme</item>
-        <item name="colorPrimaryDark">@color/color_light_theme</item>
-    </style>
-
-    <style name="DarkThemeSmall" parent="Theme.AppCompat">
-        <item name="android:textColor">@color/color_dark_theme</item>
-        <item name="android:textSize">14sp</item>
-        <item name="colorControlNormal">@color/color_dark_theme</item>
-        <item name="android:switchTextAppearance">@style/SwitchTextAppearanceDark</item>
-        <item name="colorAccent">@color/color_dark_theme</item>
-        <item name="colorPrimaryDark">@color/color_dark_theme</item>
-    </style>
-
-    <style name="DarkThemeMedium" parent="Theme.AppCompat">
-        <item name="android:textColor">@color/color_dark_theme</item>
-        <item name="colorControlNormal">@color/color_dark_theme</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:switchTextAppearance">@style/SwitchTextAppearanceDark</item>
-        <item name="colorAccent">@color/color_dark_theme</item>
-        <item name="colorPrimaryDark">@color/color_dark_theme</item>
-    </style>
-
-    <style name="DarkThemeLarge" parent="Theme.AppCompat">
-        <item name="android:textColor">@color/color_dark_theme</item>
-        <item name="android:textSize">22sp</item>
         <item name="colorControlNormal">@color/color_dark_theme</item>
         <item name="android:switchTextAppearance">@style/SwitchTextAppearanceDark</item>
         <item name="colorAccent">@color/color_dark_theme</item>
