@@ -37,11 +37,24 @@
             android:label="@string/settings"
             android:parentActivityName=".activities.MainActivity" />
 
-        <service android:name=".services.WMService" />
+        <service android:name=".services.WMService">
+            <intent-filter>
+                <action android:name="android.intent.action.HEADSET_PLUG" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </service>
 
         <service android:name=".services.DownloadService" />
 
         <activity android:name=".activities.SearchActivity" />
+
+
+        <receiver android:name=".services.WMReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.HEADSET_PLUG" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

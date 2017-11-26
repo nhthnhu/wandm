@@ -29,6 +29,7 @@ import com.wandm.utils.PreferencesUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import android.content.Intent
 
 
 class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -145,6 +146,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
     }
 
     override fun onAudioFocusChange(p0: Int) {
+        Log.d(TAG, p0.toString())
         when (p0) {
             AudioManager.AUDIOFOCUS_GAIN -> {
                 Log.d(TAG, "AUDIOFOCUS_GAIN")
@@ -181,6 +183,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
             }
         }
     }
+
 
     fun requestAudioFocus(): Boolean {
         val result = mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
