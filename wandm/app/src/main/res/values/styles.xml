@@ -40,16 +40,12 @@
         <item name="android:textColor">@color/color_light_theme</item>
         <item name="colorControlNormal">@color/color_light_theme</item>
         <item name="android:switchTextAppearance">@style/SwitchTextAppearanceLight</item>
-        <item name="colorAccent">@color/color_light_theme</item>
-        <item name="colorPrimaryDark">@color/color_light_theme</item>
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat">
         <item name="android:textColor">@color/color_dark_theme</item>
         <item name="colorControlNormal">@color/color_dark_theme</item>
         <item name="android:switchTextAppearance">@style/SwitchTextAppearanceDark</item>
-        <item name="colorAccent">@color/color_dark_theme</item>
-        <item name="colorPrimaryDark">@color/color_dark_theme</item>
     </style>
 
     <style name="SwitchTextAppearanceLight" parent="@android:style/TextAppearance.Holo.Medium">

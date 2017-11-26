@@ -14,20 +14,43 @@
         <CheckBoxPreference
             android:id="@+id/preference_small_text"
             android:defaultValue="false"
+            android:iconSpaceReserved="true"
             android:key="key_preference_small_text"
             android:title="@string/small_text" />
 
         <CheckBoxPreference
             android:id="@+id/preference_medium_text"
             android:defaultValue="true"
+            android:iconSpaceReserved="true"
             android:key="key_preference_medium_text"
             android:title="@string/medium_text" />
 
         <CheckBoxPreference
             android:id="@+id/preference_large_text"
             android:defaultValue="false"
+            android:iconSpaceReserved="true"
             android:key="key_preference_large_text"
             android:title="@string/large_text" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/information">
+
+        <Preference
+            android:iconSpaceReserved="true"
+            android:summary="@string/version_num"
+            android:textIsSelectable="false"
+            android:title="@string/version" />
+
+        <Preference
+            android:iconSpaceReserved="true"
+            android:textIsSelectable="false"
+            android:title="@string/report" />
+
+        <Preference
+            android:iconSpaceReserved="true"
+            android:textIsSelectable="false"
+            android:title="@string/rate" />
 
     </PreferenceCategory>
 

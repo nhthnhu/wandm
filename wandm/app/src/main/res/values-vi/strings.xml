@@ -21,6 +21,7 @@
     <string name="second">Giây</string>
     <string name="seconds">Giây</string>
     <string name="alarm_toast">Tắt nhạc sau %1$s %2$s</string>
+
     <style name="cancel_alarm">Đã huỷ hẹn giờ</style>
 
     <string name="speech">Speech</string>
@@ -52,6 +53,11 @@
     <string name="small_text">Nhỏ</string>
     <string name="medium_text">Vừa</string>
     <string name="large_text">Lớn</string>
+    <string name="information">Thông tin</string>
+    <string name="rate">Bình chọn cho We \u0026 Music</string>
+    <string name="version">Phiên bản</string>
+    <string name="version_num">1.1.0</string>
+    <string name="report">Góp ý \u0026 Phản hồi</string>
 
     <string name="add_to_favorites">Thêm vào yêu thích</string>
     <string name="add_to_playlist">Thêm vào playlist</string>

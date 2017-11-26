@@ -53,6 +53,11 @@
     <string name="small_text">Small</string>
     <string name="medium_text">Medium</string>
     <string name="large_text">Large</string>
+    <string name="information">Information</string>
+    <string name="rate">Rate us</string>
+    <string name="version">Version</string>
+    <string name="report">Report \u0026 Feedback</string>
+    <string name="version_num">1.1.0</string>
 
     <string name="add_to_favorites">Add to favorites</string>
     <string name="add_to_playlist">Add to playlist</string>
