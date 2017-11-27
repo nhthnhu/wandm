@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
+import com.arlib.floatingsearchview.util.Util
 import com.wandm.R
 import com.wandm.adapters.OnlineSongsAdapter
 import com.wandm.adapters.SongsAdapter
@@ -31,6 +32,7 @@ import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.textColor
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -65,12 +67,13 @@ class SearchActivity : BaseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         setupViews()
-        setupSize()
+        setupView()
         setupSearchBar()
         setupSpeech()
     }
 
     private fun setupViews() {
+        blurringView.blurConfig(Utils.getBlurViewConfig())
         setBlurBackground(searchBackground, blurringView)
 
         resultsOfflineView.layoutManager = LinearLayoutManager(this)
@@ -372,11 +375,20 @@ class SearchActivity : BaseActivity() {
         startActivity(intent)
     }
 
-    private fun setupSize() {
+    private fun setupView() {
+        Utils.applyLightTheme(this)
+
         val textSize = PreferencesUtils.getTextSize()
         textMessage.textSize = textSize.toFloat()
         textListening.textSize = textSize.toFloat()
         labelSearchOffline.textSize = textSize.toFloat()
         labelSearchOnline.textSize = textSize.toFloat()
+
+        var colorResId = R.color.color_dark_theme
+        if (PreferencesUtils.getLightTheme())
+            colorResId = R.color.color_light_theme
+
+        labelSearchOnline.textColor = resources.getColor(colorResId)
+        labelSearchOffline.textColor = resources.getColor(colorResId)
     }
 }

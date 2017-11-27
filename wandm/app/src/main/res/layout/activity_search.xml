@@ -88,12 +88,12 @@
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/labelSearchOffline"
+                    style="@style/WMTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/offline_searching"
-                    android:textColor="@color/color_white"
                     android:textSize="18sp" />
 
                 <android.support.v7.widget.RecyclerView
@@ -125,12 +125,12 @@
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/labelSearchOnline"
+                    style="@style/WMTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/online_searching"
-                    android:textColor="@color/color_white"
                     android:textSize="18sp" />
 
                 <android.support.v7.widget.RecyclerView

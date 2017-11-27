@@ -9,9 +9,7 @@ import com.wandm.R
 import com.wandm.dialogs.SongFolderDetailDialog
 import com.wandm.models.MusicFolder
 import com.wandm.utils.PreferencesUtils
-import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
-import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_folder.view.*
 
 
@@ -48,14 +46,9 @@ class FoldersAdapter(var musicFolders: List<MusicFolder>) : RecyclerView.Adapter
 
     inner class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(musicFolder: MusicFolder) {
-            setupSize(itemView)
+            setupView(itemView)
             val context = itemView.context
 
-            if (PreferencesUtils.getLightTheme()) {
-                itemView.folderImage.setColor(context.resources.getColor(R.color.color_light_theme))
-            } else {
-                itemView.folderImage.setColor(context.resources.getColor(R.color.color_dark_theme))
-            }
 
             itemView.folderName.text = musicFolder.file.name
 
@@ -74,10 +67,17 @@ class FoldersAdapter(var musicFolders: List<MusicFolder>) : RecyclerView.Adapter
         }
     }
 
-    private fun setupSize(itemView: View) {
+    private fun setupView(itemView: View) {
         val textSize = PreferencesUtils.getTextSize()
         itemView.folderName.textSize = textSize.toFloat()
         itemView.folderPath.textSize = (textSize - 4).toFloat()
+
+        if (PreferencesUtils.getLightTheme()) {
+            itemView.folderImage.setColor(itemView.resources.getColor(R.color.color_light_theme))
+        } else {
+            itemView.folderImage.setColor(itemView.resources.getColor(R.color.color_dark_theme))
+        }
+
     }
 
 }

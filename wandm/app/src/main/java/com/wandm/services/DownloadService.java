@@ -93,7 +93,6 @@ public class DownloadService extends IntentService {
                     publishResults(result);
                 }
 
-
                 result = Activity.RESULT_OK;
 
             } finally {

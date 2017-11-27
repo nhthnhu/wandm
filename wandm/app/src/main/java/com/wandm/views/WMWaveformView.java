@@ -8,6 +8,9 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.wandm.R;
+import com.wandm.utils.PreferencesUtils;
+
 public class WMWaveformView extends View {
     private static final int DENSITY = 2;
     private static final int WAVE_COUNT = 6;
@@ -40,7 +43,11 @@ public class WMWaveformView extends View {
     public WMWaveformView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        WAVE_COLOR = Color.LTGRAY;
+        if (PreferencesUtils.INSTANCE.getLightTheme())
+            WAVE_COLOR = R.color.color_light_theme;
+        else
+            WAVE_COLOR = R.color.color_dark_theme;
+
         initialize();
     }
 

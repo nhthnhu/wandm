@@ -53,6 +53,7 @@ class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
             setupView(itemView)
             itemView.titleItemSongTextView.text = song.title
             itemView.titleItemSongTextView.isSelected = true
+
             Picasso.with(itemView.context).load(song.albumArt).into(itemView.albumArt, object : Callback {
                 override fun onSuccess() {
 
