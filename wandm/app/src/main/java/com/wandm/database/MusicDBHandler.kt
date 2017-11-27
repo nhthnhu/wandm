@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.wandm.models.playlist.Playlist
+import com.wandm.models.Playlist
 import com.wandm.models.song.Song
 
 

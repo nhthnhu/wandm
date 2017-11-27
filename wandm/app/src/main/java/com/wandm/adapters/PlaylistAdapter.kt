@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wandm.R
-import com.wandm.models.playlist.Playlist
+import com.wandm.models.Playlist
 import com.wandm.utils.PreferencesUtils
-import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
-import kotlinx.android.synthetic.main.item_artist.view.*
 import kotlinx.android.synthetic.main.item_playlist.view.*
 
 class PlaylistAdapter(var listPlaylists: ArrayList<Playlist>,

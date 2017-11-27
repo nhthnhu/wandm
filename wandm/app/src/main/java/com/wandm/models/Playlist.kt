@@ -1,4 +1,4 @@
-package com.wandm.models.playlist
+package com.wandm.models
 
 class Playlist {
 

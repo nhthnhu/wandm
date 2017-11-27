@@ -17,6 +17,8 @@ class ListMenus private constructor() {
 
         val favorite = Menu(MaterialDrawableBuilder.IconValue.HEART, Menu.FAVORITES)
 
+        val playlist = Menu(MaterialDrawableBuilder.IconValue.PLAYLIST_PLUS, Menu.PLAYLIST)
+
         val artists = Menu(MaterialDrawableBuilder.IconValue.ACCOUNT, Menu.ARTISTS)
 
         val albums = Menu(MaterialDrawableBuilder.IconValue.ALBUM, Menu.ALBUMS)
@@ -25,6 +27,7 @@ class ListMenus private constructor() {
 
         mList.add(songs)
         mList.add(favorite)
+        mList.add(playlist)
         mList.add(artists)
         mList.add(albums)
         mList.add(folders)

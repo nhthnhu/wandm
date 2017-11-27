@@ -11,5 +11,6 @@ data class Menu(val icon: MaterialDrawableBuilder.IconValue, val content: String
         val ARTISTS = App.instance.resources.getString(R.string.artists)
         val ALBUMS = App.instance.resources.getString(R.string.albums)
         val FOLDERS = App.instance.resources.getString(R.string.folders)
+        val PLAYLIST = App.instance.resources.getString(R.string.playlists)
     }
 }

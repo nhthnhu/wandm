@@ -77,7 +77,7 @@ class FoldersAdapter(var musicFolders: List<MusicFolder>) : RecyclerView.Adapter
     private fun setupSize(itemView: View) {
         val textSize = PreferencesUtils.getTextSize()
         itemView.folderName.textSize = textSize.toFloat()
-        itemView.folderPath.textSize = (textSize - 2).toFloat()
+        itemView.folderPath.textSize = (textSize - 4).toFloat()
     }
 
 }
