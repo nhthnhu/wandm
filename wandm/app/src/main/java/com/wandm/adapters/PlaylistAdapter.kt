@@ -60,7 +60,7 @@ class PlaylistAdapter(var listPlaylists: ArrayList<Playlist>,
     }
 
     private fun setupView(itemView: View) {
-        val textSize = Utils.getTextSize()
+        val textSize = PreferencesUtils.getTextSize()
         itemView.playlistNameView.textSize = textSize.toFloat()
         itemView.playlistSongCount.textSize = (textSize - 4).toFloat()
 

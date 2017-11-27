@@ -152,7 +152,7 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
     private fun setTheme() {
         val isLightTheme = PreferencesUtils.getLightTheme()
         Utils.applyLightTheme(activity)
-        textSize = Utils.getTextSize()
+        textSize = PreferencesUtils.getTextSize()
 
         colorResId = R.color.color_dark_theme
         if (isLightTheme) {

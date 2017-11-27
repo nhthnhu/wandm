@@ -26,6 +26,7 @@ import com.wandm.speech.GoogleVoiceTypingDisabledException
 import com.wandm.speech.Speech
 import com.wandm.speech.SpeechDelegate
 import com.wandm.speech.SpeechRecognitionNotAvailable
+import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.doAsync
@@ -365,7 +366,7 @@ class SearchActivity : BaseActivity() {
     }
 
     private fun setupSize() {
-        val textSize = Utils.getTextSize()
+        val textSize = PreferencesUtils.getTextSize()
         textMessage.textSize = textSize.toFloat()
         textListening.textSize = textSize.toFloat()
         labelSearchOffline.textSize = textSize.toFloat()

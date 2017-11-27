@@ -24,12 +24,10 @@ object PreferencesUtils {
     private val ARTIST_IMAGE_MOBILE = "artist_image_mobile"
 
     val PREFS_THEME = "key_preference_theme"
-    val PREFS_SMALL_TEXT = "key_preference_small_text"
-    val PREFS_MEDIUM_TEXT = "key_preference_medium_text"
-    val PREFS_LARGE_TEXT = "key_preference_large_text"
     val PREFS_VERSION = "key_preference_version"
     val PREFS_REPORT = "key_preference_report"
     val PREFS_RATE = "key_preference_rate"
+    val PREFS_TEXT_SIZE = "key_preference_text_size"
 
 
     private val CURRENT_CATEGORY_POSITION = "current_category_position"
@@ -169,16 +167,8 @@ object PreferencesUtils {
         return mPreferences.getInt(CURRENT_CATEGORY_POSITION, 0)
     }
 
-    fun getSmallText(): Boolean {
-        return mPreferences.getBoolean(PREFS_SMALL_TEXT, false)
-    }
-
-    fun getMediumText(): Boolean {
-        return mPreferences.getBoolean(PREFS_MEDIUM_TEXT, true)
-    }
-
-    fun getLargeText(): Boolean {
-        return mPreferences.getBoolean(PREFS_LARGE_TEXT, false)
+    fun getTextSize(): Int {
+        return mPreferences.getString(PREFS_TEXT_SIZE, "18").toInt()
     }
 
 }

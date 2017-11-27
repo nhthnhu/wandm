@@ -514,7 +514,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     private fun setTheme() {
         val isLightTheme = PreferencesUtils.getLightTheme()
         Utils.applyLightTheme(this)
-        textSize = Utils.getTextSize()
+        textSize = PreferencesUtils.getTextSize()
 
         if (isLightTheme) {
             colorResId = R.color.color_light_theme

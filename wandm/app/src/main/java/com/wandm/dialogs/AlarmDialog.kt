@@ -120,7 +120,7 @@ class AlarmDialog : BaseDialog(), View.OnClickListener {
         val isLightTheme = PreferencesUtils.getLightTheme()
         Utils.applyLightTheme(activity)
 
-        textSize = Utils.getTextSize()
+        textSize = PreferencesUtils.getTextSize()
         if (isLightTheme) {
             colorResId = R.color.color_light_theme
         }

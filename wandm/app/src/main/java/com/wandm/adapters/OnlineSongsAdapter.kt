@@ -8,6 +8,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.models.song.Song
+import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_album.view.*
@@ -64,7 +65,7 @@ class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
     }
 
     private fun setupSize(itemView: View) {
-        val textSize = Utils.getTextSize()
+        val textSize = PreferencesUtils.getTextSize()
         itemView.titleItemSongTextView.textSize = textSize.toFloat()
     }
 }

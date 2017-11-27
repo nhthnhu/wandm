@@ -15,6 +15,7 @@ import com.wandm.database.FavoritesTable
 import com.wandm.database.MusicDBHandler
 import com.wandm.models.song.Song
 import com.wandm.services.MusicPlayer
+import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_favorite_song.view.*
@@ -96,7 +97,7 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
     }
 
     private fun setupSize(itemView: View) {
-        val textSize = Utils.getTextSize()
+        val textSize = PreferencesUtils.getTextSize()
         itemView.titleItemSongTextView.textSize = textSize.toFloat()
         itemView.artistItemSongTextView.textSize = (textSize - 4).toFloat()
     }

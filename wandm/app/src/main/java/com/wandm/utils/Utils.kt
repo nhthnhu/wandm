@@ -63,16 +63,6 @@ object Utils {
             activity.setTheme(R.style.DarkTheme)
     }
 
-    fun getTextSize(): Int {
-        if (PreferencesUtils.getSmallText())
-            return 14
-
-        if (PreferencesUtils.getMediumText())
-            return 18
-
-        return 22
-    }
-
 
     val DEBUG = java.lang.Boolean.parseBoolean("true")
 

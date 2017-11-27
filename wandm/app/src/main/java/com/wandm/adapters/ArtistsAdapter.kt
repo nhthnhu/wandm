@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso
 import com.wandm.R
 import com.wandm.loaders.ArtistAlbumLoader
 import com.wandm.models.Artist
+import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_album.view.*
@@ -75,7 +76,7 @@ class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView
     }
 
     private fun setupSize(itemView: View) {
-        val textSize = Utils.getTextSize()
+        val textSize = PreferencesUtils.getTextSize()
         itemView.artistName.textSize = textSize.toFloat()
         itemView.albumSongsSount.textSize = (textSize - 4).toFloat()
     }

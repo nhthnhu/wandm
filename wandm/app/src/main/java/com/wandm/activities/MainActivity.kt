@@ -213,7 +213,7 @@ class MainActivity : BaseActivity() {
 
     private fun setTheme() {
         val isLightTheme = PreferencesUtils.getLightTheme()
-        textSize = Utils.getTextSize()
+        textSize = PreferencesUtils.getTextSize()
 
         Utils.applyLightTheme(this)
 

@@ -138,7 +138,7 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
     }
 
     private fun setupSize(itemView: View) {
-        val textSize = Utils.getTextSize()
+        val textSize = PreferencesUtils.getTextSize()
         itemView.titleItemSongTextView.textSize = textSize.toFloat()
         itemView.artistItemSongTextView.textSize = (textSize - 4).toFloat()
     }

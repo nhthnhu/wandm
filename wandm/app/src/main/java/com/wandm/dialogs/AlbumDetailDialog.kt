@@ -15,6 +15,7 @@ import com.wandm.adapters.SongsAdapter
 import com.wandm.loaders.AlbumLoader
 import com.wandm.loaders.AlbumSongLoader
 import com.wandm.services.MusicPlayer
+import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_album_detail.*
@@ -132,7 +133,7 @@ class AlbumDetailDialog : BaseDialog() {
     }
 
     private fun setupSize() {
-        val textSize = Utils.getTextSize()
+        val textSize = PreferencesUtils.getTextSize()
         albumNameTextView.textSize = textSize.toFloat()
         detailAlbumTextView.textSize = (textSize - 4).toFloat()
     }

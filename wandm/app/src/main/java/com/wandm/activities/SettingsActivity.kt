@@ -8,15 +8,14 @@ import android.preference.PreferenceActivity
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.WindowManager
 import com.ms_square.etsyblur.BlurringView
 import com.wandm.R
 import com.wandm.utils.PreferencesUtils
-import com.wandm.utils.PreferencesUtils.PREFS_LARGE_TEXT
-import com.wandm.utils.PreferencesUtils.PREFS_MEDIUM_TEXT
 import com.wandm.utils.PreferencesUtils.PREFS_RATE
 import com.wandm.utils.PreferencesUtils.PREFS_REPORT
-import com.wandm.utils.PreferencesUtils.PREFS_SMALL_TEXT
+import com.wandm.utils.PreferencesUtils.PREFS_TEXT_SIZE
 import com.wandm.utils.PreferencesUtils.PREFS_THEME
 import com.wandm.utils.PreferencesUtils.PREFS_VERSION
 import com.wandm.utils.Utils
@@ -95,25 +94,7 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
                 recreate()
             }
 
-            PREFS_SMALL_TEXT -> {
-                val enable = !PreferencesUtils.getSmallText()
-                findPreference(PREFS_MEDIUM_TEXT).isEnabled = enable
-                findPreference(PREFS_LARGE_TEXT).isEnabled = enable
-                recreate()
-            }
-
-            PREFS_MEDIUM_TEXT -> {
-                val enable = !PreferencesUtils.getMediumText()
-                findPreference(PREFS_SMALL_TEXT).isEnabled = enable
-                findPreference(PREFS_LARGE_TEXT).isEnabled = enable
-                recreate()
-            }
-
-            PREFS_LARGE_TEXT -> {
-                val enable = !PreferencesUtils.getLargeText()
-                findPreference(PREFS_MEDIUM_TEXT).isEnabled = enable
-                findPreference(PREFS_SMALL_TEXT).isEnabled = enable
-                recreate()
+            PREFS_TEXT_SIZE -> {
             }
         }
     }
@@ -144,32 +125,14 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
             findPreference(PREFS_REPORT).icon = resources.getDrawable(R.drawable.ic_report_light)
             findPreference(PREFS_VERSION).icon = resources.getDrawable(R.drawable.ic_info_light)
             findPreference(PREFS_THEME).icon = resources.getDrawable(R.drawable.ic_theme_light)
+            findPreference(PREFS_TEXT_SIZE).icon = resources.getDrawable(R.drawable.ic_text_size_light)
         } else {
             findPreference(PREFS_THEME).summary = resources.getString(R.string.dark_theme)
             findPreference(PREFS_RATE).icon = resources.getDrawable(R.drawable.ic_rate_dark)
             findPreference(PREFS_REPORT).icon = resources.getDrawable(R.drawable.ic_report_dark)
             findPreference(PREFS_VERSION).icon = resources.getDrawable(R.drawable.ic_info_dark)
             findPreference(PREFS_THEME).icon = resources.getDrawable(R.drawable.ic_theme_dark)
-        }
-
-        when (Utils.getTextSize()) {
-            14 -> {
-                val enable = !PreferencesUtils.getSmallText()
-                findPreference(PREFS_MEDIUM_TEXT).isEnabled = enable
-                findPreference(PREFS_LARGE_TEXT).isEnabled = enable
-            }
-
-            18 -> {
-                val enable = !PreferencesUtils.getMediumText()
-                findPreference(PREFS_SMALL_TEXT).isEnabled = enable
-                findPreference(PREFS_LARGE_TEXT).isEnabled = enable
-            }
-
-            22 -> {
-                val enable = !PreferencesUtils.getLargeText()
-                findPreference(PREFS_MEDIUM_TEXT).isEnabled = enable
-                findPreference(PREFS_SMALL_TEXT).isEnabled = enable
-            }
+            findPreference(PREFS_TEXT_SIZE).icon = resources.getDrawable(R.drawable.ic_text_size_dark)
         }
     }
 

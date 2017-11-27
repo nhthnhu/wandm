@@ -58,7 +58,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
     }
 
     private fun setupSize(itemView: View) {
-        val textSize = Utils.getTextSize()
+        val textSize = PreferencesUtils.getTextSize()
         itemView.contentMenuTextView.textSize = textSize.toFloat()
     }
 
