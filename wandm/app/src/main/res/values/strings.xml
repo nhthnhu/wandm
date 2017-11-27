@@ -5,4 +5,70 @@
     <string name="playlist_recently_played">Recently Played</string>
     <string name="playlist_top_tracks">My Top Tracks</string>
     <string name="welcome">Welcome to</string>
+
+    <string name="songs">Songs</string>
+    <string name="song">Song</string>
+    <string name="favorites">Favorites</string>
+    <string name="playlists">Playlists</string>
+    <string name="artists">Artists</string>
+    <string name="albums">Albums</string>
+    <string name="album">Album</string>
+    <string name="folders">Folders</string>
+    <string name="settings">Settings</string>
+    <string name="download">Download</string>
+    <string name="downloading">Downloading</string>
+    <string name="download_failed">Download failed</string>
+    <string name="download_completed">Download completed</string>
+
+    <string name="request_read_storage_permission">We amp\u0026 Music will need to read external storage to display songs on your device.</string>
+
+    <string name="turn_off_alarm">Turn off alarm</string>
+    <string name="minute">Minute</string>
+    <string name="minutes">Minutes</string>
+    <string name="second">Second</string>
+    <string name="seconds">Seconds</string>
+    <string name="alarm_toast">Turn off music after %1$s %2$s</string>
+
+    <style name="cancel_alarm">Canceled alarm setting</style>
+
+    <string name="speech">Speech</string>
+    <string name="error_audio">Record failed</string>
+    <string name="error_client">Sorry, I can not hear clearly</string>
+    <string name="error_insufficient_permissions">Can not connect to the Microphone</string>
+    <string name="error_network">Please check the Internet</string>
+    <string name="error_network_timeout">Network timeout.</string>
+    <string name="error_no_match">Sorry, I can not hear clearly</string>
+    <string name="error_recognizer_busy">Recognizer is busy, please try again!</string>
+    <string name="error_server">Please check the Internet</string>
+    <string name="error_speech_timeout">Why do not you say anything?</string>
+    <string name="error_default">Please try again</string>
+
+    <string name="menu_show_as_entry_default">Default</string>
+    <string name="select_storage">Select storage</string>
+
+    <string name="ok">OK</string>
+    <string name="offline_searching">Offline searching</string>
+    <string name="online_searching">Online searching</string>
+
+    <string name="count">%1$s | %2$s</string>
+
+    <string name="theme">Theme</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="general_setting">General</string>
+    <string name="text_size">Text size</string>
+    <string name="small_text">Small</string>
+    <string name="medium_text">Medium</string>
+    <string name="large_text">Large</string>
+    <string name="information">Information</string>
+    <string name="rate">Rate us</string>
+    <string name="version">Version</string>
+    <string name="report">Report \u0026 Feedback</string>
+    <string name="version_num">1.1.0</string>
+
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="added_to_favorites">Added to favorites</string>
+    <string name="new_playlist">New playlist</string>
+
 </resources>

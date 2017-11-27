@@ -8,32 +8,32 @@ import com.wandm.models.playlist.Playlist
 import com.wandm.models.song.Song
 
 
-class MusicDBHandler private constructor(context: Context, private val tableName: String) {
+class MusicDBHandler private constructor(context: Context, var tableName: String) {
     companion object {
         @SuppressLint("StaticFieldLeak")
         private var instance: MusicDBHandler? = null
-        private var tableName = FavoritesTable.TABLE_NAME
 
         fun getInstance(context: Context, tableName: String): MusicDBHandler? {
-            this.tableName = tableName
             if (instance == null) {
                 instance = MusicDBHandler(context, tableName)
             }
+
+            instance?.tableName = tableName
             return instance
         }
     }
 
     private var context: Context? = null
-    private var database: SQLiteDatabase? = null
+    var database: SQLiteDatabase? = null
 
-    private var event: InsertEvent? = null
+    private val events = ArrayList<InsertEvent>()
 
     interface InsertEvent {
         fun onInsert(tableName: String)
     }
 
     fun setInsertEvent(e: InsertEvent) {
-        event = e
+        events.add(e)
     }
 
     init {
@@ -41,7 +41,7 @@ class MusicDBHandler private constructor(context: Context, private val tableName
         database = MusicDBHelper(this.context).writableDatabase
     }
 
-    fun insert(data: Any): Boolean {
+    fun insert(data: Any?): Boolean {
         var values: ContentValues? = null
         when (tableName) {
             FavoritesTable.TABLE_NAME -> {
@@ -53,17 +53,22 @@ class MusicDBHandler private constructor(context: Context, private val tableName
             }
 
             PlaylistSongsTable.TABLE_NAME -> {
-                values = getPlaylistSongContentValues(data as Song)
+                val song = data as Song
+                val cursor = query(PlaylistSongsTable.Cols.DATA + "=? and " +
+                        PlaylistSongsTable.Cols.PLAYLIST_ID + "=?",
+                        arrayOf(song.data, song.playlistId.toString()))
+                if (cursor != null && cursor.count > 0) return false
+
+                values = getPlaylistSongContentValues(song)
             }
         }
-
 
         val row = database?.insert(tableName, null, values)
         if (row == (-1).toLong()) {
             return false
         }
 
-        event?.onInsert(tableName)
+        for (insertEvent in events) insertEvent.onInsert(tableName)
         return true
     }
 
@@ -117,13 +122,23 @@ class MusicDBHandler private constructor(context: Context, private val tableName
     }
 
     fun getPlaylists(): ArrayList<Playlist> {
+        val statement = "SELECT COUNT(*) FROM SongsPlayList WHERE playlist_id=?";
+
         val playlists = ArrayList<Playlist>()
         val cursor = query(null, null)
         try {
             cursor?.moveToFirst()
             if (cursor != null)
                 while (!cursor.isAfterLast) {
-                    playlists.add(cursor.getPlaylist())
+                    val playlist = cursor.getPlaylist()
+
+                    val countCursor = database?.rawQuery(statement, arrayOf(playlist.id.toString()))
+                    countCursor?.moveToFirst()
+                    val songCount = countCursor?.getInt(0)
+                    playlist.songCount = songCount ?: 0
+                    countCursor?.close()
+
+                    playlists.add(playlist)
                     cursor.moveToNext()
                 }
         } finally {
@@ -185,6 +200,24 @@ class MusicDBHandler private constructor(context: Context, private val tableName
         }
     }
 
+    fun getLatestPlaylist(): Playlist {
+
+        val cursor = database?.query(PlaylistsTable.TABLE_NAME, null,
+                null, null, null, null,
+                PlaylistsTable.Cols.ID + " DESC")
+        try {
+            cursor?.moveToFirst()
+            if (cursor != null && !cursor.isAfterLast) {
+                val playlist = (MusicCursorWrapper(cursor)).getPlaylist()
+                return playlist
+            }
+        } finally {
+            cursor?.close()
+        }
+
+        return Playlist()
+    }
+
     fun deleteAll() {
         database?.delete(tableName, null, null)
     }
@@ -206,7 +239,6 @@ class MusicDBHandler private constructor(context: Context, private val tableName
 
     private fun getPlaylistContentValues(playlist: Playlist): ContentValues {
         val values = ContentValues()
-        values.put(PlaylistsTable.Cols.ID, playlist.id)
         values.put(PlaylistsTable.Cols.NAME, playlist.name)
         values.put(PlaylistsTable.Cols.SONGS_COUNT, playlist.songCount)
 
@@ -229,7 +261,6 @@ class MusicDBHandler private constructor(context: Context, private val tableName
         return values
     }
 
-    @SuppressLint("Recycle")
     private fun query(whereClause: String?, whereArgs: Array<String>?): MusicCursorWrapper? {
         val cursor = database?.query(tableName,
                 null, whereClause, whereArgs,

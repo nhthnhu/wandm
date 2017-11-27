@@ -31,7 +31,8 @@ class MusicDBHelper(val context: Context?) : SQLiteOpenHelper(context, DATABASE_
         )
 
         p0?.execSQL("create table " + PlaylistSongsTable.TABLE_NAME + " (" +
-                PlaylistSongsTable.Cols.DATA + " text primary key, " +
+                "_id integer primary key autoincrement," +
+                PlaylistSongsTable.Cols.DATA + " text, " +
                 PlaylistSongsTable.Cols.TITLE + " text, " +
                 PlaylistSongsTable.Cols.ALBUM_ID + " text, " +
                 PlaylistSongsTable.Cols.ALBUM_NAME + " text, " +
@@ -39,7 +40,7 @@ class MusicDBHelper(val context: Context?) : SQLiteOpenHelper(context, DATABASE_
                 PlaylistSongsTable.Cols.ARTIST_NAME + " text, " +
                 PlaylistSongsTable.Cols.DURATION + " text, " +
                 PlaylistSongsTable.Cols.TRACK_NUMBER + " text, " +
-                PlaylistSongsTable.Cols.ID + " text" +
+                PlaylistSongsTable.Cols.ID + " text," +
                 PlaylistSongsTable.Cols.PLAYLIST_ID + " integer)"
         )
     }

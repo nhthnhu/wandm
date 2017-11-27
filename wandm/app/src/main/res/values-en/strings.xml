@@ -63,6 +63,7 @@
     <string name="add_to_favorites">Add to favorites</string>
     <string name="add_to_playlist">Add to playlist</string>
     <string name="added_to_favorites">Added to favorites</string>
+    <string name="new_playlist">New playlist</string>
 
 
 </resources>

@@ -17,7 +17,7 @@
         android:layout_marginEnd="4dp"
         android:background="@color/transparent"
         android:shape="ring"
-        android:thicknessRatio="1.9"
+        android:thicknessRatio="1.5"
         app:cardBackgroundColor="@color/transparent"
         app:cardCornerRadius="27dp">
 

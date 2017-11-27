@@ -42,8 +42,7 @@ class MusicCursorWrapper(cursor: Cursor?) : CursorWrapper(cursor) {
     fun getPlaylist(): Playlist {
         val id = getInt(getColumnIndex(PlaylistsTable.Cols.ID))
         val name = getString(getColumnIndex(PlaylistsTable.Cols.NAME))
-        val songCount = getInt(getColumnIndex(PlaylistsTable.Cols.SONGS_COUNT))
 
-        return Playlist(id, name, songCount)
+        return Playlist(id, name, 0)
     }
 }

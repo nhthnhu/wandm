@@ -34,7 +34,8 @@ class FavoritesFragment : BaseFragment() {
         MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)
                 ?.setInsertEvent(object : MusicDBHandler.InsertEvent {
                     override fun onInsert(tableName: String) {
-                        updateList()
+                        if (tableName == FavoritesTable.TABLE_NAME)
+                            updateList()
                     }
                 })
 

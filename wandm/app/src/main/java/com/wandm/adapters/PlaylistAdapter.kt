@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.wandm.R
 import com.wandm.models.playlist.Playlist
+import com.wandm.utils.PreferencesUtils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_playlist.view.*
 
@@ -40,6 +41,13 @@ class PlaylistAdapter(var listPlaylists: ArrayList<Playlist>,
 
     class PlaylistHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(playlist: Playlist) {
+            if (PreferencesUtils.getLightTheme()) {
+                itemView.playlistsIcon.setColor(itemView.resources.getColor(R.color.color_light_theme))
+            } else {
+                itemView.playlistsIcon.setColor(itemView.resources.getColor(R.color.color_dark_theme))
+            }
+
+
             itemView.playlistNameView.text = playlist.name
             itemView.playlistSongCount.text = itemView?.context?.resources?.
                     getQuantityString(R.plurals.song_count, playlist.songCount, playlist.songCount)

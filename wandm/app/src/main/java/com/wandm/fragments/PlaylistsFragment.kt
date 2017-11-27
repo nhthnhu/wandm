@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wandm.R
 import com.wandm.adapters.PlaylistAdapter
+import com.wandm.database.FavoritesTable
 import com.wandm.database.MusicDBHandler
 import com.wandm.database.PlaylistsTable
 import com.wandm.views.DividerItemDecoration
@@ -33,6 +34,15 @@ class PlaylistsFragment : BaseFragment() {
         playlistsAdapter = PlaylistAdapter(ArrayList()) { playlist, i ->
 
         }
+        playlistsRecyclerView.adapter = playlistsAdapter
+        MusicDBHandler.getInstance(activity, PlaylistsTable.TABLE_NAME)
+                ?.setInsertEvent(object : MusicDBHandler.InsertEvent {
+                    override fun onInsert(tableName: String) {
+                        if (tableName != FavoritesTable.TABLE_NAME)
+                            loadPlaylists()
+                    }
+
+                })
     }
 
     private fun loadPlaylists() {
@@ -48,7 +58,8 @@ class PlaylistsFragment : BaseFragment() {
                         if (playlists.size > 0) {
                             playlistsRecyclerView.visibility = View.VISIBLE
                             playlistsFastScroller.visibility = View.VISIBLE
-                        } else playlistsProgressBar.visibility = View.GONE
+                        }
+                        playlistsProgressBar.visibility = View.GONE
                     }
             }
         }
