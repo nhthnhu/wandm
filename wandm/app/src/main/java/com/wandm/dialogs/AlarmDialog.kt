@@ -131,9 +131,6 @@ class AlarmDialog : BaseDialog(), View.OnClickListener {
         minuteTextView.textSize = (textSize + 6).toFloat()
         secondTextView.textSize = (textSize + 6).toFloat()
 
-        minuteNumberPicker.setBackgroundColor(resources.getColor(colorResId))
-        secondNumberPicker.setBackgroundColor(resources.getColor(colorResId))
-
         cancelAlarmButton.setColor(resources.getColor(colorResId))
         setAlarmButton.setColor(resources.getColor(colorResId))
     }

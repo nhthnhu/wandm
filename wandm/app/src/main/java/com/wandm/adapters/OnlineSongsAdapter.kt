@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
+import com.wandm.data.CurrentPlaylistManager
 import com.wandm.models.song.Song
 import com.wandm.utils.PreferencesUtils
-import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
-import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_online_song.view.*
 
 class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
                          private val listener: (Song, Int, String) -> Unit) : RecyclerView.Adapter<OnlineSongsAdapter.SearchHolder>(), BubbleTextGetter {
+
+    private var colorResId = R.color.color_dark_theme
 
     companion object {
         val ACTION_PLAY = "action_play"
@@ -37,6 +38,7 @@ class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
         holder?.bind(listSongs[position])
 
         holder?.itemView?.titleItemSongTextView?.setOnClickListener {
+            CurrentPlaylistManager.listSongs = listSongs
             listener(listSongs[position], position, ACTION_PLAY)
         }
 
@@ -48,7 +50,7 @@ class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
 
     inner class SearchHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(song: Song) {
-            setupSize(itemView)
+            setupView(itemView)
             itemView.titleItemSongTextView.text = song.title
             itemView.titleItemSongTextView.isSelected = true
             Picasso.with(itemView.context).load(song.albumArt).into(itemView.albumArt, object : Callback {
@@ -64,8 +66,12 @@ class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
 
     }
 
-    private fun setupSize(itemView: View) {
+    private fun setupView(itemView: View) {
+        if (PreferencesUtils.getLightTheme())
+            colorResId = R.color.color_light_theme
+
         val textSize = PreferencesUtils.getTextSize()
         itemView.titleItemSongTextView.textSize = textSize.toFloat()
+        itemView.downloadtButton.setColor(itemView.resources?.getColor(colorResId)!!)
     }
 }

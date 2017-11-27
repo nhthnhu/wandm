@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaMetadata;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -63,12 +64,14 @@ public class DownloadService extends IntentService {
             URLConnection connection = url.openConnection();
             int fileLength = connection.getContentLength();
 
-            File storagePath = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_MUSIC), fileName + ".mp3");
+            String filePath = Environment.DIRECTORY_DOWNLOADS;
+
+            File storagePath = new File(  Environment.getExternalStorageDirectory().getPath() + filePath);
+
 
             //do download
             InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-            OutputStream outputStream = new FileOutputStream(storagePath);
+            OutputStream outputStream = new FileOutputStream(new File(storagePath, fileName + ".mp3"));
             int downloaded = 0;
 
             try {
@@ -89,6 +92,7 @@ public class DownloadService extends IntentService {
                     result = 1;
                     publishResults(result);
                 }
+
 
                 result = Activity.RESULT_OK;
 

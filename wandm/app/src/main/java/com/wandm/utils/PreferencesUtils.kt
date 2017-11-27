@@ -150,7 +150,7 @@ object PreferencesUtils {
     }
 
     fun getAlarm(): String {
-        return mPreferences.getString(ALARM_SET, "")
+        return mPreferences.getString(ALARM_SET, "0;;0")
     }
 
     fun getLightTheme(): Boolean {

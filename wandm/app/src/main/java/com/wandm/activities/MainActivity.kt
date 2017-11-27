@@ -20,7 +20,6 @@ import com.wandm.fragments.CategoryFragment
 import com.wandm.fragments.QuickControlFragment
 import com.wandm.permissions.PermissionCallback
 import com.wandm.permissions.PermissionHelper
-import com.wandm.speech.Speech
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -81,7 +80,6 @@ class MainActivity : BaseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         instance = this
         setupToolbar()
-        Speech.init(this)
         addFragment(QuickControlFragment(), R.id.quick_control_container, "QuickControlFragment")
     }
 
@@ -111,7 +109,7 @@ class MainActivity : BaseActivity() {
         when (item?.itemId) {
             R.id.search_item_menu -> {
                 val intent = Intent(this, SearchActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
             }
         }

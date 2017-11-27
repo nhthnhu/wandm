@@ -2,6 +2,7 @@ package com.wandm.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.speech.SpeechRecognizer
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -57,6 +58,11 @@ class SearchActivity : BaseActivity() {
         instance = this
     }
 
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        Speech.init(this)
+    }
+
     override fun initView(savedInstanceState: Bundle?) {
         setupViews()
         setupSize()
@@ -92,6 +98,7 @@ class SearchActivity : BaseActivity() {
         waveformView.setOnClickListener {
             if (Speech.getInstance().isListening) {
                 Speech.getInstance().stopListening()
+                showViewsForSpeech(SPEECH_DONE)
             }
         }
     }
@@ -176,8 +183,8 @@ class SearchActivity : BaseActivity() {
     private fun setupSpeech() {
 
         Speech.init(this)
-        Speech.getInstance().setLocale(Locale.getDefault())
-        Speech.getInstance().setTransitionMinimumDelay(250)
+        Speech.getInstance().setLocale(Locale("vi"))
+        Speech.getInstance().setTransitionMinimumDelay(500)
         Speech.getInstance().setDelegate(object : SpeechDelegate {
             override fun onStartOfSpeech() {
                 showViewsForSpeech(SPEECH_START)
