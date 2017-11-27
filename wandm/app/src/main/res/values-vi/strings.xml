@@ -3,7 +3,7 @@
     <string name="songs">Bài hát</string>
     <string name="song">Bài hát</string>
     <string name="favorites">Yêu thích</string>
-    <string name="playlists">Playlists</string>
+    <string name="playlists">Playlist</string>
     <string name="artists">Ca sĩ</string>
     <string name="albums">Album</string>
     <string name="album">Album</string>
@@ -63,6 +63,18 @@
     <string name="add_to_favorites">Thêm vào yêu thích</string>
     <string name="add_to_playlist">Thêm vào playlist</string>
     <string name="added_to_favorites">Đã thêm vào yêu thích</string>
+
+    <string-array name="list_text_size_titles">
+        <item>Nhỏ</item>
+        <item>Vừa</item>
+        <item>Lớn</item>
+    </string-array>
+
+    <string-array name="list_text_size_values">
+        <item>14</item>
+        <item>18</item>
+        <item>22</item>
+    </string-array>
 
     <string name="new_playlist">Tạo playlist</string>
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:persistent="false">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <SwitchPreference
@@ -14,41 +13,42 @@
         <CheckBoxPreference
             android:id="@+id/preference_small_text"
             android:defaultValue="false"
-            android:iconSpaceReserved="true"
             android:key="key_preference_small_text"
             android:title="@string/small_text" />
 
         <CheckBoxPreference
             android:id="@+id/preference_medium_text"
             android:defaultValue="true"
-            android:iconSpaceReserved="true"
             android:key="key_preference_medium_text"
             android:title="@string/medium_text" />
 
         <CheckBoxPreference
             android:id="@+id/preference_large_text"
             android:defaultValue="false"
-            android:iconSpaceReserved="true"
             android:key="key_preference_large_text"
             android:title="@string/large_text" />
 
     </PreferenceCategory>
 
+    <ListPreference
+        android:key="key_preference_text_size"
+        android:title="@string/text_size" />
+
     <PreferenceCategory android:title="@string/information">
 
         <Preference
-            android:iconSpaceReserved="true"
+            android:key="key_preference_version"
             android:summary="@string/version_num"
             android:textIsSelectable="false"
             android:title="@string/version" />
 
         <Preference
-            android:iconSpaceReserved="true"
+            android:key="key_preference_report"
             android:textIsSelectable="false"
             android:title="@string/report" />
 
         <Preference
-            android:iconSpaceReserved="true"
+            android:key="key_preference_rate"
             android:textIsSelectable="false"
             android:title="@string/rate" />
 

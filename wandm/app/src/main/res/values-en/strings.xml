@@ -65,5 +65,17 @@
     <string name="added_to_favorites">Added to favorites</string>
     <string name="new_playlist">New playlist</string>
 
+    <string-array name="list_text_size_titles">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+
+    <string-array name="list_text_size_values">
+        <item>14</item>
+        <item>18</item>
+        <item>22</item>
+    </string-array>
+
 
 </resources>

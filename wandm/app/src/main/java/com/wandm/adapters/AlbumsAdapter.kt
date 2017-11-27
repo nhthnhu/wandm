@@ -81,7 +81,7 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
     private fun setupSize(itemView: View) {
         val textSize = Utils.getTextSize()
         itemView.albumName.textSize = textSize.toFloat()
-        itemView.numbersongs.textSize = (textSize - 2).toFloat()
+        itemView.numbersongs.textSize = (textSize - 4).toFloat()
     }
 
 }

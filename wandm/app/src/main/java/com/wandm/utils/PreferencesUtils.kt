@@ -27,6 +27,9 @@ object PreferencesUtils {
     val PREFS_SMALL_TEXT = "key_preference_small_text"
     val PREFS_MEDIUM_TEXT = "key_preference_medium_text"
     val PREFS_LARGE_TEXT = "key_preference_large_text"
+    val PREFS_VERSION = "key_preference_version"
+    val PREFS_REPORT = "key_preference_report"
+    val PREFS_RATE = "key_preference_rate"
 
 
     private val CURRENT_CATEGORY_POSITION = "current_category_position"
@@ -171,7 +174,7 @@ object PreferencesUtils {
     }
 
     fun getMediumText(): Boolean {
-        return mPreferences.getBoolean(PREFS_MEDIUM_TEXT, false)
+        return mPreferences.getBoolean(PREFS_MEDIUM_TEXT, true)
     }
 
     fun getLargeText(): Boolean {
