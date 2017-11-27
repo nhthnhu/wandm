@@ -147,9 +147,10 @@ class MusicDBHandler private constructor(context: Context, var tableName: String
         return playlists
     }
 
-    fun getPlaylistSongs(): ArrayList<Song> {
+    fun getPlaylistSongs(playlistId: Int): ArrayList<Song> {
         val songs = ArrayList<Song>()
-        val cursor = query(null, null)
+        val cursor = query("${PlaylistSongsTable.Cols.PLAYLIST_ID} = ?",
+                arrayOf(playlistId.toString()))
         try {
             cursor?.moveToFirst()
             if (cursor != null)
@@ -188,8 +189,9 @@ class MusicDBHandler private constructor(context: Context, var tableName: String
     }
 
 
-    fun getPlaylistSong(data: String): Song? {
-        val cursor = query("${PlaylistSongsTable.Cols.DATA} = ?", arrayOf(data))
+    fun getPlaylistSong(playlistId: Int): Song? {
+        val cursor = query("${PlaylistSongsTable.Cols.PLAYLIST_ID} = ?",
+                arrayOf(playlistId.toString()))
         try {
             cursor?.moveToFirst()
             return cursor?.getPlaylistSong()
