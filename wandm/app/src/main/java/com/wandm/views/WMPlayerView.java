@@ -31,6 +31,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -379,7 +380,7 @@ public class WMPlayerView extends View {
         try {
             mBitmapCover = Picasso.with(getContext())
                     .load(imageUrl).get();
-        } catch (IOException e) {
+        } catch (IllegalArgumentException | IOException e) {
             mBitmapCover = Utils.INSTANCE.convertDrawableToBitmap(
                     getResources().getDrawable(R.drawable.ic_music));
         }
