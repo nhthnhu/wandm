@@ -4,14 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/notifiTextView"
-        style="@style/WMTextStyle"
+    <LinearLayout
+        android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_margin="8dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:orientation="horizontal">
+
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            android:id="@+id/homeButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="center"
+            app:materialIcon="arrow_left" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/toolbarLayout"
         android:id="@+id/songsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

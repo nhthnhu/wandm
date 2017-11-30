@@ -12,6 +12,7 @@ import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.SongsAdapter
 import com.wandm.models.MusicFolder
 import com.wandm.services.MusicPlayer
+import com.wandm.utils.PreferencesUtils
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_song_folder_detail.*
 import org.jetbrains.anko.doAsync
@@ -47,11 +48,20 @@ class SongFolderDetailDialog : BaseDialog() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         loadSongs()
+
+        homeButton.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun setupViews() {
         songsRecyclerView.layoutManager = LinearLayoutManager(activity)
         songsFastScroller.setRecyclerView(songsRecyclerView)
+
+        if (PreferencesUtils.getLightTheme())
+            homeButton.setColor(activity.resources.getColor(R.color.color_light_theme))
+        else
+            homeButton.setColor(activity.resources.getColor(R.color.color_dark_theme))
     }
 
     private fun loadSongs() {
