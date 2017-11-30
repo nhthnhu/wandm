@@ -1,11 +1,12 @@
-package com.wandm.models.song
+package com.wandm.utils
 
 import android.util.Log
+import com.wandm.models.Song
 import org.json.JSONArray
 import java.net.URL
 
-object SongUtil {
-    private val TAG = "SongUtil"
+object OnlineSongUtil {
+    private val TAG = "OnlineSongUtil"
 
     fun getListMusicModel(name: String): ArrayList<Song>? {
         val url = "http://j.ginggong.com/jOut.ashx?" +

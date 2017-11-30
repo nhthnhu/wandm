@@ -2,21 +2,26 @@ package com.wandm.utils
 
 import android.app.Activity
 import android.content.ContentUris
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaMetadataRetriever
+import android.media.MediaScannerConnection
+import android.media.MediaScannerConnection.MediaScannerConnectionClient
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import com.ms_square.etsyblur.BlurConfig
 import com.wandm.R
 import com.wandm.SmartAsyncPolicyHolder
-import java.io.File
 
 
 object Utils {
+
+    val TAG = "Utils"
 
     fun getAlbumArtUri(albumId: Long): Uri {
         return ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId)
@@ -88,15 +93,19 @@ object Utils {
                     .build()
     }
 
+    fun scanMp3File(context: Context, filePaths: Array<String>) {
+        MediaScannerConnection.scanFile(
+                context,
+                filePaths,
+                arrayOf("audio/mp3", "*/*"),
+                object : MediaScannerConnectionClient {
+                    override fun onMediaScannerConnected() {
+                        Log.d(TAG, "onMediaScannerConnected")
+                    }
 
-    fun changeExtension(file: java.io.File, extension: String): Boolean {
-        var filename = file.name
-
-        if (filename.contains(".")) {
-            filename = filename.substring(0, filename.lastIndexOf('.'))
-        }
-        filename += "." + extension
-
-        return file.renameTo(File(file.getParentFile(), filename))
+                    override fun onScanCompleted(path: String, uri: Uri) {
+                        Log.d(TAG, "onScanCompleted")
+                    }
+                })
     }
 }

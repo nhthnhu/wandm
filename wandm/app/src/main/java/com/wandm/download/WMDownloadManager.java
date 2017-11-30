@@ -10,6 +10,7 @@ import com.wandm.R;
 import com.wandm.download.core.DownloadManagerPro;
 import com.wandm.download.report.ReportStructure;
 import com.wandm.download.report.listener.DownloadManagerListener;
+import com.wandm.utils.Utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.UnsupportedMimeTypeException;
@@ -88,6 +89,7 @@ public class WMDownloadManager {
 
             ReportStructure report = downloadManager.singleDownloadStatus((int) taskId);
             updateNotification((int) taskId, STATE_DOWNLOAD_COMPLETED, 100);
+            Utils.INSTANCE.scanMp3File(App.instance, new String[]{report.saveAddress});
         }
 
         @Override

@@ -11,7 +11,7 @@ import com.wandm.database.MusicDBHandler
 import com.wandm.database.PlaylistSongsTable
 import com.wandm.database.PlaylistsTable
 import com.wandm.models.Playlist
-import com.wandm.models.song.Song
+import com.wandm.models.Song
 import kotlinx.android.synthetic.main.dialog_new_playlist.*
 
 class NewPlaylistDialog : DialogFragment() {

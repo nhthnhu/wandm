@@ -11,7 +11,7 @@ import com.wandm.adapters.PlaylistAdapter
 import com.wandm.database.MusicDBHandler
 import com.wandm.database.PlaylistSongsTable
 import com.wandm.database.PlaylistsTable
-import com.wandm.models.song.Song
+import com.wandm.models.Song
 import com.wandm.utils.PreferencesUtils
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_playlists.*

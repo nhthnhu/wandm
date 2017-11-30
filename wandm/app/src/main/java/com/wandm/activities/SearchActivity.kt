@@ -10,17 +10,16 @@ import android.view.View
 import android.widget.Toast
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
-import com.arlib.floatingsearchview.util.Util
 import com.wandm.R
 import com.wandm.adapters.OnlineSongsAdapter
 import com.wandm.adapters.SongsAdapter
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.data.SearchHelper
+import com.wandm.loaders.OnlineSongLoader
 import com.wandm.loaders.SongLoader
 import com.wandm.models.RequestListener
+import com.wandm.models.Song
 import com.wandm.models.SongSearchSuggestion
-import com.wandm.models.song.Song
-import com.wandm.models.song.SongRequest
 import com.wandm.permissions.PermissionCallback
 import com.wandm.permissions.askPermission
 import com.wandm.services.MusicPlayer
@@ -358,7 +357,7 @@ class SearchActivity : BaseActivity() {
             }
         }
 
-        SongRequest(title, musicListener).execute()
+        OnlineSongLoader(title, musicListener).execute()
     }
 
     private fun playSong(song: Song) {

@@ -5,12 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wandm.R
-import com.wandm.models.Artist
-import com.wandm.models.menu.ListMenus
-import com.wandm.models.menu.Menu
+import com.wandm.models.ListMenus
+import com.wandm.models.Menu
 import com.wandm.utils.PreferencesUtils
-import com.wandm.utils.Utils
-import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_menu.view.*
 
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {

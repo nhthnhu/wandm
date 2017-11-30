@@ -132,11 +132,11 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
             uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong!!.albumId).toString()
 
         if (uri.isEmpty()) {
-            albumImageView.background = context.getDrawable(R.drawable.ic_action_music)
+            albumImageView.background = activity.getDrawable(R.drawable.ic_action_music)
             return
         }
 
-        Picasso.with(context)
+        Picasso.with(activity)
                 .load(uri)
                 .into(albumImageView, object : Callback {
                     override fun onSuccess() {
@@ -144,7 +144,7 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
                     }
 
                     override fun onError() {
-                        albumImageView.background = context.getDrawable(R.drawable.ic_action_music)
+                        albumImageView.background = activity.getDrawable(R.drawable.ic_action_music)
                     }
                 })
     }

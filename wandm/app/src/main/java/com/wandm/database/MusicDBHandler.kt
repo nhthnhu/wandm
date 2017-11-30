@@ -5,7 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.wandm.models.Playlist
-import com.wandm.models.song.Song
+import com.wandm.models.Song
 
 
 class MusicDBHandler private constructor(context: Context, var tableName: String) {

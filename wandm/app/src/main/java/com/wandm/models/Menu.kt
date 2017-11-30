@@ -1,4 +1,4 @@
-package com.wandm.models.menu
+package com.wandm.models
 
 import com.wandm.App
 import com.wandm.R

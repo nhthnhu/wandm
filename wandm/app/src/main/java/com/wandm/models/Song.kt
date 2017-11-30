@@ -1,4 +1,4 @@
-package com.wandm.models.song
+package com.wandm.models
 
 import java.io.Serializable
 

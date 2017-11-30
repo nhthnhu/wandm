@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
-import com.wandm.data.CurrentPlaylistManager
-import com.wandm.models.song.Song
+import com.wandm.models.Song
 import com.wandm.utils.PreferencesUtils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_online_song.view.*

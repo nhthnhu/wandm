@@ -1,7 +1,5 @@
 package com.wandm.models;
 
-import com.wandm.models.song.Song;
-
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -6,7 +6,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import com.wandm.models.MusicFolder;
-import com.wandm.models.song.Song;
+import com.wandm.models.Song;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -84,7 +84,7 @@ public class MusicFoldersLoader {
 
         for (File inFile : files) {
             if (inFile.isDirectory()) {
-                if (!inFile.getName().isEmpty()) {
+                if (!inFile.getName().isEmpty() && inFile.getName().indexOf('.') != 0) {
                     dirs.add(inFile);
                 }
             }

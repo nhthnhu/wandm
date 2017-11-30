@@ -11,7 +11,7 @@ import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.FavoritesAdapter
 import com.wandm.database.FavoritesTable
 import com.wandm.database.MusicDBHandler
-import com.wandm.models.song.Song
+import com.wandm.models.Song
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder

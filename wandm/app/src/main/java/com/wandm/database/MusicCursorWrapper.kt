@@ -3,7 +3,7 @@ package com.wandm.database
 import android.database.Cursor
 import android.database.CursorWrapper
 import com.wandm.models.Playlist
-import com.wandm.models.song.Song
+import com.wandm.models.Song
 
 
 class MusicCursorWrapper(cursor: Cursor?) : CursorWrapper(cursor) {

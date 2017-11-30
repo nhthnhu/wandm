@@ -2,8 +2,8 @@ package com.wandm.data
 
 import android.content.Context
 import android.widget.Filter
+import com.wandm.models.Song
 import com.wandm.models.SongSearchSuggestion
-import com.wandm.models.song.Song
 import java.util.*
 
 object SearchHelper {
