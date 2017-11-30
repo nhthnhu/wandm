@@ -1,6 +1,7 @@
 package com.wandm.fragments
 
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wandm.R
@@ -16,7 +17,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.uiThread
 
-class PlaylistsFragment : BaseFragment() {
+class PlaylistsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private var playlistsAdapter: PlaylistAdapter? = null
 
@@ -27,6 +28,11 @@ class PlaylistsFragment : BaseFragment() {
         loadPlaylists()
     }
 
+    override fun onRefresh() {
+        container.isRefreshing = true
+        loadPlaylists()
+    }
+
     private fun setupViews() {
         playlistsRecyclerView.visibility = View.GONE
         playlistsFastScroller.visibility = View.GONE
@@ -34,6 +40,8 @@ class PlaylistsFragment : BaseFragment() {
 
         playlistsRecyclerView.layoutManager = LinearLayoutManager(activity)
         playlistsFastScroller.setRecyclerView(playlistsRecyclerView)
+
+        container.setOnRefreshListener(this)
 
         MusicDBHandler.getInstance(activity, PlaylistSongsTable.TABLE_NAME)?.setDeleteEvent(object : MusicDBHandler.DeleteEvent {
             override fun onDelete(tableName: String) {
@@ -73,6 +81,8 @@ class PlaylistsFragment : BaseFragment() {
                 val playlists = MusicDBHandler.getInstance(activity, PlaylistsTable.TABLE_NAME)?.getPlaylists()
                 if (playlists != null)
                     uiThread {
+                        container.isRefreshing = false
+
                         playlistsAdapter?.listPlaylists = playlists
                         setItemDecoration()
                         playlistsAdapter?.notifyDataSetChanged()

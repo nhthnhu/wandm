@@ -190,20 +190,22 @@ class MainActivity : BaseActivity() {
      * Checking PermissionReadStorage
      */
     private fun checkPermissionReadStorage() {
-        val permission = Manifest.permission.READ_EXTERNAL_STORAGE
-        if (PermissionHelper.checkPermission(permission)) {
+        val readPermission = Manifest.permission.READ_EXTERNAL_STORAGE
+        val writePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+        if (PermissionHelper.checkPermission(readPermission)) {
             setupUI()
         } else {
-            if (PermissionHelper.shouldShowRequestPermissionRationale(this, permission)) {
+            if (PermissionHelper.shouldShowRequestPermissionRationale(this, readPermission)) {
                 Snackbar.make(slidingPane, getString(R.string.request_read_storage_permission), Snackbar.LENGTH_INDEFINITE)
                         .setAction(android.R.string.ok) {
                             PermissionHelper.askForPermission(this,
-                                    permission,
+                                    arrayOf(readPermission, writePermission),
                                     permissionReadStorageCallback)
                         }.show()
             } else {
                 PermissionHelper.askForPermission(this,
-                        permission,
+                        arrayOf(readPermission, writePermission),
                         permissionReadStorageCallback)
             }
         }

@@ -2,7 +2,9 @@ package com.wandm.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.wandm.App
 import com.wandm.R
@@ -19,8 +21,11 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 
-class SongsFragment : BaseFragment() {
+class SongsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+
+
     private var adapter: SongsAdapter? = null
+    private val TAG = "SongsFragment"
 
     companion object {
         fun newInstance(): SongsFragment {
@@ -36,38 +41,52 @@ class SongsFragment : BaseFragment() {
         PreferencesUtils.setSongSortOrder(SortOrder.SongSortOrder.SONG_A_Z)
         songsRecyclerView.layoutManager = LinearLayoutManager(activity)
         songsFastScroller.setRecyclerView(songsRecyclerView)
+        container.setOnRefreshListener(this)
 
         if (activity != null) {
-            doAsync {
-                val songs = SongLoader.getAllSongs(App.instance)
-                SearchHelper.setSongSuggestions(songs)
+            loadSongs()
+        }
+    }
 
-                adapter = SongsAdapter(songs, true) { song, position, action ->
-                    when (action) {
-                        SongsAdapter.ACTION_ADD_PLAYLIST -> {
+    override fun onRefresh() {
+        if (activity != null) {
+            container.isRefreshing = true
+            loadSongs()
+        }
+    }
 
-                        }
+    private fun loadSongs() {
+        doAsync {
+            val songs = SongLoader.getAllSongs(App.instance)
+            SearchHelper.setSongSuggestions(songs)
 
-                        SongsAdapter.ACTION_PLAY -> {
-                            MusicPlayer.bind(null)
+            adapter = SongsAdapter(songs, true) { song, position, action ->
+                when (action) {
+                    SongsAdapter.ACTION_ADD_PLAYLIST -> {
 
-                            val intent = Intent(activity, NowPlayingActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            activity.startActivity(intent)
-                        }
+                    }
+
+                    SongsAdapter.ACTION_PLAY -> {
+                        MusicPlayer.bind(null)
+
+                        val intent = Intent(activity, NowPlayingActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        activity.startActivity(intent)
                     }
                 }
+            }
 
-                uiThread {
-                    songsRecyclerView.adapter = adapter
-                    setItemDecoration()
-                    songsRecyclerView.adapter.notifyDataSetChanged()
+            uiThread {
+                container.isRefreshing = false
 
-                    if (songs.size > 0)
-                        songsFastScroller.visibility = View.VISIBLE
+                songsRecyclerView.adapter = adapter
+                setItemDecoration()
+                songsRecyclerView.adapter.notifyDataSetChanged()
 
-                    songsProgressBar.visibility = View.GONE
-                }
+                if (songs.size > 0)
+                    songsFastScroller.visibility = View.VISIBLE
+
+                songsProgressBar.visibility = View.GONE
             }
         }
     }

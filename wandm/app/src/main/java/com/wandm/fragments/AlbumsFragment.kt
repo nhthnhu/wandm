@@ -1,6 +1,7 @@
 package com.wandm.fragments
 
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wandm.App
@@ -17,36 +18,50 @@ import kotlinx.android.synthetic.main.fragment_albums.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class AlbumsFragment : BaseFragment() {
+class AlbumsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun getLayoutResId() = R.layout.fragment_albums
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
         PreferencesUtils.setAlbumSortOrder(SortOrder.AlbumSortOrder.ALBUM_A_Z)
         albumsRecyclerView.layoutManager = LinearLayoutManager(activity)
         albumsFastScroller.setRecyclerView(albumsRecyclerView)
+        container.setOnRefreshListener(this)
 
 
         if (activity != null) {
-            doAsync {
-                val albums = AlbumLoader.getAllAlbums(App.instance) as ArrayList<Album>
+            loadAlbums()
+        }
+    }
 
-                val adapter = AlbumsAdapter(albums)
-                uiThread {
-                    albumsRecyclerView.adapter = adapter
-                    setItemDecoration()
-                    albumsRecyclerView.adapter.notifyDataSetChanged()
+    override fun onRefresh() {
+        if (activity != null) {
+            container.isRefreshing = true
+            loadAlbums()
+        }
+    }
 
-                    if (albums.size > 0)
-                        albumsFastScroller.visibility = View.VISIBLE
+    private fun loadAlbums() {
+        doAsync {
+            val albums = AlbumLoader.getAllAlbums(App.instance) as ArrayList<Album>
+            val adapter = AlbumsAdapter(albums)
+
+            uiThread {
+                container.isRefreshing = false
+
+                albumsRecyclerView.adapter = adapter
+                setItemDecoration()
+                albumsRecyclerView.adapter.notifyDataSetChanged()
+
+                if (albums.size > 0)
+                    albumsFastScroller.visibility = View.VISIBLE
 
 
-                    albumsProgressBar.visibility = View.GONE
+                albumsProgressBar.visibility = View.GONE
 
-                    adapter.setOnItemClickListener { album, position ->
-                        val fragmentManager = MainActivity.instance.supportFragmentManager
-                        val dialogFragment = AlbumDetailDialog.newInstance(album.id)
-                        dialogFragment.show(fragmentManager, "AlbumDetailDialog")
-                    }
+                adapter.setOnItemClickListener { album, position ->
+                    val fragmentManager = MainActivity.instance.supportFragmentManager
+                    val dialogFragment = AlbumDetailDialog.newInstance(album.id)
+                    dialogFragment.show(fragmentManager, "AlbumDetailDialog")
                 }
             }
         }

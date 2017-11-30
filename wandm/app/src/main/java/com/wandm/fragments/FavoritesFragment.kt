@@ -2,7 +2,9 @@ package com.wandm.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.wandm.App
@@ -20,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_songs.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class FavoritesFragment : BaseFragment() {
+class FavoritesFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private val TAG = "FavoritesFragment"
     private var mList: ArrayList<Song>? = null
 
@@ -34,30 +36,37 @@ class FavoritesFragment : BaseFragment() {
         PreferencesUtils.setSongSortOrder(SortOrder.SongSortOrder.SONG_A_Z)
         songsRecyclerView.layoutManager = LinearLayoutManager(activity)
         songsFastScroller.setRecyclerView(songsRecyclerView)
+        container.setOnRefreshListener(this)
 
         MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)
                 ?.setInsertEvent(object : MusicDBHandler.InsertEvent {
                     override fun onInsert(tableName: String) {
                         if (tableName == FavoritesTable.TABLE_NAME)
-                            updateList()
+                            loadSongs()
                     }
                 })
 
         if (activity != null) {
-            updateList()
+            loadSongs()
         }
     }
 
-    private fun setItemDecoration() {
-        songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
+    override fun onRefresh() {
+        if (activity != null) {
+            container.isRefreshing = true
+            loadSongs()
+        }
     }
 
-    private fun updateList() {
+    private fun loadSongs() {
         doAsync {
             mList = MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.getFavorites()
             if (mList != null) {
                 mAdapter = FavoritesAdapter(mList!!)
+
                 uiThread {
+                    container.isRefreshing = false
+
                     songsRecyclerView.adapter = mAdapter
                     setItemDecoration()
                     songsRecyclerView.adapter.notifyDataSetChanged()
@@ -93,5 +102,9 @@ class FavoritesFragment : BaseFragment() {
             }
 
         }
+    }
+
+    private fun setItemDecoration() {
+        songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
     }
 }
