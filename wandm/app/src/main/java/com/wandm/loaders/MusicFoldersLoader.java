@@ -38,11 +38,14 @@ public class MusicFoldersLoader {
 
     public static void getMusicFolders(final Activity activity,
                                        final File root,
+                                       boolean loadingAgain,
                                        final OnLoadListener onLoadListener) {
-        if (!musicFolders.isEmpty()) {
+        if (!musicFolders.isEmpty() && !loadingAgain) {
             onLoadListener.completed(musicFolders);
             return;
         }
+
+        musicFolders.clear();
 
         new Thread(new Runnable() {
             @Override

@@ -23,12 +23,12 @@ class FoldersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
         setupViews()
-        loadFolders()
+        loadFolders(false)
     }
 
     override fun onRefresh() {
         container.isRefreshing = true
-        loadFolders()
+        loadFolders(true)
     }
 
     private fun setupViews() {
@@ -39,14 +39,14 @@ class FoldersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         container.setOnRefreshListener(this)
     }
 
-    private fun loadFolders() {
+    private fun loadFolders(loadingAgain:Boolean) {
         foldersProgressBar.visibility = View.VISIBLE
         foldersRecyclerView.visibility = View.GONE
         foldersFastScroller.visibility = View.GONE
 
         if (activity != null) {
             MusicFoldersLoader.getMusicFolders(activity,
-                    MusicFoldersLoader.externalStorage) { mediaFolders ->
+                    MusicFoldersLoader.externalStorage, loadingAgain) { mediaFolders ->
 
                 try {
                     if (mediaFolders != null) {

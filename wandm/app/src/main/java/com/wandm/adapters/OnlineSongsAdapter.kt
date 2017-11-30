@@ -39,10 +39,6 @@ class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
         holder?.itemView?.titleItemSongTextView?.setOnClickListener {
             listener(listSongs[position], position, ACTION_PLAY)
         }
-
-        holder?.itemView?.downloadButton?.setOnClickListener {
-            listener(listSongs[position], position, ACTION_DOWNLOAD)
-        }
     }
 
 
@@ -71,6 +67,5 @@ class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
 
         val textSize = PreferencesUtils.getTextSize()
         itemView.titleItemSongTextView.textSize = textSize.toFloat()
-        itemView.downloadButton.setColor(itemView.resources?.getColor(colorResId)!!)
     }
 }

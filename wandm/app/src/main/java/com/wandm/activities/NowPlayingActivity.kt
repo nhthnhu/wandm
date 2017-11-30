@@ -54,7 +54,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     private var isShuffle = false
     private var repeatMode = 0
     private var isFavorite = false
-    private var isDownloaded = false
 
     private var colorResId = R.color.color_dark_theme
     private var colorResIdPressed = R.color.color_light_theme
@@ -62,6 +61,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
     companion object {
         lateinit var instance: NowPlayingActivity
+        private var isDownloaded = false
     }
 
     // Listening events of SlidingPaneLayout
@@ -110,11 +110,14 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         }
 
         override fun OnDownloadFinished(taskId: Long) {
-
+            runOnUiThread { toast(R.string.download_failed) }
         }
 
         override fun connectionLost(taskId: Long) {
-            runOnUiThread { toast(R.string.download_failed) }
+            runOnUiThread {
+                CurrentPlaylistManager.instance.currentSong?.downloadEnable = true
+                setDownload(true)
+            }
         }
 
     }
@@ -181,13 +184,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
         EventBus.getDefault().register(this)
 
-        setShuffleMode(true)
-        setRepeatMode(true)
-        setFavorite(true)
-        setDownload(true)
-        setAlbumArt()
-        setTimer(true)
-
         playpauseButton.setOnClickListener(this)
         playpauseWrapper.setOnClickListener(this)
         nextButton.setOnClickListener(this)
@@ -221,6 +217,12 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         setupUI()
+        setShuffleMode(true)
+        setRepeatMode(true)
+        setFavorite(true)
+        setDownload(true)
+        setAlbumArt()
+        setTimer(true)
         setBlurBackground(songBackground, songBlurringView)
     }
 
@@ -517,9 +519,13 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 isDownloaded = false
             }
         } else {
+            CurrentPlaylistManager.instance.currentSong?.downloadEnable = false
             val song = CurrentPlaylistManager.instance.currentSong
             WMDownloadManager.getInstance().download(song?.title, song?.data, downloadListener)
             downloadButton.isEnabled = false
+            downloadButton.setColor(resources.getColor(colorResIdPressed))
+            isDownloaded = false
+
         }
     }
 

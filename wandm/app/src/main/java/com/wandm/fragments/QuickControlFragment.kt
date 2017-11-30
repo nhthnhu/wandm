@@ -144,7 +144,8 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
                     }
 
                     override fun onError() {
-                        albumImageView.background = activity.getDrawable(R.drawable.ic_action_music)
+                        if (activity != null)
+                            albumImageView.background = activity.getDrawable(R.drawable.ic_action_music)
                     }
                 })
     }

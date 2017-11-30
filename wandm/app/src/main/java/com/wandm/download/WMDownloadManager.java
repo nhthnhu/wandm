@@ -57,7 +57,16 @@ public class WMDownloadManager {
             Log.d(TAG, "onDownloadProcess: " + percent);
             for (WMDownloadManager.Listener listener : listeners)
                 if (listener != null) listener.OnDownloadProcess(taskId, percent, downloadedLength);
-            updateNotification((int) taskId, STATE_DOWNLOAD_IN_PROGRESS, percent);
+
+            switch ((int) percent) {
+                case 10:
+                case 35:
+                case 55:
+                case 75:
+                case 95:
+                    updateNotification((int) taskId, STATE_DOWNLOAD_IN_PROGRESS, percent);
+                    break;
+            }
         }
 
         @Override
@@ -98,6 +107,7 @@ public class WMDownloadManager {
             for (WMDownloadManager.Listener listener : listeners)
                 if (listener != null) listener.connectionLost(taskId);
             updateNotification((int) taskId, STATE_DOWNLOAD_ERROR, 0);
+            downloadManager.delete((int) taskId, true);
         }
     };
 
@@ -137,6 +147,7 @@ public class WMDownloadManager {
             case STATE_DOWNLOAD_COMPLETED:
                 notificationBuilder
                         .setContentText(context.getString(R.string.download_completed))
+                        .setSmallIcon(android.R.drawable.stat_sys_download_done)
                         .setProgress(100, 100, false);
                 break;
 
