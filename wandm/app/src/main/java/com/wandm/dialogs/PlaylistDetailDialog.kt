@@ -13,6 +13,7 @@ import com.wandm.adapters.SongsAdapter
 import com.wandm.database.MusicDBHandler
 import com.wandm.database.PlaylistSongsTable
 import com.wandm.services.MusicPlayer
+import com.wandm.utils.PreferencesUtils
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_playlist_detail.*
 import org.jetbrains.anko.doAsync
@@ -49,6 +50,10 @@ class PlaylistDetailDialog : BaseDialog() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         loadSongs()
+
+        homeButton.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun setupViews() {
@@ -57,6 +62,11 @@ class PlaylistDetailDialog : BaseDialog() {
         playlistSongsFastScroller.visibility = View.GONE
         playlistSongsRecyclerView.visibility = View.GONE
         playlistSongsProgressBar.visibility = View.VISIBLE
+
+        if (PreferencesUtils.getLightTheme())
+            homeButton.setColor(activity.resources.getColor(R.color.color_light_theme))
+        else
+            homeButton.setColor(activity.resources.getColor(R.color.color_dark_theme))
 
         songsAdapter = SongsAdapter(ArrayList(), false) { song, position, action ->
             when (action) {
@@ -111,5 +121,7 @@ class PlaylistDetailDialog : BaseDialog() {
     private fun setItemDecoration() {
         playlistSongsRecyclerView.addItemDecoration(DividerItemDecoration(activity,
                 DividerItemDecoration.VERTICAL_LIST))
+
     }
+
 }

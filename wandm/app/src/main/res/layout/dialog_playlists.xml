@@ -2,13 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/newPlaylistButton"
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:orientation="horizontal">
+
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            android:id="@+id/homeButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="center"
+            app:materialIcon="arrow_left" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/newPlaylistLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -17,14 +35,14 @@
         android:orientation="horizontal">
 
         <net.steamcrafted.materialiconlib.MaterialIconView
+            android:id="@+id/newPlaylistButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_gravity="center"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="2dp"
             android:scaleType="center"
-            app:materialIcon="playlist_plus"
-            app:materialIconColor="@color/color_white" />
+            app:materialIcon="playlist_plus" />
 
         <android.support.v7.widget.AppCompatTextView
             style="@style/WMTextStyle"
@@ -37,12 +55,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/playlistsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="14dp"

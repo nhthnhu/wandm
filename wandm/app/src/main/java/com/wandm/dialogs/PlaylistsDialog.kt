@@ -12,6 +12,7 @@ import com.wandm.database.MusicDBHandler
 import com.wandm.database.PlaylistSongsTable
 import com.wandm.database.PlaylistsTable
 import com.wandm.models.song.Song
+import com.wandm.utils.PreferencesUtils
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_playlists.*
 import org.jetbrains.anko.doAsync
@@ -21,6 +22,7 @@ import org.jetbrains.anko.uiThread
 class PlaylistsDialog : BaseDialog() {
     private var song: Song? = null
     private var playlistsAdapter: PlaylistAdapter? = null
+    private var colorResId = R.color.color_dark_theme
 
     companion object {
 
@@ -49,9 +51,13 @@ class PlaylistsDialog : BaseDialog() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
 
-        newPlaylistButton.setOnClickListener {
+        newPlaylistLayout.setOnClickListener {
             val newPlaylistDialog = NewPlaylistDialog.newInstance(song)
             newPlaylistDialog.show(fragmentManager, NewPlaylistDialog::javaClass.name)
+            dismiss()
+        }
+
+        homeButton.setOnClickListener {
             dismiss()
         }
     }
@@ -62,6 +68,12 @@ class PlaylistsDialog : BaseDialog() {
     }
 
     private fun setupViews() {
+        if (PreferencesUtils.getLightTheme())
+            colorResId = R.color.color_light_theme
+
+        homeButton.setColor(activity.resources.getColor(colorResId))
+        newPlaylistButton.setColor(activity.resources.getColor(colorResId))
+
         song = arguments.getSerializable(ARG_SONG) as Song
         playlistsAdapter = PlaylistAdapter(ArrayList()) { playlist, i, action ->
 

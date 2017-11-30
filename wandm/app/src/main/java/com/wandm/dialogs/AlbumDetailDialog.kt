@@ -19,14 +19,13 @@ import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_album_detail.*
-import kotlinx.android.synthetic.main.dialog_album_detail.view.*
-import kotlinx.android.synthetic.main.item_album.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class AlbumDetailDialog : BaseDialog() {
     private var albumId = 0L
     private val TAG = "AlbumDetailDialog"
+    private var colorResId = R.color.color_dark_theme
 
     companion object {
         private val ARG_ALBUM_ID = "arg_album_id"
@@ -54,9 +53,13 @@ class AlbumDetailDialog : BaseDialog() {
         songsRecyclerView.layoutManager = LinearLayoutManager(activity)
         songsFastScroller.setRecyclerView(songsRecyclerView)
 
-        setupSize()
+        setupView()
 
         loadAlbumDetail()
+
+        homeButton.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun showView(action: String) {
@@ -132,10 +135,14 @@ class AlbumDetailDialog : BaseDialog() {
         songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
     }
 
-    private fun setupSize() {
+    private fun setupView() {
         val textSize = PreferencesUtils.getTextSize()
         albumNameTextView.textSize = textSize.toFloat()
         detailAlbumTextView.textSize = (textSize - 4).toFloat()
+
+        if (PreferencesUtils.getLightTheme())
+            colorResId = R.color.color_light_theme
+        homeButton.setColor(activity.resources.getColor(colorResId))
     }
 
 }

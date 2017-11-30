@@ -9,10 +9,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/toolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:orientation="horizontal">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/homeButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="center"
+                app:materialIcon="arrow_left" />
+
+        </LinearLayout>
+
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/albumsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_below="@id/toolbarLayout"
             android:fadeScrollbars="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -29,10 +48,10 @@
             android:id="@+id/songsFastScroller"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
             android:layout_below="@id/albumsRecyclerView"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
-            android:layout_alignParentEnd="true"
             android:visibility="invisible" />
     </RelativeLayout>
 
