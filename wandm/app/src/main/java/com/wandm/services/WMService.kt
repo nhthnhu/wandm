@@ -1,10 +1,9 @@
 package com.wandm.services
 
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.*
 import android.media.AudioManager
+import android.media.session.MediaSession
 import android.media.session.MediaSessionManager
 import android.os.CountDownTimer
 import android.os.IBinder
@@ -29,7 +28,6 @@ import com.wandm.utils.PreferencesUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import android.content.Intent
 
 
 class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -37,6 +35,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
     companion object {
         private val TAG = "WMService"
         private val NOTIFICATION_ID = 101
+        private val NOTIFICATION_CHANNEL = "notification_channel"
 
         val ACTION_PLAY = "ACTION_PLAY"
         val ACTION_PAUSE = "ACTION_PAUSE"
@@ -45,10 +44,16 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
         val ACTION_STOP = "ACTION_STOP"
     }
 
+    private var notificationManager: NotificationManager? = null
+
     private val mBinder = ServiceStub()
     private val mPlayer = MultiPlayer()
 
     private var mediaSessionManager: MediaSessionManager? = null
+
+    private var mediaSession8: MediaSession? = null
+    private var transportControls8: android.media.session.MediaController.TransportControls? = null
+
     private var mediaSession: MediaSessionCompat? = null
     private var transportControls: MediaControllerCompat.TransportControls? = null
 
@@ -251,17 +256,24 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
     }
 
     private fun initMediaSession() {
-        if (mediaSessionManager != null)
+        if (mediaSessionManager != null || mediaSession8 != null)
             return
         else {
             mediaSessionManager = getSystemService(Context.MEDIA_SESSION_SERVICE) as MediaSessionManager
             mediaSession = MediaSessionCompat(applicationContext, "WAndM")
+            mediaSession8 = MediaSession(applicationContext, "WAndM")
+
             transportControls = mediaSession!!.controller.transportControls
+            transportControls8 = mediaSession8!!.controller.transportControls
+
 
             mediaSession!!.isActive = true
             mediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS)
 
+            mediaSession8!!.isActive = true
+
             updateMetaData()
+
 
             mediaSession!!.setCallback(object : MediaSessionCompat.Callback() {
                 override fun onPlay() {
@@ -304,6 +316,7 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
 
     private fun getNotification(playbackStatus: PlaybackStatus) {
         val notificationAction: Int
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (playbackStatus == PlaybackStatus.PLAYING) {
             notificationAction = R.drawable.ic_action_pause_dark
@@ -315,23 +328,51 @@ class WMService : Service(), AudioManager.OnAudioFocusChangeListener, SharedPref
 
         val song = CurrentPlaylistManager.currentSong
 
-        val notificationBuilder = NotificationCompat.Builder(this)
-                .setShowWhen(false)
-                .setColor(resources.getColor(R.color.color_primary_dark))
-                .setSmallIcon(R.drawable.ic_music)
-                .setContentText(song?.title)
-                .addAction(R.drawable.ic_action_skip_pre_dark, "previous", playbackAction(3))
-                .addAction(notificationAction, "pause", playPauseAction)
-                .addAction(R.drawable.ic_action_skip_next_dark, "next", playbackAction(2))
-                .setStyle(android.support.v4.media.app.NotificationCompat.MediaStyle()
-                        .setMediaSession(mediaSession!!.sessionToken)
-                        .setShowActionsInCompactView(0, 1, 2))
-                .setDeleteIntent(playbackAction(4))
-                .setContentIntent(PendingIntent.getActivity(this, 0,
-                        Intent(this, NowPlayingActivity::class.java)
-                        , PendingIntent.FLAG_UPDATE_CURRENT))
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) {
 
-        (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFICATION_ID, notificationBuilder.build())
+            val notificationBuilder = NotificationCompat.Builder(this)
+                    .setShowWhen(false)
+                    .setColor(resources.getColor(R.color.color_primary_dark))
+                    .setSmallIcon(R.drawable.ic_music)
+                    .setContentText(song?.title)
+                    .addAction(R.drawable.ic_action_skip_pre_dark, "previous", playbackAction(3))
+                    .addAction(notificationAction, "pause", playPauseAction)
+                    .addAction(R.drawable.ic_action_skip_next_dark, "next", playbackAction(2))
+                    .setStyle(android.support.v4.media.app.NotificationCompat.MediaStyle()
+                            .setMediaSession(mediaSession!!.sessionToken)
+                            .setShowActionsInCompactView(0, 1, 2))
+                    .setDeleteIntent(playbackAction(4))
+                    .setContentIntent(PendingIntent.getActivity(this, 0,
+                            Intent(this, NowPlayingActivity::class.java)
+                            , PendingIntent.FLAG_UPDATE_CURRENT))
+
+            notificationManager?.notify(NOTIFICATION_ID, notificationBuilder.build())
+        } else {
+            val channel = NotificationChannel(NOTIFICATION_CHANNEL,
+                    resources.getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT)
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+
+            val builder = Notification.Builder(this, NOTIFICATION_CHANNEL)
+                    .setColor(resources.getColor(R.color.color_primary_dark))
+                    .setSmallIcon(R.drawable.ic_music)
+                    .setContentText(song?.title)
+                    .addAction(R.drawable.ic_action_skip_pre_dark, "previous", playbackAction(3))
+                    .addAction(notificationAction, "pause", playPauseAction)
+                    .addAction(R.drawable.ic_action_skip_next_dark, "next", playbackAction(2))
+                    .setStyle(Notification.MediaStyle()
+                            .setMediaSession(mediaSession8!!.sessionToken)
+                            .setShowActionsInCompactView(0, 1, 2))
+                    .setDeleteIntent(playbackAction(4))
+                    .setContentIntent(PendingIntent.getActivity(this, 0,
+                            Intent(this, NowPlayingActivity::class.java)
+                            , PendingIntent.FLAG_UPDATE_CURRENT))
+
+            notificationManager?.createNotificationChannel(channel)
+
+            notificationManager?.notify(NOTIFICATION_ID, builder.build())
+
+
+        }
 
     }
 
