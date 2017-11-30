@@ -56,4 +56,6 @@ dependencies {
     implementation 'com.github.iammert:MusicPlayerView:e3b937c729'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+    implementation files('libs/mp3agic-0.8.2.jar')
+    implementation 'org.jsoup:jsoup:1.11.2'
 }

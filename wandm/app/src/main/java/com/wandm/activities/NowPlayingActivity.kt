@@ -18,9 +18,9 @@ import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
 import com.wandm.database.MusicDBHandler
 import com.wandm.dialogs.AlarmDialog
+import com.wandm.download.WMDownloadManager
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
-import com.wandm.services.DownloadService
 import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
@@ -33,6 +33,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.textColor
+import org.jetbrains.anko.toast
 import java.util.concurrent.TimeUnit
 
 
@@ -79,6 +80,41 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         override fun onPanelSlide(arg0: View, arg1: Float) {
 
 
+        }
+
+    }
+
+    val downloadListener = object : WMDownloadManager.Listener {
+        override fun OnDownloadStarted(taskId: Long) {
+            runOnUiThread { toast(R.string.downloading) }
+        }
+
+        override fun OnDownloadRebuildStart(taskId: Long) {
+
+        }
+
+        override fun OnDownloadPaused(taskId: Long) {
+
+        }
+
+        override fun OnDownloadCompleted(taskId: Long) {
+            runOnUiThread { toast(R.string.download_completed) }
+        }
+
+        override fun OnDownloadProcess(taskId: Long, percent: Double, downloadedLength: Long) {
+
+        }
+
+        override fun OnDownloadRebuildFinished(taskId: Long) {
+
+        }
+
+        override fun OnDownloadFinished(taskId: Long) {
+
+        }
+
+        override fun connectionLost(taskId: Long) {
+            runOnUiThread { toast(R.string.download_failed) }
         }
 
     }
@@ -481,10 +517,9 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 isDownloaded = false
             }
         } else {
-            val intent = Intent(this, DownloadService::class.java)
-            intent.putExtra(DownloadService.FILE_NAME, CurrentPlaylistManager.currentSong?.title)
-            intent.putExtra(DownloadService.URL_PATH, CurrentPlaylistManager.currentSong?.data)
-            startService(intent)
+            val song = CurrentPlaylistManager.instance.currentSong
+            WMDownloadManager.getInstance().download(song?.title, song?.data, downloadListener)
+            downloadButton.isEnabled = false
         }
     }
 

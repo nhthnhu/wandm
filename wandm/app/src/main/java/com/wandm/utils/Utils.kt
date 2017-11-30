@@ -13,6 +13,7 @@ import android.os.Build
 import com.ms_square.etsyblur.BlurConfig
 import com.wandm.R
 import com.wandm.SmartAsyncPolicyHolder
+import java.io.File
 
 
 object Utils {
@@ -85,5 +86,17 @@ object Utils {
                     .asyncPolicy(SmartAsyncPolicyHolder.INSTANCE.smartAsyncPolicy())
                     .debug(true)
                     .build()
+    }
+
+
+    fun changeExtension(file: java.io.File, extension: String): Boolean {
+        var filename = file.name
+
+        if (filename.contains(".")) {
+            filename = filename.substring(0, filename.lastIndexOf('.'))
+        }
+        filename += "." + extension
+
+        return file.renameTo(File(file.getParentFile(), filename))
     }
 }

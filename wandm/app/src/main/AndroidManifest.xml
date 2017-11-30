@@ -44,8 +44,6 @@
             </intent-filter>
         </service>
 
-        <service android:name=".services.DownloadService" />
-
         <activity android:name=".activities.SearchActivity" />
 
 

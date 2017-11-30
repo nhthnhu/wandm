@@ -84,7 +84,7 @@ public class MusicFoldersLoader {
 
         for (File inFile : files) {
             if (inFile.isDirectory()) {
-                if (!inFile.getName().isEmpty() && inFile.getName().indexOf('.') != 0) {
+                if (!inFile.getName().isEmpty()) {
                     dirs.add(inFile);
                 }
             }

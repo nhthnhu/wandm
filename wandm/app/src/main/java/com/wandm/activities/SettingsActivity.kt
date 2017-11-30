@@ -8,7 +8,6 @@ import android.preference.PreferenceActivity
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.WindowManager
 import com.ms_square.etsyblur.BlurringView
 import com.wandm.R
@@ -40,7 +39,6 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
         addPreferencesFromResource(R.xml.preferences)
         setupWindows()
         blurringView.blurConfig(Utils.getBlurViewConfig())
-        setBlurBackground(background, blurringView)
         setupViews()
     }
 
@@ -58,6 +56,7 @@ class SettingsActivity : PreferenceActivity(), SharedPreferences.OnSharedPrefere
     override fun onResume() {
         super.onResume()
         preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        setBlurBackground(background, blurringView)
     }
 
     override fun onPause() {
