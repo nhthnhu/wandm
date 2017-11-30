@@ -38,7 +38,6 @@ class OnlineSongsAdapter(var listSongs: ArrayList<Song>,
         holder?.bind(listSongs[position])
 
         holder?.itemView?.titleItemSongTextView?.setOnClickListener {
-            CurrentPlaylistManager.listSongs = listSongs
             listener(listSongs[position], position, ACTION_PLAY)
         }
 

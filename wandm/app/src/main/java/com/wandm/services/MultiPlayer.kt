@@ -21,7 +21,8 @@ class MultiPlayer : MediaPlayer.OnCompletionListener,
     override fun onCompletion(p0: MediaPlayer?) {
         EventBus.getDefault().post(MessageEvent(MusicEvent.COMPLETED_ACTION))
         if (PreferencesUtils.getRepeatMode() == 1 ||
-                CurrentPlaylistManager.position < CurrentPlaylistManager.listSongs.size) {
+                (CurrentPlaylistManager.position < CurrentPlaylistManager.listSongs.size &&
+                CurrentPlaylistManager.listSongs.size != 1)) {
             next()
         }
     }

@@ -240,6 +240,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         @SuppressLint("SetTextI18n")
         override fun run() {
             if (mServiceBound) {
+                songDuration.visibility = View.VISIBLE
+
                 mStartTime = MusicPlayer.position()
 
                 songProgress.progress = mStartTime
