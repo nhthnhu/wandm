@@ -1,6 +1,5 @@
 package com.wandm.adapters
 
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +8,27 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.wandm.App
 import com.wandm.R
-import com.wandm.activities.NowPlayingActivity
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
 import com.wandm.database.MusicDBHandler
 import com.wandm.models.song.Song
-import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.Utils
 import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_favorite_song.view.*
 
 class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Adapter<FavoritesAdapter.FavoriteHolder>(), BubbleTextGetter {
+
+    companion object {
+        val ACTION_REMOVE = "action_remove"
+        val ACTION_PLAY = "action_play"
+    }
+
+    private var onItemClickListener: ((song: Song, position: Int, action: String) -> Unit)? = null
+
+    fun setOnItemClickListener(onItemClickListener: ((song: Song, position: Int, action: String) -> Unit)?) {
+        this.onItemClickListener = onItemClickListener
+    }
 
     override fun getTextToShowInBubble(pos: Int): String {
         if (listSongs.size == 0)
@@ -39,35 +47,14 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: FavoriteHolder?, position: Int) {
-        holder?.bind(listSongs[position])
-
-        holder?.songItemView?.setOnClickListener {
-            val context = holder.songItemView.context
-
-            CurrentPlaylistManager.listSongs = listSongs
-            CurrentPlaylistManager.position = position
-            MusicPlayer.bind(null)
-
-
-            val intent = Intent(context, NowPlayingActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            context.startActivity(intent)
-        }
-
-        holder?.songItemView?.setOnLongClickListener {
-            removeSong(position)
-        }
-
-        holder?.songItemView?.favoriteButton?.setOnClickListener {
-            removeSong(position)
-        }
+        holder?.bind(listSongs[position], position)
     }
 
 
     inner class FavoriteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var songItemView: View = itemView
 
-        fun bind(song: Song) {
+        fun bind(song: Song, position: Int) {
             setupSize(itemView)
             ImageLoader.getInstance().displayImage(
                     Utils.getAlbumArtUri(song.albumId).toString(),
@@ -80,6 +67,23 @@ class FavoritesAdapter(private val listSongs: ArrayList<Song>) : RecyclerView.Ad
 
             itemView.titleItemSongTextView.isSelected = true
             itemView.artistItemSongTextView.isSelected = true
+
+
+            itemView.favoriteButton.setOnClickListener {
+                onItemClickListener?.invoke(song, position, ACTION_REMOVE)
+            }
+
+            itemView.setOnClickListener {
+                CurrentPlaylistManager.listSongs = listSongs
+                CurrentPlaylistManager.position = position
+
+                onItemClickListener?.invoke(song, position, ACTION_PLAY)
+            }
+
+            itemView.setOnLongClickListener {
+                onItemClickListener?.invoke(song, position, ACTION_REMOVE)
+                true
+            }
         }
 
     }

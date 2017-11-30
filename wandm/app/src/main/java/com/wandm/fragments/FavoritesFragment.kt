@@ -1,14 +1,18 @@
 package com.wandm.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.Toast
 import com.wandm.App
 import com.wandm.R
+import com.wandm.activities.NowPlayingActivity
 import com.wandm.adapters.FavoritesAdapter
 import com.wandm.database.FavoritesTable
 import com.wandm.database.MusicDBHandler
 import com.wandm.models.song.Song
+import com.wandm.services.MusicPlayer
 import com.wandm.utils.PreferencesUtils
 import com.wandm.utils.SortOrder
 import com.wandm.views.DividerItemDecoration
@@ -62,6 +66,29 @@ class FavoritesFragment : BaseFragment() {
                         songsFastScroller.visibility = View.VISIBLE
 
                     songsProgressBar.visibility = View.GONE
+                }
+            }
+
+            mAdapter?.setOnItemClickListener { song, position, action ->
+                when (action) {
+                    FavoritesAdapter.ACTION_PLAY -> {
+                        MusicPlayer.bind(null)
+
+                        val intent = Intent(activity, NowPlayingActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                    }
+
+                    FavoritesAdapter.ACTION_REMOVE -> {
+                        val isSuccessfull = MusicDBHandler.getInstance(activity, FavoritesTable.TABLE_NAME)?.
+                                remove(mList!![position])!!
+
+                        if (isSuccessfull) {
+                            mList?.remove(song)
+                            mAdapter?.notifyDataSetChanged()
+                            Toast.makeText(activity, R.string.remove_from_favorites, Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
 

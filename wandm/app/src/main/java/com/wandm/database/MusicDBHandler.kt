@@ -26,15 +26,25 @@ class MusicDBHandler private constructor(context: Context, var tableName: String
     private var context: Context? = null
     var database: SQLiteDatabase? = null
 
-    private val events = ArrayList<InsertEvent>()
+    private val insetEvents = ArrayList<InsertEvent>()
+    private val deleteEvents = ArrayList<DeleteEvent>()
 
     interface InsertEvent {
         fun onInsert(tableName: String)
     }
 
-    fun setInsertEvent(e: InsertEvent) {
-        events.add(e)
+    interface DeleteEvent {
+        fun onDelete(tableName: String)
     }
+
+    fun setInsertEvent(e: InsertEvent) {
+        insetEvents.add(e)
+    }
+
+    fun setDeleteEvent(e: DeleteEvent) {
+        deleteEvents.add(e)
+    }
+
 
     init {
         this.context = context.applicationContext
@@ -68,7 +78,7 @@ class MusicDBHandler private constructor(context: Context, var tableName: String
             return false
         }
 
-        for (insertEvent in events) insertEvent.onInsert(tableName)
+        for (insertEvent in insetEvents) insertEvent.onInsert(tableName)
         return true
     }
 
@@ -261,6 +271,29 @@ class MusicDBHandler private constructor(context: Context, var tableName: String
         values.put(PlaylistSongsTable.Cols.PLAYLIST_ID, song.playlistId)
 
         return values
+    }
+
+    fun removeSongFromPlaylist(song: Song) {
+        database?.delete(tableName, PlaylistSongsTable.Cols.TITLE + "=?"
+                , arrayOf(song.title))
+
+        for (deleteEvent in deleteEvents) {
+            deleteEvent.onDelete(tableName)
+        }
+    }
+
+    fun removePlaylist(playlistId: Int) {
+        database?.delete(PlaylistSongsTable.TABLE_NAME
+                , PlaylistSongsTable.Cols.PLAYLIST_ID + "=?"
+                , arrayOf(playlistId.toString()))
+
+        database?.delete(tableName, PlaylistsTable.Cols.ID + "=?"
+                , arrayOf(playlistId.toString()))
+
+        for (deleteEvent in deleteEvents) {
+            deleteEvent.onDelete(tableName)
+        }
+
     }
 
     private fun query(whereClause: String?, whereArgs: Array<String>?): MusicCursorWrapper? {

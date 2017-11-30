@@ -32,6 +32,7 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
         val ACTION_PLAY = "action_play"
         val ACTION_ADD_FAVORITES = "action_add_favorites"
         val ACTION_ADD_PLAYLIST = "action_add_playlist"
+        val ACTION_REMOVE_SONG = "action_remove_song"
     }
 
     override fun getTextToShowInBubble(pos: Int): String {
@@ -62,6 +63,11 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
 
         holder?.songItemView?.songMenuButton?.setOnClickListener {
             setupPopupMenu(holder.songItemView.context, holder.songItemView.songMenuButton, position)
+        }
+
+        holder?.songItemView?.setOnLongClickListener {
+            listener(listSongs[position], position, ACTION_REMOVE_SONG)
+            true
         }
     }
 

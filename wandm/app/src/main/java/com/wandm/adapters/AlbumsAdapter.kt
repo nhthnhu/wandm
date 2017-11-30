@@ -41,10 +41,6 @@ class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Ad
 
     override fun getItemCount() = mListAlbums.size
 
-    override fun onViewAttachedToWindow(holder: AlbumsHolder?) {
-        super.onViewAttachedToWindow(holder)
-    }
-
     inner class AlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(album: Album, pos: Int) {

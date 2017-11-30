@@ -16,6 +16,7 @@ import com.wandm.services.MusicPlayer
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_playlist_detail.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.uiThread
 
 class PlaylistDetailDialog : BaseDialog() {
@@ -59,10 +60,6 @@ class PlaylistDetailDialog : BaseDialog() {
 
         songsAdapter = SongsAdapter(ArrayList(), false) { song, position, action ->
             when (action) {
-                SongsAdapter.ACTION_ADD_PLAYLIST -> {
-
-                }
-
                 SongsAdapter.ACTION_PLAY -> {
                     MusicPlayer.bind(null)
 
@@ -71,6 +68,12 @@ class PlaylistDetailDialog : BaseDialog() {
                     activity.startActivity(intent)
 
                     dismiss()
+                }
+
+                SongsAdapter.ACTION_REMOVE_SONG -> {
+                    MusicDBHandler.getInstance(activity, PlaylistSongsTable.TABLE_NAME)?.removeSongFromPlaylist(song)
+                    loadSongs()
+                    toast(R.string.remove_from_playlist)
                 }
             }
         }
@@ -93,7 +96,8 @@ class PlaylistDetailDialog : BaseDialog() {
                         if (songs.size > 0) {
                             playlistSongsFastScroller.visibility = View.VISIBLE
                             playlistSongsRecyclerView.visibility = View.VISIBLE
-                        }
+                        } else
+                            dismiss()
 
                         playlistSongsProgressBar.visibility = View.GONE
                     }

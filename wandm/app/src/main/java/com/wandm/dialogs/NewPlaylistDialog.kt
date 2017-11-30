@@ -5,6 +5,7 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.wandm.R
 import com.wandm.database.MusicDBHandler
 import com.wandm.database.PlaylistSongsTable
@@ -46,6 +47,10 @@ class NewPlaylistDialog : DialogFragment() {
             val song = arguments.get(ARG_SONG) as Song
             song.playlistId = playlist?.id ?: 0
             musicDBHandler?.insert(song)
+
+            Toast.makeText(activity
+                    , activity.resources.getString(R.string.added_to_playlist
+                    , playlist?.name), Toast.LENGTH_SHORT).show()
 
             dismiss()
         }

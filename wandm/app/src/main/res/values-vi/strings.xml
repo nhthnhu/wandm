@@ -63,6 +63,11 @@
     <string name="add_to_favorites">Thêm vào yêu thích</string>
     <string name="add_to_playlist">Thêm vào playlist</string>
     <string name="added_to_favorites">Đã thêm vào yêu thích</string>
+    <string name="remove_from_favorites">Đã xoá khỏi yêu thích</string>
+    <string name="delete_playlist">Đã xoá Playlist</string>
+    <string name="added_to_playlist">Đã thêm vào Playlist %1$s</string>
+    <string name="remove_from_playlist">Đã xoá khỏi Playlist</string>
+
 
     <string-array name="list_text_size_titles">
         <item>Nhỏ</item>

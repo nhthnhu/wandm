@@ -15,6 +15,7 @@ import com.wandm.models.song.Song
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.dialog_playlists.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.uiThread
 
 class PlaylistsDialog : BaseDialog() {
@@ -62,10 +63,13 @@ class PlaylistsDialog : BaseDialog() {
 
     private fun setupViews() {
         song = arguments.getSerializable(ARG_SONG) as Song
-        playlistsAdapter = PlaylistAdapter(ArrayList()) { playlist, i ->
+        playlistsAdapter = PlaylistAdapter(ArrayList()) { playlist, i, action ->
 
             song?.playlistId = playlist.id
             MusicDBHandler.getInstance(activity, PlaylistSongsTable.TABLE_NAME)?.insert(song)
+
+            toast(activity.resources.getString(R.string.added_to_playlist, playlist.name))
+
             dismiss()
         }
 

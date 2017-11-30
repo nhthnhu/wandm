@@ -11,7 +11,13 @@ import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_playlist.view.*
 
 class PlaylistAdapter(var listPlaylists: ArrayList<Playlist>,
-                      val listener: (Playlist, Int) -> Unit) : RecyclerView.Adapter<PlaylistAdapter.PlaylistHolder>(), BubbleTextGetter {
+                      val listener: (Playlist, Int, String) -> Unit) : RecyclerView.Adapter<PlaylistAdapter.PlaylistHolder>(), BubbleTextGetter {
+
+    companion object {
+        val ACTION_SHOW_DETAIL = "action_show_detail"
+        val ACTION_DELETE_PLAYLIST = "action_delete_playlist"
+    }
+
     override fun getTextToShowInBubble(pos: Int): String {
         if (listPlaylists.size > 0) {
             return listPlaylists[pos].name[0].toString()
@@ -31,8 +37,15 @@ class PlaylistAdapter(var listPlaylists: ArrayList<Playlist>,
     override fun onBindViewHolder(holder: PlaylistHolder?, position: Int) {
         holder?.bind(listPlaylists.get(position))
         holder?.itemView?.setOnClickListener {
-            listener(listPlaylists.get(position), position)
+            listener(listPlaylists[position], position, ACTION_SHOW_DETAIL)
         }
+
+        holder?.itemView?.setOnLongClickListener {
+            listener(listPlaylists[position], position, ACTION_DELETE_PLAYLIST)
+            true
+        }
+
+
     }
 
     override fun getItemCount(): Int {
@@ -43,7 +56,7 @@ class PlaylistAdapter(var listPlaylists: ArrayList<Playlist>,
     inner class PlaylistHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(playlist: Playlist) {
             setupView(itemView)
-            
+
             if (PreferencesUtils.getLightTheme()) {
                 itemView.playlistsIcon.setColor(itemView.resources.getColor(R.color.color_light_theme))
             } else {

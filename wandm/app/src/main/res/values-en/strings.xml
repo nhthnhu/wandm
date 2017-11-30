@@ -64,6 +64,10 @@
     <string name="add_to_playlist">Add to playlist</string>
     <string name="added_to_favorites">Added to favorites</string>
     <string name="new_playlist">New playlist</string>
+    <string name="remove_from_favorites">Remove from Favorites</string>
+    <string name="delete_playlist">Delete Playlist</string>
+    <string name="added_to_playlist">Added to %1$s PLaylist</string>
+    <string name="remove_from_playlist">Remove from Playlist</string>
 
     <string-array name="list_text_size_titles">
         <item>Small</item>
