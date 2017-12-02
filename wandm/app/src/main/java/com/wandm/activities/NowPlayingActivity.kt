@@ -522,6 +522,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             CurrentPlaylistManager.instance.currentSong?.downloadEnable = false
             val song = CurrentPlaylistManager.instance.currentSong
             WMDownloadManager.getInstance().download(song?.title, song?.data, downloadListener)
+            downloadButton.setColor(resources.getColor(colorResIdPressed))
             downloadButton.isEnabled = false
             downloadButton.setColor(resources.getColor(colorResIdPressed))
             isDownloaded = false
