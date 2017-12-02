@@ -36,10 +36,9 @@ class NewPlaylistDialog : DialogFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog.setTitle(getString(R.string.new_playlist))
 
         createButton.setOnClickListener {
-            var playlist: Playlist? = Playlist(playlistNameEdit.text.toString())
+            var playlist: Playlist? = Playlist(playlistNameEditText.text.toString())
             var musicDBHandler = MusicDBHandler.getInstance(activity, PlaylistsTable.TABLE_NAME)
             musicDBHandler?.insert(playlist)
             playlist = musicDBHandler?.getLatestPlaylist()

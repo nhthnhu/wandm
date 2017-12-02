@@ -4,17 +4,23 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingEnd="16dp"
-    android:paddingStart="16dp">
+    android:padding="16dp">
+
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/WMTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/new_playlist"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/playlistNameEdit"
+        android:id="@+id/playlistNameEditText"
         style="@style/WMTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginStart="4dp"
-        android:textColor="@color/color_white"
         android:textSize="18sp" />
 
     <LinearLayout

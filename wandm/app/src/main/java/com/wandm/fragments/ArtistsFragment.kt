@@ -3,6 +3,7 @@ package com.wandm.fragments
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.wandm.App
 import com.wandm.R
@@ -19,6 +20,9 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class ArtistsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+    private val TAG = "ArtistsFragment"
+    private var adapter: ArtistsAdapter? = null
+
     override fun getLayoutResId() = R.layout.fragment_artists
 
     override fun onCreatedView(savedInstanceState: Bundle?) {
@@ -26,6 +30,10 @@ class ArtistsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         artistsRecyclerView.layoutManager = LinearLayoutManager(activity)
         artistsFastScroller.setRecyclerView(artistsRecyclerView)
         container.setOnRefreshListener(this)
+
+        adapter = ArtistsAdapter(ArrayList())
+        artistsRecyclerView.adapter = adapter
+        setItemDecoration()
 
         if (activity != null) {
             loadArtists()
@@ -43,25 +51,27 @@ class ArtistsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun loadArtists() {
         doAsync {
             val artists = ArtistLoader.getAllArtists(App.instance) as ArrayList<Artist>
-            val adapter = ArtistsAdapter(artists)
 
             uiThread {
-                container.isRefreshing = false
+                try {
+                    container.isRefreshing = false
+                    adapter?.mListArtists = artists
+                    artistsRecyclerView.adapter.notifyDataSetChanged()
 
-                artistsRecyclerView.adapter = adapter
-                setItemDecoration()
-                artistsRecyclerView.adapter.notifyDataSetChanged()
+                    if (artists.size > 0) {
+                        ArtistLoader.getAllArtists(App.instance) as ArrayList<Artist>
+                        artistsFastScroller.visibility = View.VISIBLE
+                    }
 
-                if (artists.size > 0) {
-                    ArtistLoader.getAllArtists(App.instance) as ArrayList<Artist>
-                    artistsFastScroller.visibility = View.VISIBLE
-                }
+                    artistsProgressBar.visibility = View.GONE
 
-                artistsProgressBar.visibility = View.GONE
-                adapter.setOnItemClickListener { artist, _ ->
-                    val fragmentManager = MainActivity.instance.supportFragmentManager
-                    val dialogFragment = ArtistDetailDialog.newInstance(artist.id)
-                    dialogFragment.show(fragmentManager, "ArtistDetailDialog")
+                    adapter?.setOnItemClickListener { artist, _ ->
+                        val fragmentManager = MainActivity.instance.supportFragmentManager
+                        val dialogFragment = ArtistDetailDialog.newInstance(artist.id)
+                        dialogFragment.show(fragmentManager, "ArtistDetailDialog")
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, e.message, e)
                 }
             }
         }

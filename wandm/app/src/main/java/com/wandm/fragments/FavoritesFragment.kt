@@ -38,6 +38,10 @@ class FavoritesFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         songsFastScroller.setRecyclerView(songsRecyclerView)
         container.setOnRefreshListener(this)
 
+        mAdapter = FavoritesAdapter(ArrayList())
+        songsRecyclerView.adapter = mAdapter
+        setItemDecoration()
+
         MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)
                 ?.setInsertEvent(object : MusicDBHandler.InsertEvent {
                     override fun onInsert(tableName: String) {
@@ -45,6 +49,7 @@ class FavoritesFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                             loadSongs()
                     }
                 })
+
 
         if (activity != null) {
             loadSongs()
@@ -61,50 +66,53 @@ class FavoritesFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun loadSongs() {
         doAsync {
             mList = MusicDBHandler.getInstance(App.instance, FavoritesTable.TABLE_NAME)?.getFavorites()
-            if (mList != null) {
-                mAdapter = FavoritesAdapter(mList!!)
 
-                uiThread {
-                    container.isRefreshing = false
+            uiThread {
+                try {
+                    if (mList != null) {
+                        container.isRefreshing = false
+                        mAdapter?.listSongs = mList!!
+                        songsRecyclerView.adapter.notifyDataSetChanged()
 
-                    songsRecyclerView.adapter = mAdapter
-                    setItemDecoration()
-                    songsRecyclerView.adapter.notifyDataSetChanged()
-
-                    if (mList!!.size > 0)
-                        songsFastScroller.visibility = View.VISIBLE
+                        if (mList!!.size > 0)
+                            songsFastScroller.visibility = View.VISIBLE
+                    }
 
                     songsProgressBar.visibility = View.GONE
+                } catch (e: Exception) {
+                    Log.e(TAG, e.message, e)
                 }
             }
+        }
 
-            mAdapter?.setOnItemClickListener { song, position, action ->
-                when (action) {
-                    FavoritesAdapter.ACTION_PLAY -> {
-                        MusicPlayer.bind(null)
 
-                        val intent = Intent(activity, NowPlayingActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        startActivity(intent)
-                    }
+        mAdapter?.setOnItemClickListener { song, position, action ->
+            when (action) {
+                FavoritesAdapter.ACTION_PLAY -> {
+                    MusicPlayer.bind(null)
 
-                    FavoritesAdapter.ACTION_REMOVE -> {
-                        val isSuccessfull = MusicDBHandler.getInstance(activity, FavoritesTable.TABLE_NAME)?.
-                                remove(mList!![position])!!
+                    val intent = Intent(activity, NowPlayingActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
 
-                        if (isSuccessfull) {
-                            mList?.remove(song)
-                            mAdapter?.notifyDataSetChanged()
-                            Toast.makeText(activity, R.string.remove_from_favorites, Toast.LENGTH_SHORT).show()
-                        }
+                FavoritesAdapter.ACTION_REMOVE -> {
+                    val isSuccessfull = MusicDBHandler.getInstance(activity, FavoritesTable.TABLE_NAME)?.
+                            remove(mList!![position])!!
+
+                    if (isSuccessfull) {
+                        mList?.remove(song)
+                        mAdapter?.notifyDataSetChanged()
+                        Toast.makeText(activity, R.string.remove_from_favorites, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
-
         }
     }
+
 
     private fun setItemDecoration() {
         songsRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
     }
 }
+

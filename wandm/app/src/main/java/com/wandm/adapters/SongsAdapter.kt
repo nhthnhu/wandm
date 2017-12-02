@@ -2,7 +2,6 @@ package com.wandm.adapters
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import android.widget.Toast
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.wandm.R
+import com.wandm.activities.MainActivity
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
 import com.wandm.database.MusicDBHandler
@@ -62,7 +62,7 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
         }
 
         holder?.songItemView?.songMenuButton?.setOnClickListener {
-            setupPopupMenu(holder.songItemView.context, holder.songItemView.songMenuButton, position)
+            setupPopupMenu(MainActivity.instance, holder.songItemView.songMenuButton, position)
         }
 
         holder?.songItemView?.setOnLongClickListener {
@@ -136,7 +136,7 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
             R.id.addPlaylistItemMenu -> {
                 listener(listSongs[pos], pos, ACTION_ADD_PLAYLIST)
                 val playlistsDialog = PlaylistsDialog.newInstance(listSongs[pos])
-                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                val fragmentManager = MainActivity.instance.supportFragmentManager
                 playlistsDialog.show(fragmentManager, PlaylistsDialog::javaClass.name)
             }
         }

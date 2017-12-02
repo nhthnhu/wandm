@@ -3,6 +3,7 @@ package com.wandm.fragments
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.wandm.R
 import com.wandm.adapters.PlaylistAdapter
@@ -18,6 +19,8 @@ import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.uiThread
 
 class PlaylistsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+
+    private val TAG = "PlaylistsFragment"
 
     private var playlistsAdapter: PlaylistAdapter? = null
 
@@ -72,6 +75,8 @@ class PlaylistsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                     }
 
                 })
+
+        setItemDecoration()
     }
 
     private fun loadPlaylists() {
@@ -81,16 +86,20 @@ class PlaylistsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                 val playlists = MusicDBHandler.getInstance(activity, PlaylistsTable.TABLE_NAME)?.getPlaylists()
                 if (playlists != null)
                     uiThread {
-                        container.isRefreshing = false
+                        try {
+                            container.isRefreshing = false
+                            playlistsAdapter?.listPlaylists = playlists
+                            playlistsAdapter?.notifyDataSetChanged()
 
-                        playlistsAdapter?.listPlaylists = playlists
-                        setItemDecoration()
-                        playlistsAdapter?.notifyDataSetChanged()
-                        if (playlists.size > 0) {
-                            playlistsRecyclerView.visibility = View.VISIBLE
-                            playlistsFastScroller.visibility = View.VISIBLE
+                            if (playlists.size > 0) {
+                                playlistsRecyclerView.visibility = View.VISIBLE
+                                playlistsFastScroller.visibility = View.VISIBLE
+                            }
+
+                            playlistsProgressBar.visibility = View.GONE
+                        } catch (e: Exception) {
+                            Log.e(TAG, e.message, e)
                         }
-                        playlistsProgressBar.visibility = View.GONE
                     }
             }
         }

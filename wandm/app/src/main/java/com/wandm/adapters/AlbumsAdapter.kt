@@ -16,7 +16,7 @@ import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_album.view.*
 
 
-class AlbumsAdapter(private val mListAlbums: ArrayList<Album>) : RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>(),
+class AlbumsAdapter(var mListAlbums: ArrayList<Album>) : RecyclerView.Adapter<AlbumsAdapter.AlbumsHolder>(),
         BubbleTextGetter {
 
     override fun getTextToShowInBubble(pos: Int): String {

@@ -39,7 +39,7 @@ class FoldersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         container.setOnRefreshListener(this)
     }
 
-    private fun loadFolders(loadingAgain:Boolean) {
+    private fun loadFolders(loadingAgain: Boolean) {
         foldersProgressBar.visibility = View.VISIBLE
         foldersRecyclerView.visibility = View.GONE
         foldersFastScroller.visibility = View.GONE
@@ -49,6 +49,7 @@ class FoldersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                     MusicFoldersLoader.externalStorage, loadingAgain) { mediaFolders ->
 
                 try {
+                    container.isRefreshing = false
                     if (mediaFolders != null) {
                         foldersAdapter.musicFolders = mediaFolders
                         foldersRecyclerView.adapter = foldersAdapter
@@ -57,11 +58,9 @@ class FoldersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                     }
                     foldersProgressBar.visibility = View.GONE
                 } catch (e: Exception) {
-                    Log.e(TAG, e.message)
+                    Log.e(TAG, e.message, e)
                 }
                 Log.d(TAG, "Folders loading completed")
-
-                container.isRefreshing = false
             }
         }
     }

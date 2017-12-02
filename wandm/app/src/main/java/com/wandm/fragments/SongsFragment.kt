@@ -43,6 +43,24 @@ class SongsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         songsFastScroller.setRecyclerView(songsRecyclerView)
         container.setOnRefreshListener(this)
 
+        adapter = SongsAdapter(ArrayList(), true) { song, position, action ->
+            when (action) {
+                SongsAdapter.ACTION_ADD_PLAYLIST -> {
+
+                }
+
+                SongsAdapter.ACTION_PLAY -> {
+                    MusicPlayer.bind(null)
+
+                    val intent = Intent(activity, NowPlayingActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    activity.startActivity(intent)
+                }
+            }
+        }
+        songsRecyclerView.adapter = adapter
+        setItemDecoration()
+
         if (activity != null) {
             loadSongs()
         }
@@ -60,33 +78,18 @@ class SongsFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             val songs = SongLoader.getAllSongs(App.instance)
             SearchHelper.setSongSuggestions(songs)
 
-            adapter = SongsAdapter(songs, true) { song, position, action ->
-                when (action) {
-                    SongsAdapter.ACTION_ADD_PLAYLIST -> {
-
-                    }
-
-                    SongsAdapter.ACTION_PLAY -> {
-                        MusicPlayer.bind(null)
-
-                        val intent = Intent(activity, NowPlayingActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        activity.startActivity(intent)
-                    }
-                }
-            }
-
             uiThread {
-                container.isRefreshing = false
+                try {
+                    container.isRefreshing = false
+                    adapter?.listSongs = songs
+                    adapter?.notifyDataSetChanged()
+                    if (songs.size > 0)
+                        songsFastScroller.visibility = View.VISIBLE
 
-                songsRecyclerView.adapter = adapter
-                setItemDecoration()
-                songsRecyclerView.adapter.notifyDataSetChanged()
-
-                if (songs.size > 0)
-                    songsFastScroller.visibility = View.VISIBLE
-
-                songsProgressBar.visibility = View.GONE
+                    songsProgressBar.visibility = View.GONE
+                } catch (e: Exception) {
+                    Log.e(TAG, e.message, e)
+                }
             }
         }
     }

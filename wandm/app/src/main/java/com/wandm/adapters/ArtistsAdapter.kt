@@ -16,7 +16,7 @@ import com.wandm.views.BubbleTextGetter
 import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_artist.view.*
 
-class ArtistsAdapter(private val mListArtists: ArrayList<Artist>) : RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>(),
+class ArtistsAdapter(var mListArtists: ArrayList<Artist>) : RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>(),
         BubbleTextGetter {
 
     override fun getTextToShowInBubble(pos: Int) = mListArtists[pos].name[0].toString()
