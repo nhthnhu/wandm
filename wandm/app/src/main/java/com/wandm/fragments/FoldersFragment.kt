@@ -8,6 +8,7 @@ import android.view.View
 import com.wandm.R
 import com.wandm.adapters.FoldersAdapter
 import com.wandm.loaders.MusicFoldersLoader
+import com.wandm.models.MusicFolder
 import com.wandm.views.DividerItemDecoration
 import kotlinx.android.synthetic.main.fragment_folders.*
 
@@ -46,22 +47,25 @@ class FoldersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
         if (activity != null) {
             MusicFoldersLoader.getMusicFolders(activity,
-                    MusicFoldersLoader.externalStorage, loadingAgain) { mediaFolders ->
-
-                try {
-                    container.isRefreshing = false
-                    if (mediaFolders != null) {
-                        foldersAdapter.musicFolders = mediaFolders
-                        foldersRecyclerView.adapter = foldersAdapter
-                        foldersRecyclerView.visibility = View.VISIBLE
-                        foldersFastScroller.visibility = View.VISIBLE
+                    MusicFoldersLoader.externalStorage,
+                    loadingAgain, object : MusicFoldersLoader.OnLoadListener {
+                override fun completed(musicFolders: java.util.ArrayList<MusicFolder>?) {
+                    try {
+                        container.isRefreshing = false
+                        if (musicFolders != null) {
+                            foldersAdapter.musicFolders = musicFolders
+                            foldersRecyclerView.adapter = foldersAdapter
+                            foldersRecyclerView.visibility = View.VISIBLE
+                            foldersFastScroller.visibility = View.VISIBLE
+                        }
+                        foldersProgressBar.visibility = View.GONE
+                    } catch (e: Exception) {
+                        Log.e(TAG, e.message, e)
                     }
-                    foldersProgressBar.visibility = View.GONE
-                } catch (e: Exception) {
-                    Log.e(TAG, e.message, e)
+                    Log.d(TAG, "Folders loading completed")
                 }
-                Log.d(TAG, "Folders loading completed")
-            }
+
+            })
         }
     }
 }

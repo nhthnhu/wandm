@@ -186,7 +186,6 @@ class SearchActivity : BaseActivity() {
 
         Speech.init(this)
         Speech.getInstance().setLocale(Locale("vi"))
-        Speech.getInstance().setTransitionMinimumDelay(500)
         Speech.getInstance().setDelegate(object : SpeechDelegate {
             override fun onStartOfSpeech() {
                 showViewsForSpeech(SPEECH_START)

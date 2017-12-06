@@ -27,13 +27,13 @@ public class MusicFoldersLoader {
     private static final String[] SUPPORTED_EXT = new String[]{"mp3"};
     private static final ArrayList<MusicFolder> musicFolders = new ArrayList<>();
 
-    private OnLoadListener onLoadListener;
+    private static OnLoadListener onLoadListener;
 
-    public void setOnLoadListener(OnLoadListener onLoadListener) {
-        this.onLoadListener = onLoadListener;
+    public static void setOnLoadListener(OnLoadListener onLoadListener) {
+        MusicFoldersLoader.onLoadListener = onLoadListener;
     }
 
-    interface OnLoadListener {
+    public interface OnLoadListener {
         void completed(ArrayList<MusicFolder> musicFolders);
     }
 
@@ -41,8 +41,9 @@ public class MusicFoldersLoader {
                                        final File root,
                                        boolean loadingAgain,
                                        final OnLoadListener onLoadListener) {
+        MusicFoldersLoader.onLoadListener = onLoadListener;
         if (!musicFolders.isEmpty() && !loadingAgain) {
-            onLoadListener.completed(musicFolders);
+            MusicFoldersLoader.onLoadListener.completed(musicFolders);
             return;
         }
 
@@ -55,8 +56,8 @@ public class MusicFoldersLoader {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (onLoadListener != null) {
-                            onLoadListener.completed(musicFolders);
+                        if (MusicFoldersLoader.onLoadListener != null) {
+                            MusicFoldersLoader.onLoadListener.completed(musicFolders);
                         }
                     }
                 });
