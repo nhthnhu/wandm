@@ -18,7 +18,7 @@ import com.wandm.data.CurrentPlaylistManager
 import com.wandm.database.FavoritesTable
 import com.wandm.database.MusicDBHandler
 import com.wandm.dialogs.AlarmDialog
-import com.wandm.download.WMDownloadManager
+import com.wandm.dialogs.PlaylistsDialog
 import com.wandm.events.MessageEvent
 import com.wandm.events.MusicEvent
 import com.wandm.services.MusicPlayer
@@ -33,7 +33,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.textColor
-import org.jetbrains.anko.toast
 import java.util.concurrent.TimeUnit
 
 
@@ -80,44 +79,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         override fun onPanelSlide(arg0: View, arg1: Float) {
 
 
-        }
-
-    }
-
-    val downloadListener = object : WMDownloadManager.Listener {
-        override fun OnDownloadStarted(taskId: Long) {
-            runOnUiThread { toast(R.string.downloading) }
-        }
-
-        override fun OnDownloadRebuildStart(taskId: Long) {
-
-        }
-
-        override fun OnDownloadPaused(taskId: Long) {
-
-        }
-
-        override fun OnDownloadCompleted(taskId: Long) {
-            runOnUiThread { toast(R.string.download_completed) }
-        }
-
-        override fun OnDownloadProcess(taskId: Long, percent: Double, downloadedLength: Long) {
-
-        }
-
-        override fun OnDownloadRebuildFinished(taskId: Long) {
-
-        }
-
-        override fun OnDownloadFinished(taskId: Long) {
-            runOnUiThread { toast(R.string.download_failed) }
-        }
-
-        override fun connectionLost(taskId: Long) {
-            runOnUiThread {
-                CurrentPlaylistManager.instance.currentSong?.downloadEnable = true
-                setDownload(true)
-            }
         }
 
     }
@@ -191,8 +152,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         shuffleButton.setOnClickListener(this)
         repeatButton.setOnClickListener(this)
         favoriteButton.setOnClickListener(this)
-        downloadButton.setOnClickListener(this)
-        songMenuButton.setOnClickListener(this)
+        addPlaylistButton.setOnClickListener(this)
         setAlarmButton.setOnClickListener(this)
 
         artistSongTextView.text = CurrentPlaylistManager.currentSong?.artistName
@@ -220,7 +180,6 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         setShuffleMode(true)
         setRepeatMode(true)
         setFavorite(true)
-        setDownload(true)
         setAlbumArt()
         setTimer(true)
         setBlurBackground(songBackground, songBlurringView)
@@ -386,12 +345,8 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
                 setFavorite(false)
             }
 
-            R.id.downloadButton -> {
-                setDownload(false)
-            }
-
-            R.id.songMenuButton -> {
-
+            R.id.addPlaylistButton -> {
+                addPlaylist()
             }
 
             R.id.setAlarmButton -> {
@@ -496,37 +451,10 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
 
     private fun setAlbumArt() {
         val uri: String
-
-        if (CurrentPlaylistManager.currentSong?.albumId == (-1).toLong()) {
-            uri = CurrentPlaylistManager.currentSong!!.albumArt
-        } else
-            uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong!!.albumId).toString()
+        uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong!!.albumId).toString()
 
         doAsync {
             albumImage.setCoverURL(uri)
-        }
-    }
-
-    private fun setDownload(init: Boolean) {
-        if (init) {
-            if (!CurrentPlaylistManager.currentSong?.downloadEnable!!) {
-                downloadButton.setColor(resources.getColor(colorResIdPressed))
-                downloadButton.isEnabled = false
-                isDownloaded = true
-            } else {
-                downloadButton.setColor(resources.getColor(colorResId))
-                downloadButton.isEnabled = true
-                isDownloaded = false
-            }
-        } else {
-            CurrentPlaylistManager.instance.currentSong?.downloadEnable = false
-            val song = CurrentPlaylistManager.instance.currentSong
-            WMDownloadManager.getInstance().download(song?.title, song?.data, downloadListener)
-            downloadButton.setColor(resources.getColor(colorResIdPressed))
-            downloadButton.isEnabled = false
-            downloadButton.setColor(resources.getColor(colorResIdPressed))
-            isDownloaded = false
-
         }
     }
 
@@ -554,6 +482,13 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
+    private fun addPlaylist() {
+        val playlistsDialog = PlaylistsDialog.newInstance(CurrentPlaylistManager.currentSong!!)
+        val fragmentManager = supportFragmentManager
+        playlistsDialog.show(fragmentManager, PlaylistsDialog::javaClass.name)
+    }
+
 
     private fun setTheme() {
         val isLightTheme = PreferencesUtils.getLightTheme()
@@ -584,8 +519,7 @@ class NowPlayingActivity : BaseActivity(), View.OnClickListener {
         repeatButton.setColor(resources.getColor(colorResId))
         shuffleButton.setColor(resources.getColor(colorResId))
         favoriteButton.setColor(resources.getColor(colorResId))
-        downloadButton.setColor(resources.getColor(colorResId))
-        songMenuButton.setColor(resources.getColor(colorResId))
+        addPlaylistButton.setColor(resources.getColor(colorResId))
         setAlarmButton.setColor(resources.getColor(colorResId))
 
     }

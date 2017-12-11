@@ -42,7 +42,6 @@
 
     <string name="ok">OK</string>
     <string name="offline_searching">Offline searching</string>
-    <string name="online_searching">Online searching</string>
 
     <string name="count">%1$s | %2$s</string>
 

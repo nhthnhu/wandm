@@ -46,7 +46,7 @@
     </LinearLayout>
 
     <net.steamcrafted.materialiconlib.MaterialIconView
-        android:id="@+id/songMenuButton"
+        android:id="@+id/addPlaylistButton"
         android:layout_width="48dp"
         android:layout_height="match_parent"
         android:layout_marginEnd="4dp"

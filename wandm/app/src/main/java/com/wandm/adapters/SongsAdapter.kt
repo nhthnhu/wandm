@@ -61,8 +61,8 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
             listener(listSongs[position], position, ACTION_PLAY)
         }
 
-        holder?.songItemView?.songMenuButton?.setOnClickListener {
-            setupPopupMenu(MainActivity.instance, holder.songItemView.songMenuButton, position)
+        holder?.songItemView?.addPlaylistButton?.setOnClickListener {
+            setupPopupMenu(MainActivity.instance, holder.songItemView.addPlaylistButton, position)
         }
 
         holder?.songItemView?.setOnLongClickListener {
@@ -81,10 +81,10 @@ class SongsAdapter(var listSongs: ArrayList<Song>,
             if (PreferencesUtils.getLightTheme())
                 colorResId = R.color.color_light_theme
 
-            itemView.songMenuButton.setColor(itemView?.context?.resources?.getColor(colorResId)!!)
+            itemView.addPlaylistButton.setColor(itemView?.context?.resources?.getColor(colorResId)!!)
 
             if (!isShowMenu)
-                itemView.songMenuButton.visibility = View.GONE
+                itemView.addPlaylistButton.visibility = View.GONE
 
             Picasso.with(itemView.context)
                     .load(Utils.getAlbumArtUri(song.albumId).toString())

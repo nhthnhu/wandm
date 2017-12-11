@@ -89,17 +89,7 @@
                     app:materialIconSize="35dp" />
 
                 <net.steamcrafted.materialiconlib.MaterialIconView
-                    android:id="@+id/downloadButton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:scaleType="center"
-                    app:materialIcon="download"
-                    app:materialIconSize="35dp" />
-
-                <net.steamcrafted.materialiconlib.MaterialIconView
-                    android:id="@+id/songMenuButton"
+                    android:id="@+id/addPlaylistButton"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"

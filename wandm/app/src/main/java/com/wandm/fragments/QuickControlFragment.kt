@@ -124,12 +124,7 @@ class QuickControlFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setAlbumArt() {
-        var uri = ""
-
-        if (CurrentPlaylistManager.currentSong?.albumId == -1.toLong())
-            uri = CurrentPlaylistManager.currentSong!!.albumArt
-        else
-            uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong!!.albumId).toString()
+        var uri = Utils.getAlbumArtUri(CurrentPlaylistManager.currentSong!!.albumId).toString()
 
         if (uri.isEmpty()) {
             albumImageView.background = activity.getDrawable(R.drawable.ic_action_music)

@@ -105,42 +105,6 @@
             </LinearLayout>
         </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ProgressBar
-                android:id="@+id/searchOnlineLoading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/resultsOnlineLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/labelSearchOnline"
-                    style="@style/WMTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/online_searching"
-                    android:textSize="18sp" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/resultsOnlineView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-        </FrameLayout>
     </LinearLayout>
 
     <com.arlib.floatingsearchview.FloatingSearchView

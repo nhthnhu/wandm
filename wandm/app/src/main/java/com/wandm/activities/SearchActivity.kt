@@ -7,17 +7,13 @@ import android.speech.SpeechRecognizer
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import com.wandm.R
-import com.wandm.adapters.OnlineSongsAdapter
 import com.wandm.adapters.SongsAdapter
 import com.wandm.data.CurrentPlaylistManager
 import com.wandm.data.SearchHelper
-import com.wandm.loaders.OnlineSongLoader
 import com.wandm.loaders.SongLoader
-import com.wandm.models.RequestListener
 import com.wandm.models.Song
 import com.wandm.models.SongSearchSuggestion
 import com.wandm.permissions.PermissionCallback
@@ -38,7 +34,6 @@ import kotlin.collections.ArrayList
 class SearchActivity : BaseActivity() {
 
     private var songsAdapter: SongsAdapter? = null
-    private var onlineSongsAdapter: OnlineSongsAdapter? = null
 
     companion object {
         private val TAG = "SearchActivity"
@@ -76,26 +71,13 @@ class SearchActivity : BaseActivity() {
         setBlurBackground(searchBackground, blurringView)
 
         resultsOfflineView.layoutManager = LinearLayoutManager(this)
-        resultsOnlineView.layoutManager = LinearLayoutManager(this)
 
         songsAdapter = SongsAdapter(ArrayList(), false) { song, _, _ ->
             playSong(song)
         }
 
-        onlineSongsAdapter = OnlineSongsAdapter(ArrayList()) { song, _, state ->
-            when (state) {
-                OnlineSongsAdapter.ACTION_DOWNLOAD -> {
-                    Toast.makeText(this, "Download clicked!", Toast.LENGTH_LONG).show()
-                }
-
-                OnlineSongsAdapter.ACTION_PLAY -> {
-                    playSong(song)
-                }
-            }
-        }
 
         resultsOfflineView.adapter = songsAdapter
-        resultsOnlineView.adapter = onlineSongsAdapter
 
         waveformView.setOnClickListener {
             if (Speech.getInstance().isListening) {
@@ -135,7 +117,6 @@ class SearchActivity : BaseActivity() {
                 searchBar.clearSearchFocus()
 
                 searchOffline(searchSuggestion.body)
-                searchOnline(searchSuggestion.body)
             }
 
             override fun onSearchAction(query: String) {
@@ -144,7 +125,6 @@ class SearchActivity : BaseActivity() {
                 SearchHelper.addHistory(query)
 
                 searchOffline(query)
-                searchOnline(query)
             }
         })
 
@@ -204,7 +184,6 @@ class SearchActivity : BaseActivity() {
 
                 if (result != "") {
                     searchOffline(result)
-                    searchOnline(result)
                     showViewsForSpeech(SPEECH_DONE)
                     searchBar.setSearchText(result)
                     return
@@ -332,33 +311,6 @@ class SearchActivity : BaseActivity() {
         }
     }
 
-    private fun searchOnline(title: String) {
-        val musicListener = object : RequestListener<java.util.ArrayList<Song>> {
-            override fun onStart() {
-                super.onStart()
-                searchOnlineLoading.visibility = View.VISIBLE
-                resultsOnlineLayout.visibility = View.GONE
-            }
-
-            override fun onComplete(data: java.util.ArrayList<Song>?) {
-                if (data != null) {
-                    onlineSongsAdapter?.listSongs = data
-                    onlineSongsAdapter?.notifyDataSetChanged()
-                    searchOnlineLoading.visibility = View.GONE
-                    resultsOnlineLayout.visibility = View.VISIBLE
-                } else {
-
-                    onlineSongsAdapter?.listSongs = ArrayList()
-                    onlineSongsAdapter?.notifyDataSetChanged()
-                    searchOnlineLoading.visibility = View.GONE
-                    resultsOnlineLayout.visibility = View.VISIBLE
-                }
-            }
-        }
-
-        OnlineSongLoader(title, musicListener).execute()
-    }
-
     private fun playSong(song: Song) {
         val songs = ArrayList<Song>()
         songs.add(song)
@@ -380,13 +332,11 @@ class SearchActivity : BaseActivity() {
         textMessage.textSize = textSize.toFloat()
         textListening.textSize = textSize.toFloat()
         labelSearchOffline.textSize = textSize.toFloat()
-        labelSearchOnline.textSize = textSize.toFloat()
 
         var colorResId = R.color.color_dark_theme
         if (PreferencesUtils.getLightTheme())
             colorResId = R.color.color_light_theme
 
-        labelSearchOnline.textColor = resources.getColor(colorResId)
         labelSearchOffline.textColor = resources.getColor(colorResId)
     }
 }
